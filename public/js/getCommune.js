@@ -12,7 +12,7 @@ export const getCommune = async (id) => {
         if (res.data.status === 'success') {
             const communes = res.data.data.rows;
 
-            const defaultValue = `<option >...</option>`;
+            const defaultValue = `<option disabled selected>...</option>`;
 
             const options = communes.map((el, index) => {
                 return `<option value="${el.id_commune}">${el.libelle_commune}</option>`;
@@ -22,12 +22,15 @@ export const getCommune = async (id) => {
             if (dom.districtAr.length !== 0) {
                 dom.districtAr.forEach((el, index) => {
                     clearHtml(dom.quartierAr[index]);
-                    dom.communeAr[index].innerHTML = options;
+                    clearHtml(dom.communeAr[index]);
+                    dom.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue)
+                    dom.communeAr[index].insertAdjacentHTML('beforeend', options)
                 });
             }
 
             if (dom.commune) {
                 clearHtml(dom.quartier);
+                clearHtml(dom.commune);
                 dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
                 dom.commune.insertAdjacentHTML('beforeend', options);
             }

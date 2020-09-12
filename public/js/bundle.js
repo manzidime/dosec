@@ -8711,7 +8711,7 @@ var getCommune = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               communes = res.data.data.rows;
-              defaultValue = "<option >...</option>";
+              defaultValue = "<option disabled selected>...</option>";
               options = communes.map(function (el, index) {
                 return "<option value=\"".concat(el.id_commune, "\">").concat(el.libelle_commune, "</option>");
               }).join(' ');
@@ -8719,12 +8719,17 @@ var getCommune = /*#__PURE__*/function () {
               if (_dom.default.districtAr.length !== 0) {
                 _dom.default.districtAr.forEach(function (el, index) {
                   (0, _alert.clearHtml)(_dom.default.quartierAr[index]);
-                  _dom.default.communeAr[index].innerHTML = options;
+                  (0, _alert.clearHtml)(_dom.default.communeAr[index]);
+
+                  _dom.default.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue);
+
+                  _dom.default.communeAr[index].insertAdjacentHTML('beforeend', options);
                 });
               }
 
               if (_dom.default.commune) {
                 (0, _alert.clearHtml)(_dom.default.quartier);
+                (0, _alert.clearHtml)(_dom.default.commune);
 
                 _dom.default.commune.insertAdjacentHTML('afterbegin', defaultValue);
 

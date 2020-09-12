@@ -2,18 +2,78 @@ import '@babel/polyfill';
 import dom from './utils/dom';
 import {login, logout} from './login';
 import {changePassword} from './changePassword';
-import {getCommune} from './getCommune';
 import {getQuartiers} from './getQuartier';
 import {newPerson} from './newPerson';
 import {updatePerson} from './updatePerson';
 import {desable, desableCar} from './desable';
 import {newVehicule, updateVehicule} from './newVehicule';
 import {getarticle, getTaxe} from './getArticles';
-import {getTaxe2, getVehicules} from './utils/select';
+import {getTaxe2, getVehicules, communeByDistrict,quartiersByCommune} from './utils/select';
 import {newTaxation, updateTaxation, desableTaxation, validateTaxation} from './newTaxation';
 import {newAttestation} from './attestation';
 
-//Login
+/**************************************************************************************
+ * UTILITIES*/
+
+//1. Get all commune by district
+if (dom.district) {
+    dom.district.addEventListener('change', async (e) => {
+        const idDistrict = dom.district.value;
+        await communeByDistrict(idDistrict);
+    });
+}
+
+//2. Get all commune by district when to update
+if (dom.districtAr) {
+    Array.from(dom.districtAr)
+    .forEach(el => {
+        el.addEventListener('change', async (event) => {
+            const idDistrict = el.value;
+            await communeByDistrict(idDistrict);
+        });
+    });
+}
+
+//3. When all quartier by commune
+if (dom.commune) {
+    dom.commune.addEventListener('change', async () => {
+        const idCommune = dom.commune.value;
+        await quartiersByCommune(idCommune);
+    });
+}
+
+if (dom.commune) {
+    dom.commune.addEventListener('click', async () => {
+        const idCommune = dom.commune.value;
+        await getQuartiers(idCommune);
+    });
+}
+
+//4. Get all quartier by commune when to update
+if (dom.communeAr) {
+    Array.from(dom.communeAr)
+    .forEach(el => {
+        el.addEventListener('change', async (event) => {
+            const idCommune = el.value;
+            await quartiersByCommune(idCommune);
+        });
+    });
+}
+
+if (dom.communeAr) {
+    Array.from(dom.communeAr)
+    .forEach(el => {
+        el.addEventListener('click', async (event) => {
+            const idCommune = el.value;
+            await quartiersByCommune(idCommune);
+        });
+    });
+}
+
+/**************************************************************************************
+ * AUTHENTIFICATION*/
+
+//1. Login
 if (dom.formLogin) {
     dom.formLogin.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -21,7 +81,7 @@ if (dom.formLogin) {
     });
 }
 
-//Logout
+//2. Logout
 if (dom.logout) {
     dom.logout.addEventListener('click', logout);
 }
@@ -31,14 +91,6 @@ if (dom.formChangePassword) {
     dom.formChangePassword.addEventListener('submit', async (event) => {
         event.preventDefault();
         await changePassword(dom.oldPassword.value, dom.newPassword.value, dom.confirmPassword.value);
-    });
-}
-
-//Get all commune by district
-if (dom.district) {
-    dom.district.addEventListener('change', async (e) => {
-        const idDistrict = dom.district.value;
-        await getCommune(idDistrict);
     });
 }
 
@@ -78,38 +130,6 @@ if (dom.types) {
     });
 }
 
-//Get Taxe by type objet
-
-//Get all commune by district when to update
-if (dom.districtAr) {
-    Array.from(dom.districtAr)
-    .forEach(el => {
-        el.addEventListener('change', async (event) => {
-            const idDistrict = el.value;
-            await getCommune(idDistrict);
-        });
-    });
-}
-
-//Get all quartier by commune
-if (dom.commune) {
-    dom.commune.addEventListener('change', async () => {
-        const idCommune = dom.commune.value;
-        await getQuartiers(idCommune);
-    });
-}
-
-//Get all quartier by commune when to update
-if (dom.communeAr) {
-    Array.from(dom.communeAr)
-    .forEach(el => {
-        el.addEventListener('change', async (event) => {
-            const idCommune = el.value;
-            await getQuartiers(idCommune);
-        });
-    });
-}
-
 //New Person
 if (dom.formNewPerson) {
     dom.formNewPerson.addEventListener('submit', async (event) => {
@@ -142,15 +162,15 @@ if (dom.formUpdatePerson) {
             const id = el.dataset.id;
 
             const body = {
-                nom: document.querySelectorAll('.nom_personne')[index].value,
-                telephone: document.querySelectorAll('.telephone')[index].value,
-                ville: document.querySelectorAll('.ville')[index].value,
-                id_district: document.querySelectorAll('.district')[index].value,
-                id_commune: document.querySelectorAll('.commune')[index].value,
-                id_quartier: document.querySelectorAll('.quartier')[index].value,
-                avenue: document.querySelectorAll('.avenue')[index].value,
-                numero: document.querySelectorAll('.numero')[index].value,
-                observation: document.querySelectorAll('.observation')[index].value,
+                nom: el.querySelector('.nom_personne').value,
+                telephone: el.querySelector('.telephone').value,
+                ville: el.querySelector('.ville').value,
+                id_district: el.querySelector('.district').value,
+                id_commune: el.querySelector('.commune').value,
+                id_quartier: el.querySelector('.quartier').value,
+                avenue: el.querySelector('.avenue').value,
+                numero: el.querySelector('.numero').value,
+                observation: el.querySelector('.observation').value,
             };
 
             await updatePerson(body, id);
@@ -284,7 +304,7 @@ if (dom.formNewTaxation) {
             nom_receptionniste: dom.nomReceptionniste.value,
             telephone_receptioniste: dom.telephoneReceptionniste.value,
             id_vehicule: dom.vehicule.value,
-            id_contribuable: dom.contribuable.value
+            id_contribuable: dom.contribuable.value,
         };
 
         await newTaxation(body);
@@ -358,7 +378,7 @@ if (dom.formNewAttestation) {
             montant_global: dom.montantGlobal.value,
             montant_penalite: dom.montantPenalite.value,
             numero_bordereau: dom.numeroBordereau.value,
-            date_attestation:dom.dateAttestation.value
+            date_attestation: dom.dateAttestation.value,
         };
 
         await newAttestation(body);

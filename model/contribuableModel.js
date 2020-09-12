@@ -84,7 +84,7 @@ module.exports = class Contribuable {
 
     //Update
     async updateOne(id) {
-        const commune = this.data.id_commune * 1
+        const commune = this.data.id_commune * 1;
         try {
             const [rows] = await DB.query(`
                 UPDATE contribuable
@@ -95,10 +95,11 @@ module.exports = class Contribuable {
                     id_commune=?,
                     id_quartier=?,
                     avenue=?,
-                    numero=?
+                    numero=?,
+                    observation=?
                 WHERE id_contribuable = ?
             `, [this.data.nom, this.data.telephone, this.data.ville, this.data.id_district, commune,
-                this.data.id_quartier, this.data.avenue, this.data.numero, id]);
+                this.data.id_quartier, this.data.avenue, this.data.numero,this.data.observation, id]);
 
             if (rows.affectedRows !== 1) {
                 throw new AppError(`Aucun contribuable trouvé avec l'id:${id}`, 403);

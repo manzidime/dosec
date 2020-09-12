@@ -8672,89 +8672,6 @@ var changePassword = /*#__PURE__*/function () {
 }();
 
 exports.changePassword = changePassword;
-},{"axios":"../../node_modules/axios/index.js","./utils/dom":"utils/dom.js","./utils/alert":"utils/alert.js"}],"getCommune.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getCommune = void 0;
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _dom = _interopRequireDefault(require("./utils/dom"));
-
-var _alert = require("./utils/alert");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var getCommune = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-    var res, communes, defaultValue, options;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return (0, _axios.default)({
-              method: 'GET',
-              url: "/api/v1/communes/by-district/".concat(id)
-            });
-
-          case 3:
-            res = _context.sent;
-
-            if (res.data.status === 'success') {
-              communes = res.data.data.rows;
-              defaultValue = "<option disabled selected>...</option>";
-              options = communes.map(function (el, index) {
-                return "<option value=\"".concat(el.id_commune, "\">").concat(el.libelle_commune, "</option>");
-              }).join(' ');
-
-              if (_dom.default.districtAr.length !== 0) {
-                _dom.default.districtAr.forEach(function (el, index) {
-                  (0, _alert.clearHtml)(_dom.default.quartierAr[index]);
-                  (0, _alert.clearHtml)(_dom.default.communeAr[index]); //dom.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue)
-
-                  _dom.default.communeAr[index].insertAdjacentHTML('beforeend', options);
-                });
-              }
-
-              if (_dom.default.commune) {
-                (0, _alert.clearHtml)(_dom.default.quartier);
-                (0, _alert.clearHtml)(_dom.default.commune); //dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
-
-                _dom.default.commune.insertAdjacentHTML('beforeend', options);
-              }
-            }
-
-            _context.next = 10;
-            break;
-
-          case 7:
-            _context.prev = 7;
-            _context.t0 = _context["catch"](0);
-            console.log(_context.t0.response.data.message);
-
-          case 10:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[0, 7]]);
-  }));
-
-  return function getCommune(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-exports.getCommune = getCommune;
 },{"axios":"../../node_modules/axios/index.js","./utils/dom":"utils/dom.js","./utils/alert":"utils/alert.js"}],"getQuartier.js":[function(require,module,exports) {
 "use strict";
 
@@ -9353,7 +9270,7 @@ exports.getTaxe = getTaxe;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getVehicules = exports.getTaxe2 = void 0;
+exports.quartiersByCommune = exports.communeByDistrict = exports.getVehicules = exports.getTaxe2 = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -9421,7 +9338,8 @@ var getTaxe2 = /*#__PURE__*/function () {
   return function getTaxe2(_x) {
     return _ref.apply(this, arguments);
   };
-}();
+}(); //Obtenir tous les vehicules d'un contribuable
+
 
 exports.getTaxe2 = getTaxe2;
 
@@ -9479,9 +9397,133 @@ var getVehicules = /*#__PURE__*/function () {
   return function getVehicules(_x2) {
     return _ref2.apply(this, arguments);
   };
-}();
+}(); //Selectionner toutes les communes d'un district
+
 
 exports.getVehicules = getVehicules;
+
+var communeByDistrict = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(id) {
+    var res, communes, options;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return (0, _axios.default)({
+              method: 'GET',
+              url: "/api/v1/communes/by-district/".concat(id)
+            });
+
+          case 3:
+            res = _context3.sent;
+
+            if (res.data.status === 'success') {
+              communes = res.data.data.rows;
+              options = communes.map(function (el, index) {
+                return "<option value=\"".concat(el.id_commune, "\">").concat(el.libelle_commune, "</option>");
+              }).join(' ');
+
+              if (_dom.default.districtAr.length !== 0) {
+                _dom.default.districtAr.forEach(function (el, index) {
+                  (0, _alert.clearHtml)(_dom.default.quartierAr[index]);
+                  (0, _alert.clearHtml)(_dom.default.communeAr[index]);
+
+                  _dom.default.communeAr[index].insertAdjacentHTML('beforeend', options);
+                });
+              }
+
+              if (_dom.default.commune) {
+                (0, _alert.clearHtml)(_dom.default.quartier);
+                (0, _alert.clearHtml)(_dom.default.commune);
+
+                _dom.default.commune.insertAdjacentHTML('beforeend', options);
+              }
+            }
+
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
+            console.log(_context3.t0.response.data.message);
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+
+  return function communeByDistrict(_x3) {
+    return _ref3.apply(this, arguments);
+  };
+}(); //Selectionner tous les quartiers d'une commune
+
+
+exports.communeByDistrict = communeByDistrict;
+
+var quartiersByCommune = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(id) {
+    var res, quartier, options;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return (0, _axios.default)({
+              method: 'GET',
+              url: "/api/v1/quartiers/commune/".concat(id)
+            });
+
+          case 3:
+            res = _context4.sent;
+
+            if (res.data.status === 'success') {
+              quartier = res.data.data.rows;
+              options = quartier.map(function (el) {
+                return "<option value=\"".concat(el.id_quartier, "\">").concat(el.libelle_quartier, "</option>");
+              }).join(' ');
+
+              if (_dom.default.districtAr.length !== 0) {
+                _dom.default.districtAr.forEach(function (el, index) {
+                  (0, _alert.clearHtml)(_dom.default.quartierAr[index]);
+                  _dom.default.quartierAr[index].innerHTML = options;
+                });
+              }
+
+              if (_dom.default.quartier) {
+                (0, _alert.clearHtml)(_dom.default.quartier);
+                _dom.default.quartier.innerHTML = options;
+              }
+            }
+
+            _context4.next = 10;
+            break;
+
+          case 7:
+            _context4.prev = 7;
+            _context4.t0 = _context4["catch"](0);
+            console.log(_context4.t0.response.data.message);
+
+          case 10:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 7]]);
+  }));
+
+  return function quartiersByCommune(_x4) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+exports.quartiersByCommune = quartiersByCommune;
 },{"axios":"../../node_modules/axios/index.js","./dom":"utils/dom.js","./alert":"utils/alert.js"}],"newTaxation.js":[function(require,module,exports) {
 "use strict";
 
@@ -10034,8 +10076,6 @@ var _login = require("./login");
 
 var _changePassword = require("./changePassword");
 
-var _getCommune = require("./getCommune");
-
 var _getQuartier = require("./getQuartier");
 
 var _newPerson = require("./newPerson");
@@ -10060,17 +10100,20 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//Login
-if (_dom.default.formLogin) {
-  _dom.default.formLogin.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+/**************************************************************************************
+ * UTILITIES*/
+//1. Get all commune by district
+if (_dom.default.district) {
+  _dom.default.district.addEventListener('change', /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
+      var idDistrict;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              event.preventDefault();
+              idDistrict = _dom.default.district.value;
               _context.next = 3;
-              return (0, _login.login)(_dom.default.login.value, _dom.default.password.value);
+              return (0, _select.communeByDistrict)(idDistrict);
 
             case 3:
             case "end":
@@ -10084,7 +10127,163 @@ if (_dom.default.formLogin) {
       return _ref.apply(this, arguments);
     };
   }());
-} //Logout
+} //2. Get all commune by district when to update
+
+
+if (_dom.default.districtAr) {
+  Array.from(_dom.default.districtAr).forEach(function (el) {
+    el.addEventListener('change', /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(event) {
+        var idDistrict;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                idDistrict = el.value;
+                _context2.next = 3;
+                return (0, _select.communeByDistrict)(idDistrict);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }());
+  });
+} //3. When all quartier by commune
+
+
+if (_dom.default.commune) {
+  _dom.default.commune.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var idCommune;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            idCommune = _dom.default.commune.value;
+            _context3.next = 3;
+            return (0, _select.quartiersByCommune)(idCommune);
+
+          case 3:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  })));
+}
+
+if (_dom.default.commune) {
+  _dom.default.commune.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+    var idCommune;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            idCommune = _dom.default.commune.value;
+            _context4.next = 3;
+            return (0, _getQuartier.getQuartiers)(idCommune);
+
+          case 3:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  })));
+} //4. Get all quartier by commune when to update
+
+
+if (_dom.default.communeAr) {
+  Array.from(_dom.default.communeAr).forEach(function (el) {
+    el.addEventListener('change', /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(event) {
+        var idCommune;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                idCommune = el.value;
+                _context5.next = 3;
+                return (0, _select.quartiersByCommune)(idCommune);
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      return function (_x3) {
+        return _ref5.apply(this, arguments);
+      };
+    }());
+  });
+}
+
+if (_dom.default.communeAr) {
+  Array.from(_dom.default.communeAr).forEach(function (el) {
+    el.addEventListener('click', /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(event) {
+        var idCommune;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                idCommune = el.value;
+                _context6.next = 3;
+                return (0, _select.quartiersByCommune)(idCommune);
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      return function (_x4) {
+        return _ref6.apply(this, arguments);
+      };
+    }());
+  });
+}
+/**************************************************************************************
+ * AUTHENTIFICATION*/
+//1. Login
+
+
+if (_dom.default.formLogin) {
+  _dom.default.formLogin.addEventListener('submit', /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(event) {
+      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              event.preventDefault();
+              _context7.next = 3;
+              return (0, _login.login)(_dom.default.login.value, _dom.default.password.value);
+
+            case 3:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }));
+
+    return function (_x5) {
+      return _ref7.apply(this, arguments);
+    };
+  }());
+} //2. Logout
 
 
 if (_dom.default.logout) {
@@ -10094,52 +10293,25 @@ if (_dom.default.logout) {
 
 if (_dom.default.formChangePassword) {
   _dom.default.formChangePassword.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(event) {
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(event) {
+      return regeneratorRuntime.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
               event.preventDefault();
-              _context2.next = 3;
+              _context8.next = 3;
               return (0, _changePassword.changePassword)(_dom.default.oldPassword.value, _dom.default.newPassword.value, _dom.default.confirmPassword.value);
 
             case 3:
             case "end":
-              return _context2.stop();
+              return _context8.stop();
           }
         }
-      }, _callee2);
+      }, _callee8);
     }));
 
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }());
-} //Get all commune by district
-
-
-if (_dom.default.district) {
-  _dom.default.district.addEventListener('change', /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
-      var idDistrict;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              idDistrict = _dom.default.district.value;
-              _context3.next = 3;
-              return (0, _getCommune.getCommune)(idDistrict);
-
-            case 3:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function (_x3) {
-      return _ref3.apply(this, arguments);
+    return function (_x6) {
+      return _ref8.apply(this, arguments);
     };
   }());
 } //Get articles budgetaires by type objet
@@ -10147,52 +10319,52 @@ if (_dom.default.district) {
 
 if (_dom.default.type) {
   _dom.default.type.addEventListener('change', /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(event) {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(event) {
       var idType;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      return regeneratorRuntime.wrap(function _callee9$(_context9) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context9.prev = _context9.next) {
             case 0:
               idType = _dom.default.type.value;
-              _context4.next = 3;
+              _context9.next = 3;
               return (0, _getArticles.getarticle)(idType);
 
             case 3:
             case "end":
-              return _context4.stop();
+              return _context9.stop();
           }
         }
-      }, _callee4);
+      }, _callee9);
     }));
 
-    return function (_x4) {
-      return _ref4.apply(this, arguments);
+    return function (_x7) {
+      return _ref9.apply(this, arguments);
     };
   }());
 }
 
 if (_dom.default.type) {
   _dom.default.type.addEventListener('change', /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(event) {
+    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(event) {
       var idTaxe;
-      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      return regeneratorRuntime.wrap(function _callee10$(_context10) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context10.prev = _context10.next) {
             case 0:
               idTaxe = _dom.default.type.value;
-              _context5.next = 3;
+              _context10.next = 3;
               return (0, _getArticles.getTaxe)(idTaxe);
 
             case 3:
             case "end":
-              return _context5.stop();
+              return _context10.stop();
           }
         }
-      }, _callee5);
+      }, _callee10);
     }));
 
-    return function (_x5) {
-      return _ref5.apply(this, arguments);
+    return function (_x8) {
+      return _ref10.apply(this, arguments);
     };
   }());
 }
@@ -10200,27 +10372,27 @@ if (_dom.default.type) {
 if (_dom.default.types) {
   Array.from(_dom.default.types).forEach(function (el) {
     el.addEventListener('change', /*#__PURE__*/function () {
-      var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(event) {
+      var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(event) {
         var idType;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        return regeneratorRuntime.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 idType = el.value;
                 console.log(idType);
-                _context6.next = 4;
+                _context11.next = 4;
                 return (0, _getArticles.getarticle)(idType);
 
               case 4:
               case "end":
-                return _context6.stop();
+                return _context11.stop();
             }
           }
-        }, _callee6);
+        }, _callee11);
       }));
 
-      return function (_x6) {
-        return _ref6.apply(this, arguments);
+      return function (_x9) {
+        return _ref11.apply(this, arguments);
       };
     }());
   });
@@ -10229,106 +10401,26 @@ if (_dom.default.types) {
 if (_dom.default.types) {
   Array.from(_dom.default.types).forEach(function (el) {
     el.addEventListener('change', /*#__PURE__*/function () {
-      var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(event) {
+      var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(event) {
         var idTaxe;
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        return regeneratorRuntime.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
                 idTaxe = el.value;
-                _context7.next = 3;
+                _context12.next = 3;
                 return (0, _getArticles.getTaxe)(idTaxe);
 
               case 3:
               case "end":
-                return _context7.stop();
+                return _context12.stop();
             }
           }
-        }, _callee7);
+        }, _callee12);
       }));
 
-      return function (_x7) {
-        return _ref7.apply(this, arguments);
-      };
-    }());
-  });
-} //Get Taxe by type objet
-//Get all commune by district when to update
-
-
-if (_dom.default.districtAr) {
-  Array.from(_dom.default.districtAr).forEach(function (el) {
-    el.addEventListener('change', /*#__PURE__*/function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(event) {
-        var idDistrict;
-        return regeneratorRuntime.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                idDistrict = el.value;
-                _context8.next = 3;
-                return (0, _getCommune.getCommune)(idDistrict);
-
-              case 3:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }));
-
-      return function (_x8) {
-        return _ref8.apply(this, arguments);
-      };
-    }());
-  });
-} //Get all quartier by commune
-
-
-if (_dom.default.commune) {
-  _dom.default.commune.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-    var idCommune;
-    return regeneratorRuntime.wrap(function _callee9$(_context9) {
-      while (1) {
-        switch (_context9.prev = _context9.next) {
-          case 0:
-            idCommune = _dom.default.commune.value;
-            _context9.next = 3;
-            return (0, _getQuartier.getQuartiers)(idCommune);
-
-          case 3:
-          case "end":
-            return _context9.stop();
-        }
-      }
-    }, _callee9);
-  })));
-} //Get all quartier by commune when to update
-
-
-if (_dom.default.communeAr) {
-  Array.from(_dom.default.communeAr).forEach(function (el) {
-    el.addEventListener('change', /*#__PURE__*/function () {
-      var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(event) {
-        var idCommune;
-        return regeneratorRuntime.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                idCommune = el.value;
-                _context10.next = 3;
-                return (0, _getQuartier.getQuartiers)(idCommune);
-
-              case 3:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      }));
-
-      return function (_x9) {
-        return _ref10.apply(this, arguments);
+      return function (_x10) {
+        return _ref12.apply(this, arguments);
       };
     }());
   });
@@ -10337,11 +10429,11 @@ if (_dom.default.communeAr) {
 
 if (_dom.default.formNewPerson) {
   _dom.default.formNewPerson.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(event) {
+    var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(event) {
       var body;
-      return regeneratorRuntime.wrap(function _callee11$(_context11) {
+      return regeneratorRuntime.wrap(function _callee13$(_context13) {
         while (1) {
-          switch (_context11.prev = _context11.next) {
+          switch (_context13.prev = _context13.next) {
             case 0:
               event.preventDefault();
               body = {
@@ -10355,19 +10447,19 @@ if (_dom.default.formNewPerson) {
                 numero: _dom.default.numero.value,
                 observation: _dom.default.observation.value
               };
-              _context11.next = 4;
+              _context13.next = 4;
               return (0, _newPerson.newPerson)(body);
 
             case 4:
             case "end":
-              return _context11.stop();
+              return _context13.stop();
           }
         }
-      }, _callee11);
+      }, _callee13);
     }));
 
-    return function (_x10) {
-      return _ref11.apply(this, arguments);
+    return function (_x11) {
+      return _ref13.apply(this, arguments);
     };
   }());
 } //Update person
@@ -10376,81 +10468,6 @@ if (_dom.default.formNewPerson) {
 if (_dom.default.formUpdatePerson) {
   Array.from(_dom.default.formUpdatePerson).forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(event) {
-        var id, body;
-        return regeneratorRuntime.wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                event.preventDefault();
-                id = el.dataset.id;
-                body = {
-                  nom: document.querySelectorAll('.nom_personne')[index].value,
-                  telephone: document.querySelectorAll('.telephone')[index].value,
-                  ville: document.querySelectorAll('.ville')[index].value,
-                  id_district: document.querySelectorAll('.district')[index].value,
-                  id_commune: document.querySelectorAll('.commune')[index].value,
-                  id_quartier: document.querySelectorAll('.quartier')[index].value,
-                  avenue: document.querySelectorAll('.avenue')[index].value,
-                  numero: document.querySelectorAll('.numero')[index].value,
-                  observation: document.querySelectorAll('.observation')[index].value
-                };
-                _context12.next = 5;
-                return (0, _updatePerson.updatePerson)(body, id);
-
-              case 5:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12);
-      }));
-
-      return function (_x11) {
-        return _ref12.apply(this, arguments);
-      };
-    }());
-  });
-} //Desable person
-
-
-if (_dom.default.btnDelete) {
-  _dom.default.btnDelete.forEach(function (el, index) {
-    el.addEventListener('click', /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(event) {
-        var id, body;
-        return regeneratorRuntime.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                event.preventDefault();
-                id = _dom.default.rowData[index].dataset.row;
-                body = {
-                  active: 'false'
-                };
-                console.log(id);
-                _context13.next = 6;
-                return (0, _desable.desable)(body, id);
-
-              case 6:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      }));
-
-      return function (_x12) {
-        return _ref13.apply(this, arguments);
-      };
-    }());
-  });
-} //Delete car
-
-
-if (_dom.default.btnDeleteCar) {
-  _dom.default.btnDeleteCar.forEach(function (el, index) {
-    el.addEventListener('click', /*#__PURE__*/function () {
       var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(event) {
         var id, body;
         return regeneratorRuntime.wrap(function _callee14$(_context14) {
@@ -10458,12 +10475,20 @@ if (_dom.default.btnDeleteCar) {
             switch (_context14.prev = _context14.next) {
               case 0:
                 event.preventDefault();
-                id = _dom.default.rowData[index].dataset.row;
+                id = el.dataset.id;
                 body = {
-                  active: 'false'
+                  nom: el.querySelector('.nom_personne').value,
+                  telephone: el.querySelector('.telephone').value,
+                  ville: el.querySelector('.ville').value,
+                  id_district: el.querySelector('.district').value,
+                  id_commune: el.querySelector('.commune').value,
+                  id_quartier: el.querySelector('.quartier').value,
+                  avenue: el.querySelector('.avenue').value,
+                  numero: el.querySelector('.numero').value,
+                  observation: el.querySelector('.observation').value
                 };
                 _context14.next = 5;
-                return (0, _desable.desableCar)(body, id);
+                return (0, _updatePerson.updatePerson)(body, id);
 
               case 5:
               case "end":
@@ -10473,8 +10498,75 @@ if (_dom.default.btnDeleteCar) {
         }, _callee14);
       }));
 
-      return function (_x13) {
+      return function (_x12) {
         return _ref14.apply(this, arguments);
+      };
+    }());
+  });
+} //Desable person
+
+
+if (_dom.default.btnDelete) {
+  _dom.default.btnDelete.forEach(function (el, index) {
+    el.addEventListener('click', /*#__PURE__*/function () {
+      var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(event) {
+        var id, body;
+        return regeneratorRuntime.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                event.preventDefault();
+                id = _dom.default.rowData[index].dataset.row;
+                body = {
+                  active: 'false'
+                };
+                console.log(id);
+                _context15.next = 6;
+                return (0, _desable.desable)(body, id);
+
+              case 6:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15);
+      }));
+
+      return function (_x13) {
+        return _ref15.apply(this, arguments);
+      };
+    }());
+  });
+} //Delete car
+
+
+if (_dom.default.btnDeleteCar) {
+  _dom.default.btnDeleteCar.forEach(function (el, index) {
+    el.addEventListener('click', /*#__PURE__*/function () {
+      var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(event) {
+        var id, body;
+        return regeneratorRuntime.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                event.preventDefault();
+                id = _dom.default.rowData[index].dataset.row;
+                body = {
+                  active: 'false'
+                };
+                _context16.next = 5;
+                return (0, _desable.desableCar)(body, id);
+
+              case 5:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      return function (_x14) {
+        return _ref16.apply(this, arguments);
       };
     }());
   });
@@ -10483,11 +10575,11 @@ if (_dom.default.btnDeleteCar) {
 
 if (_dom.default.fomrNewVehicule) {
   _dom.default.fomrNewVehicule.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(event) {
+    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(event) {
       var body;
-      return regeneratorRuntime.wrap(function _callee15$(_context15) {
+      return regeneratorRuntime.wrap(function _callee17$(_context17) {
         while (1) {
-          switch (_context15.prev = _context15.next) {
+          switch (_context17.prev = _context17.next) {
             case 0:
               event.preventDefault();
               body = {
@@ -10504,19 +10596,19 @@ if (_dom.default.fomrNewVehicule) {
                 id_taxe: _dom.default.taxe.value
               };
               console.log(body);
-              _context15.next = 5;
+              _context17.next = 5;
               return (0, _newVehicule.newVehicule)(body);
 
             case 5:
             case "end":
-              return _context15.stop();
+              return _context17.stop();
           }
         }
-      }, _callee15);
+      }, _callee17);
     }));
 
-    return function (_x14) {
-      return _ref15.apply(this, arguments);
+    return function (_x15) {
+      return _ref17.apply(this, arguments);
     };
   }());
 } //Update vehicule
@@ -10525,11 +10617,11 @@ if (_dom.default.fomrNewVehicule) {
 if (_dom.default.formUpdateV) {
   _dom.default.formUpdateV.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(event) {
+      var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee16$(_context16) {
+        return regeneratorRuntime.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context16.prev = _context16.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
                 event.preventDefault();
                 console.log(document.querySelectorAll('.taxes')[index].value);
@@ -10547,19 +10639,19 @@ if (_dom.default.formUpdateV) {
                   id_taxe: document.querySelectorAll('.taxes')[index].value
                 };
                 id = el.dataset.id;
-                _context16.next = 6;
+                _context18.next = 6;
                 return (0, _newVehicule.updateVehicule)(body, id, index);
 
               case 6:
               case "end":
-                return _context16.stop();
+                return _context18.stop();
             }
           }
-        }, _callee16);
+        }, _callee18);
       }));
 
-      return function (_x15) {
-        return _ref16.apply(this, arguments);
+      return function (_x16) {
+        return _ref18.apply(this, arguments);
       };
     }());
   });
@@ -10571,84 +10663,41 @@ if (_dom.default.formUpdateV) {
 
 if (_dom.default.service) {
   _dom.default.service.addEventListener('change', /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(event) {
+    var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19(event) {
       var idService;
-      return regeneratorRuntime.wrap(function _callee17$(_context17) {
+      return regeneratorRuntime.wrap(function _callee19$(_context19) {
         while (1) {
-          switch (_context17.prev = _context17.next) {
+          switch (_context19.prev = _context19.next) {
             case 0:
               idService = _dom.default.service.value;
-              _context17.next = 3;
+              _context19.next = 3;
               return (0, _select.getTaxe2)(idService);
 
             case 3:
             case "end":
-              return _context17.stop();
+              return _context19.stop();
           }
         }
-      }, _callee17);
+      }, _callee19);
     }));
 
-    return function (_x16) {
-      return _ref17.apply(this, arguments);
+    return function (_x17) {
+      return _ref19.apply(this, arguments);
     };
   }());
 }
 
 if (_dom.default.services) {
   _dom.default.services.forEach(function (el) {
-    el.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18() {
-      var idService;
-      return regeneratorRuntime.wrap(function _callee18$(_context18) {
-        while (1) {
-          switch (_context18.prev = _context18.next) {
-            case 0:
-              idService = el.value;
-              _context18.next = 3;
-              return (0, _select.getTaxe2)(idService);
-
-            case 3:
-            case "end":
-              return _context18.stop();
-          }
-        }
-      }, _callee18);
-    })));
-  });
-} //2. get vehicule by contribuable
-
-
-if (_dom.default.contribuable) {
-  _dom.default.contribuable.addEventListener('input', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19() {
-    var idContribuable;
-    return regeneratorRuntime.wrap(function _callee19$(_context19) {
-      while (1) {
-        switch (_context19.prev = _context19.next) {
-          case 0:
-            idContribuable = _dom.default.contribuable.value;
-            _context19.next = 3;
-            return (0, _select.getVehicules)(idContribuable);
-
-          case 3:
-          case "end":
-            return _context19.stop();
-        }
-      }
-    }, _callee19);
-  })));
-}
-
-if (_dom.default.contribuables) {
-  _dom.default.contribuables.forEach(function (el) {
     el.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
-      var idContribuable;
+      var idService;
       return regeneratorRuntime.wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
-              idContribuable = el.value;
+              idService = el.value;
               _context20.next = 3;
-              return (0, _select.getVehicules)(idContribuable);
+              return (0, _select.getTaxe2)(idService);
 
             case 3:
             case "end":
@@ -10658,16 +10707,59 @@ if (_dom.default.contribuables) {
       }, _callee20);
     })));
   });
+} //2. get vehicule by contribuable
+
+
+if (_dom.default.contribuable) {
+  _dom.default.contribuable.addEventListener('input', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+    var idContribuable;
+    return regeneratorRuntime.wrap(function _callee21$(_context21) {
+      while (1) {
+        switch (_context21.prev = _context21.next) {
+          case 0:
+            idContribuable = _dom.default.contribuable.value;
+            _context21.next = 3;
+            return (0, _select.getVehicules)(idContribuable);
+
+          case 3:
+          case "end":
+            return _context21.stop();
+        }
+      }
+    }, _callee21);
+  })));
+}
+
+if (_dom.default.contribuables) {
+  _dom.default.contribuables.forEach(function (el) {
+    el.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
+      var idContribuable;
+      return regeneratorRuntime.wrap(function _callee22$(_context22) {
+        while (1) {
+          switch (_context22.prev = _context22.next) {
+            case 0:
+              idContribuable = el.value;
+              _context22.next = 3;
+              return (0, _select.getVehicules)(idContribuable);
+
+            case 3:
+            case "end":
+              return _context22.stop();
+          }
+        }
+      }, _callee22);
+    })));
+  });
 } //3. Create taxation
 
 
 if (_dom.default.formNewTaxation) {
   _dom.default.formNewTaxation.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref21 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21(event) {
+    var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23(event) {
       var body;
-      return regeneratorRuntime.wrap(function _callee21$(_context21) {
+      return regeneratorRuntime.wrap(function _callee23$(_context23) {
         while (1) {
-          switch (_context21.prev = _context21.next) {
+          switch (_context23.prev = _context23.next) {
             case 0:
               event.preventDefault();
               body = {
@@ -10678,19 +10770,19 @@ if (_dom.default.formNewTaxation) {
                 id_vehicule: _dom.default.vehicule.value,
                 id_contribuable: _dom.default.contribuable.value
               };
-              _context21.next = 4;
+              _context23.next = 4;
               return (0, _newTaxation.newTaxation)(body);
 
             case 4:
             case "end":
-              return _context21.stop();
+              return _context23.stop();
           }
         }
-      }, _callee21);
+      }, _callee23);
     }));
 
-    return function (_x17) {
-      return _ref21.apply(this, arguments);
+    return function (_x18) {
+      return _ref23.apply(this, arguments);
     };
   }());
 } //4. Update taxation
@@ -10699,11 +10791,11 @@ if (_dom.default.formNewTaxation) {
 if (_dom.default.formUpdateTaxation) {
   _dom.default.formUpdateTaxation.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref22 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22(event) {
+      var _ref24 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee22$(_context22) {
+        return regeneratorRuntime.wrap(function _callee24$(_context24) {
           while (1) {
-            switch (_context22.prev = _context22.next) {
+            switch (_context24.prev = _context24.next) {
               case 0:
                 event.preventDefault();
                 body = {
@@ -10714,19 +10806,19 @@ if (_dom.default.formUpdateTaxation) {
                   id_contribuable: _dom.default.contribuables[index].value
                 };
                 id = el.dataset.id;
-                _context22.next = 5;
+                _context24.next = 5;
                 return (0, _newTaxation.updateTaxation)(body, id, index);
 
               case 5:
               case "end":
-                return _context22.stop();
+                return _context24.stop();
             }
           }
-        }, _callee22);
+        }, _callee24);
       }));
 
-      return function (_x18) {
-        return _ref22.apply(this, arguments);
+      return function (_x19) {
+        return _ref24.apply(this, arguments);
       };
     }());
   });
@@ -10736,30 +10828,30 @@ if (_dom.default.formUpdateTaxation) {
 if (_dom.default.btnDeleteTaxation) {
   _dom.default.btnDeleteTaxation.forEach(function (el, index) {
     el.addEventListener('click', /*#__PURE__*/function () {
-      var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23(event) {
+      var _ref25 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(event) {
         var id, body;
-        return regeneratorRuntime.wrap(function _callee23$(_context23) {
+        return regeneratorRuntime.wrap(function _callee25$(_context25) {
           while (1) {
-            switch (_context23.prev = _context23.next) {
+            switch (_context25.prev = _context25.next) {
               case 0:
                 event.preventDefault();
                 id = _dom.default.rowData[index].dataset.row;
                 body = {
                   active: 'false'
                 };
-                _context23.next = 5;
+                _context25.next = 5;
                 return (0, _newTaxation.desableTaxation)(body, id);
 
               case 5:
               case "end":
-                return _context23.stop();
+                return _context25.stop();
             }
           }
-        }, _callee23);
+        }, _callee25);
       }));
 
-      return function (_x19) {
-        return _ref23.apply(this, arguments);
+      return function (_x20) {
+        return _ref25.apply(this, arguments);
       };
     }());
   });
@@ -10769,11 +10861,11 @@ if (_dom.default.btnDeleteTaxation) {
 if (_dom.default.formValidation) {
   _dom.default.formValidation.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref24 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(event) {
+      var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee24$(_context24) {
+        return regeneratorRuntime.wrap(function _callee26$(_context26) {
           while (1) {
-            switch (_context24.prev = _context24.next) {
+            switch (_context26.prev = _context26.next) {
               case 0:
                 event.preventDefault();
                 body = {
@@ -10782,19 +10874,19 @@ if (_dom.default.formValidation) {
                 };
                 id = el.dataset.id;
                 console.log(body);
-                _context24.next = 6;
+                _context26.next = 6;
                 return (0, _newTaxation.validateTaxation)(body, id, index);
 
               case 6:
               case "end":
-                return _context24.stop();
+                return _context26.stop();
             }
           }
-        }, _callee24);
+        }, _callee26);
       }));
 
-      return function (_x20) {
-        return _ref24.apply(this, arguments);
+      return function (_x21) {
+        return _ref26.apply(this, arguments);
       };
     }());
   });
@@ -10806,11 +10898,11 @@ if (_dom.default.formValidation) {
 
 if (_dom.default.formNewAttestation) {
   _dom.default.formNewAttestation.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref25 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(event) {
+    var _ref27 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee27(event) {
       var body;
-      return regeneratorRuntime.wrap(function _callee25$(_context25) {
+      return regeneratorRuntime.wrap(function _callee27$(_context27) {
         while (1) {
-          switch (_context25.prev = _context25.next) {
+          switch (_context27.prev = _context27.next) {
             case 0:
               event.preventDefault();
               body = {
@@ -10822,7 +10914,7 @@ if (_dom.default.formNewAttestation) {
                 numero_bordereau: _dom.default.numeroBordereau.value,
                 date_attestation: _dom.default.dateAttestation.value
               };
-              _context25.next = 4;
+              _context27.next = 4;
               return (0, _attestation.newAttestation)(body);
 
             case 4:
@@ -10830,18 +10922,18 @@ if (_dom.default.formNewAttestation) {
 
             case 5:
             case "end":
-              return _context25.stop();
+              return _context27.stop();
           }
         }
-      }, _callee25);
+      }, _callee27);
     }));
 
-    return function (_x21) {
-      return _ref25.apply(this, arguments);
+    return function (_x22) {
+      return _ref27.apply(this, arguments);
     };
   }());
 }
-},{"core-js/modules/es6.array.copy-within":"../../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-primitive":"../../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.function.has-instance":"../../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es7.object.values":"../../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.int8-array":"../../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./utils/dom":"utils/dom.js","./login":"login.js","./changePassword":"changePassword.js","./getCommune":"getCommune.js","./getQuartier":"getQuartier.js","./newPerson":"newPerson.js","./updatePerson":"updatePerson.js","./desable":"desable.js","./newVehicule":"newVehicule.js","./getArticles":"getArticles.js","./utils/select":"utils/select.js","./newTaxation":"newTaxation.js","./attestation":"attestation.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"core-js/modules/es6.array.copy-within":"../../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-primitive":"../../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.function.has-instance":"../../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es7.object.values":"../../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.int8-array":"../../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./utils/dom":"utils/dom.js","./login":"login.js","./changePassword":"changePassword.js","./getQuartier":"getQuartier.js","./newPerson":"newPerson.js","./updatePerson":"updatePerson.js","./desable":"desable.js","./newVehicule":"newVehicule.js","./getArticles":"getArticles.js","./utils/select":"utils/select.js","./newTaxation":"newTaxation.js","./attestation":"attestation.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

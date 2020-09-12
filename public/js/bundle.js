@@ -8694,7 +8694,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var getCommune = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(id) {
-    var res, communes, options;
+    var res, communes, defaultValue, options;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -8711,6 +8711,7 @@ var getCommune = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               communes = res.data.data.rows;
+              defaultValue = "<option >...</option>";
               options = communes.map(function (el, index) {
                 return "<option value=\"".concat(el.id_commune, "\">").concat(el.libelle_commune, "</option>");
               }).join(' ');
@@ -8724,7 +8725,10 @@ var getCommune = /*#__PURE__*/function () {
 
               if (_dom.default.commune) {
                 (0, _alert.clearHtml)(_dom.default.quartier);
-                _dom.default.commune.innerHTML = options;
+
+                _dom.default.commune.insertAdjacentHTML('afterbegin', defaultValue);
+
+                _dom.default.commune.insertAdjacentHTML('beforeend', options);
               }
             }
 

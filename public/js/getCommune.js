@@ -12,6 +12,8 @@ export const getCommune = async (id) => {
         if (res.data.status === 'success') {
             const communes = res.data.data.rows;
 
+            const defaultValue = `<option >...</option>`;
+
             const options = communes.map((el, index) => {
                 return `<option value="${el.id_commune}">${el.libelle_commune}</option>`;
             })
@@ -26,7 +28,8 @@ export const getCommune = async (id) => {
 
             if (dom.commune) {
                 clearHtml(dom.quartier);
-                dom.commune.innerHTML = options;
+                dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
+                dom.commune.insertAdjacentHTML('beforeend', options);
             }
         }
     } catch (err) {

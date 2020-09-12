@@ -153,13 +153,7 @@ if (dom.formUpdatePerson) {
                 observation: document.querySelectorAll('.observation')[index].value,
             };
 
-            await updatePerson(body, id,index);
-
-            //Reset the form
-            dom.formUpdatePerson.forEach(el => {
-                console.log(el);
-                el.reset();
-            });
+            await updatePerson(body, id);
         });
     });
 }

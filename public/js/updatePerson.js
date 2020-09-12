@@ -2,7 +2,7 @@ import axios from 'axios';
 import dom from './utils/dom';
 import {clearHtml, alert} from './utils/alert';
 
-export const updatePerson = async (body, id, index) => {
+export const updatePerson = async (body, id) => {
     try {
         const res = await axios({
             method: 'PATCH',
@@ -12,14 +12,14 @@ export const updatePerson = async (body, id, index) => {
         });
 
         if (res.data.status === 'success') {
-            const container = document.querySelectorAll('.container-error')[index];
+            const container = document.querySelector(`.alert-update-person-${id}`);
             clearHtml(container);
-            alert('alert-success', 'Personne mise à jour',container);
+            alert('alert-success', 'Personne mise à jour', container);
         }
     } catch (err) {
-        const container = document.querySelectorAll('.container-error')[index];
+        const container = document.querySelector(`.alert-update-person-${id}`);
         clearHtml(container);
-        alert('alert-danger', err.response.data.message,container);
+        alert('alert-danger', err.response.data.message, container);
     }
 
 };

@@ -8925,7 +8925,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var updatePerson = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(body, id, index) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(body, id) {
     var res, container, _container;
 
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -8944,7 +8944,7 @@ var updatePerson = /*#__PURE__*/function () {
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              container = document.querySelectorAll('.container-error')[index];
+              container = document.querySelector(".alert-update-person-".concat(id));
               (0, _alert.clearHtml)(container);
               (0, _alert.alert)('alert-success', 'Personne mise à jour', container);
             }
@@ -8955,7 +8955,7 @@ var updatePerson = /*#__PURE__*/function () {
           case 7:
             _context.prev = 7;
             _context.t0 = _context["catch"](0);
-            _container = document.querySelectorAll('.container-error')[index];
+            _container = document.querySelector(".alert-update-person-".concat(id));
             (0, _alert.clearHtml)(_container);
             (0, _alert.alert)('alert-danger', _context.t0.response.data.message, _container);
 
@@ -8967,7 +8967,7 @@ var updatePerson = /*#__PURE__*/function () {
     }, _callee, null, [[0, 7]]);
   }));
 
-  return function updatePerson(_x, _x2, _x3) {
+  return function updatePerson(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -10400,16 +10400,9 @@ if (_dom.default.formUpdatePerson) {
                   observation: document.querySelectorAll('.observation')[index].value
                 };
                 _context12.next = 5;
-                return (0, _updatePerson.updatePerson)(body, id, index);
+                return (0, _updatePerson.updatePerson)(body, id);
 
               case 5:
-                //Reset the form
-                _dom.default.formUpdatePerson.forEach(function (el) {
-                  console.log(el);
-                  el.reset();
-                });
-
-              case 6:
               case "end":
                 return _context12.stop();
             }

@@ -34,7 +34,7 @@ block content
                                                                 button.close(type='button' data-dismiss='modal' aria-label='Close')
                                                                     span(aria-hidden='true') &times;
                                                             .modal-body
-                                                                .container-error
+                                                                div(class=`alert-update-person-${contribuable.id_contribuable}`)
                                                                 .card-body
                                                                     form.needs-validation(novalidate='' class='form-update-person' data-id=`${contribuable.id_contribuable}`)
                                                                         .row

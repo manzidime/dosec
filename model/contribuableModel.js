@@ -25,7 +25,7 @@ module.exports = class Contribuable {
                     date_creation=current_timestamp()
             `, [this.data.nom, this.data.telephone, this.data.ville, this.data.id_district, this.data.id_commune,
                 this.data.id_quartier,
-                this.data.avenue, this.data.numero, this.data.id_site,this.data.id_agent,this.data.observation]);
+                this.data.avenue, this.data.numero, this.data.id_site, this.data.id_agent, this.data.observation]);
             return rows;
         } catch (err) {
             throw err;
@@ -40,17 +40,20 @@ module.exports = class Contribuable {
             if (user.id_fonction === 1) {
                 query = `
                     SELECT *
-                    FROM v_all_contribuable WHERE active='true'
+                    FROM v_all_contribuable
+                    WHERE active = 'true'
                 `;
             }
-            else{
+            else {
                 query = `
                     SELECT *
-                    FROM v_all_contribuable WHERE id_site=? AND active='true'
+                    FROM v_all_contribuable
+                    WHERE id_site = ?
+                      AND active = 'true'
                 `;
             }
 
-            const [rows] = await DB.query(query,user.id_site);
+            const [rows] = await DB.query(query, user.id_site);
 
             return rows;
         } catch (err) {
@@ -81,6 +84,7 @@ module.exports = class Contribuable {
 
     //Update
     async updateOne(id) {
+        const commune = this.data.id_commune * 1
         try {
             const [rows] = await DB.query(`
                 UPDATE contribuable
@@ -93,7 +97,7 @@ module.exports = class Contribuable {
                     avenue=?,
                     numero=?
                 WHERE id_contribuable = ?
-            `, [this.data.nom, this.data.telephone, this.data.ville, this.data.id_district, this.data.id_commune,
+            `, [this.data.nom, this.data.telephone, this.data.ville, this.data.id_district, commune,
                 this.data.id_quartier, this.data.avenue, this.data.numero, id]);
 
             if (rows.affectedRows !== 1) {

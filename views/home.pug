@@ -1,0 +1,274 @@
+doctype html
+// Mirrored from html.phoenixcoded.net/nextro-able/bootstrap/default/form2_select2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Aug 2020 10:45:08 GMT
+head
+    title title #{title}
+    // HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 11
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    // Meta
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='description' content='')
+    meta(name='keywords' content='')
+    meta(name='author' content='Phoenixcoded')
+    // Favicon icon
+    link(rel='icon' href='/images/favicon.svg' type='image/x-icon')
+    // select2 css
+    link(rel='stylesheet' href='/css/plugins/select2.min.css')
+    link(rel='stylesheet' href='/css/plugins/dataTables.bootstrap4.min.css')
+    // font css
+    link(rel='stylesheet' href='/fonts/font-awsome-pro/css/pro.min.css')
+    link(rel='stylesheet' href='/fonts/feather.css')
+    link(rel='stylesheet' href='/fonts/fontawesome.css')
+    // vendor css
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/css/customizer.css')
+
+    style.
+        .table td, .table th {
+            padding: 0.4rem 0.75rem;
+        }
+        .form-control{
+            border-radius: 0;
+        }
+        tfoot .form-control {
+            height: calc(1.2em + 1.15rem + 3px);
+            padding: 0.575rem 1rem;
+            /*font-size: 0.875rem;*/
+            /*font-weight: 400;*/
+            /*line-height: 1.5;*/
+            /*color: #495057;*/
+            /*background-color: #fff;*/
+            /*background-clip: padding-box;*/
+            /*border: 1.5px solid #ced4da;*/
+            border-radius: 0;
+            /*/transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
+        }
+
+        .form-control-sm {
+            height: calc(2.3em + 0.5rem + 3px);
+        }
+// [ Pre-loader ] start
+.loader-bg
+    .loader-track
+        .loader-fill
+// [ Pre-loader ] End
+// [ Mobile header ] start
+.pc-mob-header.pc-header
+    .pcm-logo
+        img.logo.logo-lg(src='/images/logo.svg' alt='')
+    .pcm-toolbar
+        a#mobile-collapse.pc-head-link(href='#!')
+            .hamburger.hamburger--arrowturn
+                .hamburger-box
+                    .hamburger-inner
+            // <i data-feather="menu"></i>
+        a#headerdrp-collapse.pc-head-link(href='#!')
+            i(data-feather='align-right')
+        a#header-collapse.pc-head-link(href='#!')
+            i(data-feather='more-vertical')
+// [ Mobile header ] End
+// [ navigation menu ] start
+include include/_sidebar
+// [ navigation menu ] end
+// [ Header ] start
+include include/_header
+// Modal
+// [ Header ] end
+// [ Main Content ] start
+section.pc-container
+    .pcoded-content
+        block content
+            include include/_dashbord
+        // [ breadcrumb ] start
+        // [ breadcrumb ] end
+        // [ Main Content ] start
+            // [ Select2 ] end
+        // [ Main Content ] end
+// [ Main Content ] end
+// Warning Section start
+// Older IE warning message
+//if lt IE 11
+  .ie-warning
+    h1 Warning!!
+    p
+      | You are using an outdated version of Internet Explorer, please upgrade
+      br
+      | to any of the following web browsers to access this website.
+    .iew-container
+      ul.iew-download
+        li
+          a(href='http://www.google.com/chrome/')
+            img(src='/images/browser/chrome.png' alt='Chrome')
+            div Chrome
+        li
+          a(href='https://www.mozilla.org/en-US/firefox/new/')
+            img(src='/images/browser/firefox.png' alt='Firefox')
+            div Firefox
+        li
+          a(href='http://www.opera.com')
+            img(src='/images/browser/opera.png' alt='Opera')
+            div Opera
+        li
+          a(href='https://www.apple.com/safari/')
+            img(src='/images/browser/safari.png' alt='Safari')
+            div Safari
+        li
+          a(href='http://windows.microsoft.com/en-us/internet-explorer/download-ie')
+            img(src='/images/browser/ie.png' alt='')
+            div IE (11 &amp; above)
+    p Sorry for the inconvenience!
+// Warning Section Ends
+// Required Js
+script(src='/js/vendor-all.min.js')
+script(src='/js/plugins/bootstrap.min.js')
+script(src='/js/plugins/feather.min.js')
+script(src='/js/pcoded.min.js')
+script(src='../../../../cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js')
+script(src='/js/plugins/clipboard.min.js')
+script(src='/js/uikit.min.js')
+// select2 Js
+script(src='/js/plugins/select2.full.min.js')
+// form-select-custom Js
+script(src='/js/pages/form-select-custom.js')
+script(src='/js/plugins/jquery.dataTables.min.js')
+script(src='/js/plugins/dataTables.bootstrap4.min.js')
+script(src='/js/pages/data-api-custom.js')
+script(src='/js/bundle.js')
+.pct-customizer
+    .pct-c-btn(href='#!')
+        button#pct-toggler.btn.btn-light-danger
+            i(data-feather='settings')
+        button.btn.btn-light-primary(data-toggle='tooltip' title='Document' data-placement='left')
+            i(data-feather='book')
+        button.btn.btn-light-success(data-toggle='tooltip' title='Buy Now' data-placement='left')
+            i(data-feather='shopping-bag')
+        button.btn.btn-light-info(data-toggle='tooltip' title='Support' data-placement='left')
+            i(data-feather='headphones')
+    .pct-c-content
+        .pct-header.bg-primary
+            h5.mb-0.text-white.f-w-500 Nextro Customizer
+        .pct-body
+            h6.mt-2
+                i.mr-2(data-feather='credit-card')
+                | Header settings
+            hr.my-2
+            .theme-color.header-color
+                a(href='#!' data-value='bg-default')
+                    span
+                    span
+                a(href='#!' data-value='bg-primary')
+                    span
+                    span
+                a(href='#!' data-value='bg-danger')
+                    span
+                    span
+                a(href='#!' data-value='bg-warning')
+                    span
+                    span
+                a(href='#!' data-value='bg-info')
+                    span
+                    span
+                a(href='#!' data-value='bg-success')
+                    span
+                    span
+                a(href='#!' data-value='bg-dark')
+                    span
+                    span
+            h6.mt-4
+                i.mr-2(data-feather='layout')
+                | Sidebar settings
+            hr.my-2
+            .custom-control.custom-switch
+                input#cust-sidebar.custom-control-input(type='checkbox')
+                label.custom-control-label.f-w-600.pl-1(for='cust-sidebar') Light Sidebar
+            .custom-control.custom-switch.mt-2
+                input#cust-sidebrand.custom-control-input(type='checkbox')
+                label.custom-control-label.f-w-600.pl-1(for='cust-sidebrand') Color Brand
+            .theme-color.brand-color.d-none
+                a.active(href='#!' data-value='bg-primary')
+                    span
+                    span
+                a(href='#!' data-value='bg-danger')
+                    span
+                    span
+                a(href='#!' data-value='bg-warning')
+                    span
+                    span
+                a(href='#!' data-value='bg-info')
+                    span
+                    span
+                a(href='#!' data-value='bg-success')
+                    span
+                    span
+                a(href='#!' data-value='bg-dark')
+                    span
+                    span
+script.
+    // header option
+    $('#pct-toggler').on('click', function() {
+        $('.pct-customizer').toggleClass('active');
+    });
+    // header option
+    $('#cust-sidebrand').change(function() {
+        if ($(this).is(":checked")) {
+            $('.theme-color.brand-color').removeClass('d-none');
+            $('.m-header').addClass('bg-dark');
+        } else {
+            $('.m-header').removeClassPrefix('bg-');
+            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo-dark.svg');
+            $('.theme-color.brand-color').addClass('d-none');
+        }
+    });
+    // Header Color
+    $('.brand-color > a').on('click', function() {
+        var temp = $(this).attr('data-value');
+        // $('.header-color > a').removeClass('active');
+        // $('.pcoded-header').removeClassPrefix('brand-');
+        // $(this).addClass('active');
+        if (temp == "bg-default") {
+            $('.m-header').removeClassPrefix('bg-');
+        } else {
+            $('.m-header').removeClassPrefix('bg-');
+            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.svg');
+            $('.m-header').addClass(temp);
+        }
+    });
+    // Header Color
+    $('.header-color > a').on('click', function() {
+        var temp = $(this).attr('data-value');
+        // $('.header-color > a').removeClass('active');
+        // $('.pcoded-header').removeClassPrefix('brand-');
+        // $(this).addClass('active');
+        if (temp == "bg-default") {
+            $('.pc-header').removeClassPrefix('bg-');
+        } else {
+            $('.pc-header').removeClassPrefix('bg-');
+            $('.pc-header').addClass(temp);
+        }
+    });
+    // sidebar option
+    $('#cust-sidebar').change(function() {
+        if ($(this).is(":checked")) {
+            $('.pc-sidebar').addClass('light-sidebar');
+            $('.pc-horizontal .topbar').addClass('light-sidebar');
+            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo-dark.svg');
+        } else {
+            $('.pc-sidebar').removeClass('light-sidebar');
+            $('.pc-horizontal .topbar').removeClass('light-sidebar');
+            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.svg');
+        }
+    });
+    $.fn.removeClassPrefix = function(prefix) {
+        this.each(function(i, it) {
+            var classes = it.className.split(" ").map(function(item) {
+                return item.indexOf(prefix) === 0 ? "" : item;
+            });
+            it.className = classes.join(" ");
+        });
+        return this;
+    };
+// Mirrored from html.phoenixcoded.net/nextro-able/bootstrap/default/form2_select2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Aug 2020 10:45:21 GMT

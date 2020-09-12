@@ -1,0 +1,100 @@
+extends home
+block content
+    .row
+        // [ sample-page ] start
+        .col-lg-4
+            .card.user-card.user-card-1
+                .card-body.pb-0
+                    .media.user-about-block.align-items-center.mt-0.mb-3
+                        .position-relative.d-inline-block
+                            img.img-radius.img-fluid.wid-80(src='/images/user.png' alt='User image')
+                        .media-body.ml-3
+                            if user
+                                h6.mb-1=user.nom
+                                p.mb-0.text-muted=user.libelle_fonction
+                #user-set-tab.nav.flex-column.nav-pills.list-group.list-group-flush.list-pills(role='tablist' aria-orientation='vertical')
+                    a#user-set-profile-tab.nav-link.list-group-item.list-group-item-action.active(data-toggle='pill' href='#user-set-profile' role='tab' aria-controls='user-set-profile' aria-selected='true')
+                        span.f-w-500
+                            i.feather.icon-user.m-r-10.h5
+                            | Profil
+                        span.float-right
+                            i.feather.icon-chevron-right
+                    a#user-set-passwort-tab.nav-link.list-group-item.list-group-item-action(data-toggle='pill' href='#user-set-passwort' role='tab' aria-controls='user-set-passwort' aria-selected='false')
+                        span.f-w-500
+                            i.feather.icon-shield.m-r-10.h5
+                            | Changer le mot de passe
+                        span.float-right
+                            i.feather.icon-chevron-right
+        .col-lg-8
+            #user-set-tabContent.tab-content
+                #user-set-profile.tab-pane.fade.active.show(role='tabpanel' aria-labelledby='user-set-profile-tab')
+                    .card
+                        .card-header
+                            h5
+                                svg.feather.feather-user.icon-svg-primary.wid-20(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+                                    path(d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2')
+                                    circle(cx='12' cy='7' r='4')
+                                span.p-l-5 Apropos de moi
+                        .card-body
+                            h5.mb-3 Details personnels
+                            table.table.table-borderless
+                                tbody
+                                    if user
+                                        tr
+                                            td Nom
+                                            td :
+                                            td=user.nom
+                                        tr
+                                            td Prénom
+                                            td :
+                                            td=user.prenom
+                                        tr
+                                            td Matricule
+                                            td :
+                                            td=user.matricule
+                                        tr
+                                            td Site
+                                            td :
+                                            td=user.lieu
+                                        tr
+                                            td Login
+                                            td :
+                                            td=user.login
+                                        tr
+                                            td Fonction
+                                            td :
+                                            td=user.libelle_fonction
+                #user-set-passwort.tab-pane.fade(role='tabpanel' aria-labelledby='user-set-passwort-tab')
+                    .card
+                        .card-header
+                            h5
+                                svg.feather.feather-lock.icon-svg-primary.wid-20(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewbox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+                                    rect(x='3' y='11' width='18' height='11' rx='2' ry='2')
+                                    path(d='M7 11V7a5 5 0 0 1 10 0v4')
+                                span.p-l-5 Changer Mots de passe
+                        .card-body
+                            form#form-change-password
+                                #container-error
+                                .row
+                                    .col-sm-6
+                                        .form-group
+                                            label
+                                                | Ancien mots de passe
+                                                span.text-danger *
+                                            input.form-control.rounded-0(type='password' placeholder='Ancien mot de passe')#old-password
+                                    .col-sm-6
+                                        .form-group
+                                            label
+                                                | Mot de passe
+                                                span.text-danger *
+                                            input.form-control.rounded-0(type='password' placeholder='Nouveau mot de passe')#new-password
+                                    .col
+                                        .form-group
+                                            label
+                                                | Confirmer mot de passe
+                                                span.text-danger *
+                                            input.form-control.rounded-0(type='password' placeholder='confirmer le mot de passe')#confirm-password
+                                    .col-md-12.text-center
+                                        button.btn.btn-success.rounded-0.btn-sm(type='Submit') Valider
+
+        // [ sample-page ] end

@@ -1,0 +1,131 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Vehicules
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Numero plaque
+                                    th Type
+                                    //th Numero chassis
+                                    th Modele
+                                    th Marque
+                                    th Couleur
+                                    th Mise en circulation
+                                    th Action
+                            tbody.content-table
+                                if vehicules
+                                    each vehicule,index in vehicules
+                                        tr(class='row-data' data-row=`${vehicule.id_vehicule}`)
+                                            td=vehicule.nom
+                                            td=vehicule.numero_plaque
+                                            td=vehicule.article_budgetaire
+                                            //td=vehicule.numero_chassis
+                                            td=vehicule.model
+                                            td=vehicule.marque
+                                            td=vehicule.couleur
+                                            td=`${vehicule.mise_en_circulation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
+                                            td
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Mises à jour
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    form.needs-validation(novalidate='' data-id=`${vehicule.id_vehicule}`).form-update-vehicule
+                                                                        .container-error
+                                                                        .row
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='contribuable') Personne
+                                                                                    select.form-control.form-control-sm.contribuable
+                                                                                        if contribuables
+                                                                                            option(value=`${vehicule.id_contribuable}` disabled selected)=vehicule.nom
+                                                                                            each contribuable in contribuables
+                                                                                                option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                                                            .col-sm-3
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='type') Type
+                                                                                    select.types.form-control.form-control-sm.rounded-0
+                                                                                        if types
+                                                                                            each type in types
+                                                                                                option(value=`${type.id_type_objet}`)=type.designation
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='articles') Article Budgétaire
+                                                                                    select.form-control.form-control-sm.article.budge
+                                                                                        if articles
+                                                                                            option(value=`${vehicule.id_article_budgetaire}` disabled selected)=vehicule.article_budgetaire
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='type') Taxe
+                                                                                    select.taxes.form-control.form-control-sm.rounded-0
+                                                                                        if taxes
+                                                                                            option(value=`${vehicule.id_taxe}` disabled selected)=vehicule.taxe
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='chassis') Num&eacute;ro chassis
+                                                                                    input.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.numero_chassis}` class='chassis' required='')
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='plaque') Num&eacute;ro plaque
+                                                                                    input.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.numero_plaque}` class='plaque' required='')
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    .form-group.fill
+                                                                                        label.floating-label(for='model') Model
+                                                                                        input.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.model}` class='model')
+                                                                            .col-sm-3
+                                                                                .form-group
+                                                                                    label.floating-label(for='marque') marque
+                                                                                    input.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.marque}` class='marque')
+                                                                            .col-sm-3
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='couleur') Couleur
+                                                                                    input.couleur.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.couleur}`)
+                                                                            .col-sm-3
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='charge') Charge utile
+                                                                                    input.form-control.rounded-0.form-control-sm(type='text' class='charge' value=`${vehicule.charge_utile}`)
+                                                                            .col-sm-3
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='circulation') Date mise en circulation
+                                                                                    input.circulation.form-control.rounded-0.form-control-sm(type='text' value=`${vehicule.mise_en_circulation.toLocaleString('de-DE',{year: "numeric", month: "numeric", day: "numeric"})}`)
+                                                                            .col-sm-3
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='category') Catégorie
+                                                                                    select.category.form-control.rounded-0.form-control-sm
+                                                                                        if categories
+                                                                                            option(value=`${vehicule.id_categorie}` disabled selected)=vehicule.categorie
+                                                                                            each categorie in categories
+                                                                                                option(value=`${categorie.id_categorie}`)=categorie.designation
+                                                                            .col-sm-12.text-right
+                                                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
+                                                                                button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
+                                                a.btn.btn-danger.btn-sm.rounded-0.btn-delete-car(href='#')
+                                                    i.feather.icon-trash-2
+                            tfoot
+                                tr
+                                    th Redevable
+                                    th Numero plaque
+                                    th Type
+                                    //th Numero chassis
+                                    th Modele
+                                    th Marque
+                                    th Couleur
+                                    th Mise en circulation
+                                    th Action
+        // Individual Column Searching (Text Inputs) end

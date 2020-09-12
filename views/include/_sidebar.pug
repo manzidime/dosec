@@ -1,0 +1,88 @@
+nav.pc-sidebar
+    .navbar-wrapper
+        .m-header
+            a.b-brand(href='index.html')
+                // ========   change your logo hear   ============
+                img.logo.logo-lg(src='/images/Dosec-white.svg' alt='' width=80)
+                //img.logo.logo-sm(src='/images/logo-sm.svg' alt='')
+        .navbar-content
+            ul.pc-navbar
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='/home')
+                        span.pc-micon
+                            i(data-feather='home')
+                        span.pc-mtext Tableau de bord
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Personne
+                        span.pc-arrow
+                            i(data-feather='chevron-right')
+                    ul.pc-submenu
+                        li.pc-item
+                            a.pc-link(href='/home/new-person') Nouvelle Personne
+                        li.pc-item
+                            a.pc-link(href='/home/all-person') Liste Personne
+                        li.pc-item
+                            a.pc-link(href='/home/new-vehicule') Nouvelle Proprieté
+                        li.pc-item
+                            a.pc-link(href='/home/all-vehicule') Liste Proprieté
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Taxation
+                        span.pc-arrow
+                            i(data-feather='chevron-right')
+                    ul.pc-submenu
+                        li.pc-item
+                            a.pc-link(href='/home/new-taxation') Nouvelle Taxation
+                        li.pc-item
+                            a.pc-link(href='/home/all-taxation') Liste Taxation
+                        li.pc-item
+                            a.pc-link(href='/home/all-taxation-validate') Taxation validée
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Note de calcul
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Attestation
+                        span.pc-arrow
+                            i(data-feather='chevron-right')
+                    ul.pc-submenu
+                        li.pc-item
+                            a.pc-link(href='/home/new-attestation') Nouvel attestation
+                        li.pc-item
+                            a.pc-link(href='/home/all-attestation') Liste Attestation
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Rapports
+                        span.pc-arrow
+                            i(data-feather='chevron-right')
+                    ul.pc-submenu
+                        li.pc-item
+                            a.pc-link(href='/home/parts') Part dosec
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='/home/api-dosec')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext API
+                li.pc-item.pc-hasmenu
+                    a.pc-link(href='#!')
+                        span.pc-micon
+                            i(data-feather='activity')
+                        span.pc-mtext Administration
+                        span.pc-arrow
+                            i(data-feather='chevron-right')
+                    ul.pc-submenu
+                        li.pc-item
+                            a.pc-link(href='school-dashboard.html') Utilisateur
+                        li.pc-item
+                            a.pc-link(href='school-student.html') Liste Utilisateur

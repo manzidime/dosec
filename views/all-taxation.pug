@@ -1,0 +1,133 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Taxations
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Taxe
+                                    th Date taxation
+                                    th Montant USD
+                                    th Montant CDF
+                                    th Receptionniste
+                                    th Action
+                            tbody.content-table
+                                if taxations
+                                    each taxation,index in taxations
+                                        tr(class='row-data' data-row=`${taxation.id_taxation}`)
+                                            td=taxation.redevable
+                                            td=taxation.description
+                                            td=`${taxation.date_taxation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
+                                            td=`${taxation.devise && taxation.devise === 'CDF'?taxation.montant * 1 / taxation.taux:taxation.montant} USD`
+                                            td=`${taxation.devise && taxation.devise === 'USD'?taxation.montant * 1 * taxation.taux:taxation.montant} CDF`
+                                            td=taxation.nom_receptionniste
+                                            td
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Mises à jour
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    form.needs-validation(novalidate='' data-id=`${taxation.id_taxation}`).form-update-taxation
+                                                                        .container-error
+                                                                        .row
+                                                                            .col-sm-4
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='service') Service assiette
+                                                                                    select.form-control.form-control-sm.rounded-0(required='').services
+                                                                                        option(disabled selected) Choisir service
+                                                                                        if services
+                                                                                        each service in services
+                                                                                            option(value=`${service.id_serviceAssiette}`)=service.designation
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='taxe') Taxe
+                                                                                    select.form-control.rounded-0.form-control-sm(required='').taxes
+                                                                                        option(value=`${taxation.id_taxe}` disabled selected)=taxation.taxe
+                                                                            .col-sm-4
+                                                                                label.floating-label(for='contribuable') Contribuable
+                                                                                select.form-control.contribuable.form-control-sm.rounded-0
+                                                                                    option(value=`${taxation.id_contribuable}` disabled selected)=taxation.redevable
+                                                                                    if contribuables
+                                                                                        each contribuable in contribuables
+                                                                                            option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='vehicule') Vehicules
+                                                                                    select.form-control.rounded-0.form-control-sm(required='').vehicule
+                                                                                        option(value=`${taxation.id_vehicule}` disabled selected)=`${taxation.numero_plaque} | ${taxation.numero_chassis} | ${taxation.marque} | ${taxation.couleur} | ${taxation.model}`
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='nom_receptionniste') Nom receptionniste
+                                                                                    input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' value=`${taxation.nom_receptionniste}` required='')
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='telephone_receptionniste') T&eacute;l&eacute;phone receptionniste
+                                                                                    input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' value=`${taxation.telephone_receptioniste}` required='')
+                                                                            .col-sm-12.text-right
+                                                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
+                                                                                button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
+                                                a.btn.btn-success.mr-1.btn-sm.rounded-0.btn-validate-taxation(href='#' data-toggle='modal' data-title='Validation' data-target=`.validation-taxation-${index}`)
+                                                    i.feather.icon-check
+                                                .modal.fade(tabindex='-1' role='dialog' class=`validation-taxation-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Validation Taxation
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    form.needs-validation(novalidate='' data-id=`${taxation.id_taxation}`).form-validation-taxation
+                                                                        .container-alert
+                                                                        .row
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='') Montant
+                                                                                    input.form-control.rounded-0.form-control-sm.montant(type='text' value=`${!taxation.montant?0+' '+taxation.devise:taxation.montant+' '+taxation.devise}` required='')
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='') Pénalités
+                                                                                    input.form-control.rounded-0.form-control-sm.penalite(type='text' value=`${!taxation.penalite?0+' '+taxation.devise:taxation.penalite+' '+taxation.penalite}` required='')
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='') Mont global
+                                                                                    input.form-control.rounded-0.form-control-sm.montant_global(type='text' value=`${!taxation.montant_global?0+' '+taxation.devise:taxation.montant_global+' '+taxation.devise}` required='')
+                                                                            .col-sm-4
+                                                                                label.floating-label(for='') Mode de paiement
+                                                                                select.form-control.compte.form-control-sm.rounded-0
+                                                                                    if comptes
+                                                                                        each compte in comptes
+                                                                                            option(value=`${compte.id_compte}`)=`${compte.libelle_banque+'('+compte.num_compte+')'}`
+                                                                            .col-sm-4
+                                                                                label.floating-label(for='avis') Mode de paiement
+                                                                                select.form-control.avis.form-control-sm.rounded-0
+                                                                                    option(value='favorable' selected) Favorable
+                                                                                    option(value='non favorable') Non favorable
+                                                                            .col-sm-12.text-right
+                                                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Valider
+                                                a.btn.btn-danger.btn-sm.rounded-0.btn-delete-taxation(href='#')
+                                                    i.feather.icon-trash-2
+                            tfoot
+                                tr
+                                    th Redevable
+                                        th Taxe
+                                        th Date taxation
+                                        th Montant USD
+                                        th Montant CDF
+                                        th Receptionniste
+                                        th Action
+        // Individual Column Searching (Text Inputs) end

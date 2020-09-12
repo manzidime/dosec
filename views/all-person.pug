@@ -1,0 +1,95 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Liste globale des personnes
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Nom
+                                    th Adresse
+                                    th Téléphone
+                                    th Action
+                            tbody.content-table
+                                if contribuables
+                                    each contribuable,index in contribuables
+                                        tr(class='row-data' data-row=`${contribuable.id_contribuable}`)
+                                            td=contribuable.nom
+                                            td=`${contribuable.numero}-${contribuable.avenue}-Q/${contribuable.libelle_quartier}-C/${contribuable.libelle_commune}`
+                                            td=contribuable.telephone
+                                            td.text-right
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Mises à jour : #{contribuable.nom.toUpperCase()}
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .container-error
+                                                                .card-body
+                                                                    form.needs-validation(novalidate='' class='form-update-person' data-id=`${contribuable.id_contribuable}`)
+                                                                        .row
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='nom_personne') Nom
+                                                                                    input.form-control.rounded-0(type='text' class='nom_personne' value=`${contribuable.nom}` required='')
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='telephone') T&eacute;l&eacute;phone
+                                                                                    input.form-control.rounded-0(type='text' class='telephone' value=`${contribuable.telephone}` required='')
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='ville') Ville
+                                                                                    input.form-control.rounded-0(type='text' value=`${contribuable.ville}` class='ville' required='')
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group.fill
+                                                                                    label.floating-label(for='district') District
+                                                                                    select.form-control.rounded-0(required='' class='district')
+                                                                                        if districts
+                                                                                            option(value=`${contribuable.id_district}` disabled selected)=contribuable.libelle_district
+                                                                                            each district in districts
+                                                                                                option(value=`${district.id_district}`)=district.libelle_district
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='commune') Commune
+                                                                                    select.form-control.rounded-0(required='' class='commune')
+                                                                                        option(value=`${contribuable.id_commune}` disabled selected)=contribuable.libelle_commune
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='quartier') Quartier
+                                                                                    select.form-control.rounded-0(required='' class='quartier')
+                                                                                        option(value=`${contribuable.id_quartier}` disabled selected)=contribuable.libelle_quartier
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='avenue') Avenue
+                                                                                    input.form-control.rounded-0(type='text' class='avenue' value=`${contribuable.avenue}` required='')
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='numero') Num&eacute;ro
+                                                                                    input.form-control.rounded-0(type='text' value=`${contribuable.numero}` class='numero' required='')
+                                                                            .col-sm-6.col-md-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='observation') Observation
+                                                                                    input.form-control.rounded-0(type='text' value=`${contribuable.observation}` class='observation' required='')
+                                                                            .col-sm-12.text-right
+                                                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='Submit') Enregistrer
+                                                                                button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
+
+                                                a.btn.btn-danger.btn-sm.rounded-0.btn-delete(href='#')
+                                                    i.feather.icon-trash-2
+                            tfoot
+                                tr
+                                    th Nom
+                                    th Adresse
+                                    th Telephone
+                                    th Action
+        // Individual Column Searching (Text Inputs) end

@@ -1,0 +1,19 @@
+header.pc-header
+    .header-wrapper
+        .ml-auto
+            ul.list-unstyled
+                li.dropdown.pc-h-item
+                    a.pc-head-link.dropdown-toggle.arrow-none.mr-0(data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
+                        img.user-avtar(src='/images/user.png' alt='user-image')
+                        span
+                            span.user-name=user.nom+' '+user.prenom
+                            span.user-desc=user.libelle_fonction
+                    .dropdown-menu.dropdown-menu-right.pc-h-dropdown
+                        .dropdown-header
+                            h6.text-overflow.m-0 Bienvenu(e) !
+                        a.dropdown-item(href='/home/my-acount')
+                            i(data-feather='user')
+                            span Mon compte
+                        a.dropdown-item(href='#!')
+                            i(data-feather='power')
+                            span#logout Deconnexion

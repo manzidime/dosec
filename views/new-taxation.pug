@@ -1,0 +1,53 @@
+extends home
+block content
+    .row
+        // customar project  start
+        .col-xl-12
+            .card
+                .card-body
+                    h5.mt-3.mb-3 Nouvelle Taxation
+                    form.needs-validation(novalidate='')#form-new-taxation
+                        #container-error
+                        .row
+                            .col-sm-4
+                                .form-group.fill
+                                    label.floating-label(for='service') Service assiette
+                                    select#service.form-control.form-control-sm.rounded-0(required='')
+                                        option(disabled selected) Choisir service
+                                        if services
+                                        each service in services
+                                            option(value=`${service.id_serviceAssiette}`)=service.designation
+                            .col-sm-4
+                                .form-group
+                                    label.floating-label(for='taxe') Taxe
+                                    select#taxe.form-control.rounded-0.form-control-sm(required='')
+                            .col-sm-4
+                                label.floating-label(for='contribuable') Contribuable
+                                select.form-control.form-control-sm.rounded-0#contribuable
+                                    option(disabled selected) Choisir contribuable
+                                    if contribuables
+                                        each contribuable in contribuables
+                                            option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                            .col-sm-4
+                                .form-group
+                                    label.floating-label(for='vehicule') Vehicules
+                                    select#vehicule.form-control.rounded-0.form-control-sm(required='')
+                            .col-sm-4
+                                .form-group
+                                    label.floating-label(for='nom_receptionniste') Nom receptionniste
+                                    input.form-control.rounded-0.form-control-sm(type='text' id='nom_receptionniste' required='')
+                            .col-sm-4
+                                .form-group
+                                    label.floating-label(for='telephone_receptionniste') T&eacute;l&eacute;phone receptionniste
+                                    input.form-control.rounded-0.form-control-sm(type='text' id='telephone_receptionniste' required='')
+                            .col-sm-4
+                                .form-group.fill
+                                    label.floating-label(for='service') Exercice
+                                    select#exercice.form-control.form-control-sm.rounded-0(required='')
+                                        if exercices
+                                        each exercice in exercices
+                                            option(value=`${exercice.id_exercice}`)=exercice.annee
+                            .col-sm-12.text-right
+                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='Submit') Enregistrer
+                                button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
+        // customar project  end

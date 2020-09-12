@@ -1,0 +1,42 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Attestations
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Taxe
+                                    th Date taxation
+                                    th Date validation
+                                    th Numero taxation
+                                    th Montant
+                                    th Devise
+                            tbody.content-table
+                                if attestations
+                                    each attestation,index in attestations
+                                        tr(class='row-data')
+                                            td=attestation.nom
+                                            td=attestation.description
+                                            td=`${attestation.date_taxation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
+                                            td=`${attestation.date_validation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
+                                            td=attestation.num_taxation
+                                            td=attestation.montant
+                                            td=attestation.devise
+                            tfoot
+                                tr
+                                    th Redevable
+                                        th Taxe
+                                        th Date taxation
+                                        th Montant USD
+                                        th Montant CDF
+                                        th Receptionniste
+                                        th Action
+        // Individual Column Searching (Text Inputs) end

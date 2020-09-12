@@ -23,7 +23,7 @@ export const getCommune = async (id) => {
                 dom.districtAr.forEach((el, index) => {
                     clearHtml(dom.quartierAr[index]);
                     clearHtml(dom.communeAr[index]);
-                    dom.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue)
+                    //dom.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue)
                     dom.communeAr[index].insertAdjacentHTML('beforeend', options)
                 });
             }
@@ -31,7 +31,7 @@ export const getCommune = async (id) => {
             if (dom.commune) {
                 clearHtml(dom.quartier);
                 clearHtml(dom.commune);
-                dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
+                //dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
                 dom.commune.insertAdjacentHTML('beforeend', options);
             }
         }

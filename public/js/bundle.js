@@ -8719,9 +8719,7 @@ var getCommune = /*#__PURE__*/function () {
               if (_dom.default.districtAr.length !== 0) {
                 _dom.default.districtAr.forEach(function (el, index) {
                   (0, _alert.clearHtml)(_dom.default.quartierAr[index]);
-                  (0, _alert.clearHtml)(_dom.default.communeAr[index]);
-
-                  _dom.default.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue);
+                  (0, _alert.clearHtml)(_dom.default.communeAr[index]); //dom.communeAr[index].insertAdjacentHTML('afterbegin', defaultValue)
 
                   _dom.default.communeAr[index].insertAdjacentHTML('beforeend', options);
                 });
@@ -8729,9 +8727,7 @@ var getCommune = /*#__PURE__*/function () {
 
               if (_dom.default.commune) {
                 (0, _alert.clearHtml)(_dom.default.quartier);
-                (0, _alert.clearHtml)(_dom.default.commune);
-
-                _dom.default.commune.insertAdjacentHTML('afterbegin', defaultValue);
+                (0, _alert.clearHtml)(_dom.default.commune); //dom.commune.insertAdjacentHTML('afterbegin', defaultValue);
 
                 _dom.default.commune.insertAdjacentHTML('beforeend', options);
               }

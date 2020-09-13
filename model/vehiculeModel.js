@@ -158,7 +158,7 @@ module.exports = class Vehicule {
         try {
             const [rows] = await DB.query(`
                     SELECT id_vehicule,numero_chassis,numero_plaque,marque,model,couleur
-                    FROM vehicule WHERE id_vehicule=?
+                    FROM vehicule WHERE id_contribuable=?
                 `,id);
             return rows;
         } catch (err) {

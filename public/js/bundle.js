@@ -9146,6 +9146,7 @@ var getVehicules = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               vehicules = res.data.data.rows;
+              console.log(vehicules);
               options = vehicules.map(function (el, index) {
                 return "<option value=\"".concat(el.id_vehicule, "\">").concat(el.numero_plaque, " | ").concat(el.numero_chassis, " | ").concat(el.marque, " | ").concat(el.couleur, " | ").concat(el.model, " </option>");
               }).join(' ');

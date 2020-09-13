@@ -45,6 +45,8 @@ export const getVehicules = async (id) => {
         if (res.data.status === 'success') {
             const vehicules = res.data.data.rows;
 
+            console.log(vehicules);
+
             const options = vehicules.map((el, index) => {
                 return `<option value="${el.id_vehicule}">${el.numero_plaque} | ${el.numero_chassis} | ${el.marque} | ${el.couleur} | ${el.model} </option>`;
             })

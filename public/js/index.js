@@ -70,7 +70,7 @@ if (dom.communeAr) {
 
 //5. Get articles budgetaires by type objet
 window.addEventListener('load', async (event) => {
-    if(dom.type){
+    if (dom.type) {
         const id = dom.type.value;
         await articleBytype(id);
     }
@@ -232,7 +232,7 @@ if (dom.formUpdateV) {
                 marque: el.querySelector('.marque').value,
                 couleur: el.querySelector('.couleur').value,
                 charge_utile: el.querySelector('.charge').value,
-                mise_en_circulation: document.querySelector('.circulation').value
+                mise_en_circulation: document.querySelector('.circulation').value,
             };
 
             const id = el.dataset.id;

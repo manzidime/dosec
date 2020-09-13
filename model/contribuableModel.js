@@ -62,6 +62,17 @@ module.exports = class Contribuable {
 
     }
 
+    //Obtenir tous les contribuables qui ont des vehicules
+    async getAllVehicules(){
+        try{
+            const [rows] = await DB.query(`SELECT * FROM v_all_contribuables_contains_vehicules`)
+            return rows
+        }
+        catch(err){
+            throw err
+        }
+    }
+
     //Get contribuable
     async getOne(id) {
         try {

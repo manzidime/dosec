@@ -100,7 +100,7 @@ exports.allVehicule = catchAsync(async (req, res, next) => {
 
 exports.newTaxation = catchAsync(async (req, res, next) => {
     const services = await new Service().getAll();
-    const contribuables = await new Contribuable().getAll(req.user);
+    const contribuables = await new Contribuable().getAllVehicules();
     const exercices = await new Exercice().getAll();
 
     res.status(200)

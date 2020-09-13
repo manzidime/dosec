@@ -17,7 +17,7 @@ head
     // Favicon icon
     link(rel='icon' href='/images/favicon.svg' type='image/x-icon')
     // select2 css
-    link(rel='stylesheet' href='/css/plugins/select2.min.css')
+    link(rel='stylesheet' href='/assets/css/plugins/select2.min.css')
     link(rel='stylesheet' href='/css/plugins/dataTables.bootstrap4.min.css')
     // font css
     link(rel='stylesheet' href='/fonts/font-awsome-pro/css/pro.min.css')
@@ -59,7 +59,7 @@ head
 // [ Mobile header ] start
 .pc-mob-header.pc-header
     .pcm-logo
-        img.logo.logo-lg(src='/images/logo.svg' alt='')
+        img.logo.logo-lg(src='/images/Logo.png' alt='')
     .pcm-toolbar
         a#mobile-collapse.pc-head-link(href='#!')
             .hamburger.hamburger--arrowturn
@@ -140,21 +140,15 @@ script(src='/js/pages/data-api-custom.js')
 script(src='/js/bundle.js')
 .pct-customizer
     .pct-c-btn(href='#!')
-        button#pct-toggler.btn.btn-light-danger
+        button#pct-toggler.btn.btn-light-info
             i(data-feather='settings')
-        button.btn.btn-light-primary(data-toggle='tooltip' title='Document' data-placement='left')
-            i(data-feather='book')
-        button.btn.btn-light-success(data-toggle='tooltip' title='Buy Now' data-placement='left')
-            i(data-feather='shopping-bag')
-        button.btn.btn-light-info(data-toggle='tooltip' title='Support' data-placement='left')
-            i(data-feather='headphones')
     .pct-c-content
         .pct-header.bg-primary
-            h5.mb-0.text-white.f-w-500 Nextro Customizer
+            h5.mb-0.text-white.f-w-500 Customisation page
         .pct-body
             h6.mt-2
                 i.mr-2(data-feather='credit-card')
-                | Header settings
+                | Header paramettre
             hr.my-2
             .theme-color.header-color
                 a(href='#!' data-value='bg-default')
@@ -180,7 +174,7 @@ script(src='/js/bundle.js')
                     span
             h6.mt-4
                 i.mr-2(data-feather='layout')
-                | Sidebar settings
+                | Sidebar paramettre
             hr.my-2
             .custom-control.custom-switch
                 input#cust-sidebar.custom-control-input(type='checkbox')
@@ -219,7 +213,7 @@ script.
             $('.m-header').addClass('bg-dark');
         } else {
             $('.m-header').removeClassPrefix('bg-');
-            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo-dark.svg');
+            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.png');
             $('.theme-color.brand-color').addClass('d-none');
         }
     });
@@ -233,7 +227,7 @@ script.
             $('.m-header').removeClassPrefix('bg-');
         } else {
             $('.m-header').removeClassPrefix('bg-');
-            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.svg');
+            $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.png');
             $('.m-header').addClass(temp);
         }
     });
@@ -255,11 +249,11 @@ script.
         if ($(this).is(":checked")) {
             $('.pc-sidebar').addClass('light-sidebar');
             $('.pc-horizontal .topbar').addClass('light-sidebar');
-            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo-dark.svg');
+            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.png');
         } else {
             $('.pc-sidebar').removeClass('light-sidebar');
             $('.pc-horizontal .topbar').removeClass('light-sidebar');
-            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.svg');
+            // $('.m-header > .b-brand > .logo-lg').attr('src', '/images/logo.png');
         }
     });
     $.fn.removeClassPrefix = function(prefix) {

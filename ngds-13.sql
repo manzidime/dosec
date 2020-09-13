@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 12/09/2020 14:32:33
+ Date: 13/09/2020 13:36:52
 */
 
 SET NAMES utf8mb4;
@@ -347,20 +347,25 @@ CREATE TABLE `contribuable`  (
   CONSTRAINT `contribuable_ibfk_3` FOREIGN KEY (`id_quartier`) REFERENCES `quartier` (`id_quartier`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `contribuable_ibfk_4` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `contribuable_ibfk_5` FOREIGN KEY (`id_agent`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contribuable
 -- ----------------------------
 INSERT INTO `contribuable` VALUES (8, 'EFAMBE', '+243852058798', 'Kinshasa', 3, 20, 79, 'Kadima', '8', '2020-09-06 01:59:44', 'false', 41, NULL, NULL);
-INSERT INTO `contribuable` VALUES (9, 'malondaaaa', '+243852058798', 'Kinshasaaa', 2, 14, 266, 'Kadima', '8', '2020-09-06 19:30:31', 'true', 41, 18, NULL);
+INSERT INTO `contribuable` VALUES (9, 'malonda', '+2438', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8896', '2020-09-06 19:30:31', 'false', 41, 18, NULL);
 INSERT INTO `contribuable` VALUES (10, 'malonda', '+243852058798', 'Kinshasa', 2, 14, 266, 'Kadima', '8', '2020-09-07 20:20:23', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (11, 'malonda', '+243852058798', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 06:49:08', 'true', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (12, 'malonda', '+243852058798', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 11:23:10', 'true', 41, 18, 'ok');
+INSERT INTO `contribuable` VALUES (11, 'malonda', '+243852058798', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 06:49:08', 'false', 41, 18, 'ok');
+INSERT INTO `contribuable` VALUES (12, 'malonda', '+243', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 11:23:10', 'false', 41, 18, 'ok');
 INSERT INTO `contribuable` VALUES (13, 'malonda', '+243852058798', 'kinshasa', 2, 4, 200, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 11:25:03', 'false', 41, 18, 'ok');
 INSERT INTO `contribuable` VALUES (14, 'MANGUNGU KASSAY ALLAI', '+243819488420', 'kinshasa', 3, 20, 78, '14 rue', '15', '2020-09-11 16:07:23', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (15, 'MANGUNGU KASSAY ALLAIn', '+243819488420', 'kinshasa', 1, 3, 13, '14 rue', '1589', '2020-09-11 19:13:28', 'true', 41, 18, 'Q/BLA');
-INSERT INTO `contribuable` VALUES (16, 'nzita', '+2438996696689666', 'kinshasa', 2, 15, 57, 'TOMBALBAYE N°07/42 ', '155896', '2020-09-12 11:07:22', 'true', 41, 18, 'ok');
+INSERT INTO `contribuable` VALUES (15, 'MALONDA NZITA Dieu-Merci', '+243852058798', 'kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-11 19:13:28', 'false', 41, 18, '');
+INSERT INTO `contribuable` VALUES (16, 'nzita', '28999', 'kinshasa', 3, 24, 446, 'azazazaz', '155896', '2020-09-12 11:07:22', 'false', 41, 18, 'ok');
+INSERT INTO `contribuable` VALUES (17, 'noel', '+243852058798', 'kinshasa', 2, 4, 239, 'bangala', '8', '2020-09-13 00:35:20', 'true', 41, 18, '');
+INSERT INTO `contribuable` VALUES (18, 'MALONDA NZITA Dieu-Merci', '+243852058798', 'kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-13 00:41:54', 'true', 41, 18, '');
+INSERT INTO `contribuable` VALUES (19, 'john', '+00005896', 'Kinshasa', 1, 11, 40, '14 rue', '6', '2020-09-13 01:05:12', 'true', 41, 18, 'ok');
+INSERT INTO `contribuable` VALUES (20, 'MAKIESE MALONDA brielle', '+243896831088', 'Kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-13 01:10:07', 'true', 41, 18, '');
+INSERT INTO `contribuable` VALUES (21, 'nsoki', '78', 'Kinshasa', 3, 20, 86, 'azazaz', 'zazazaz', '2020-09-13 01:52:20', 'true', 41, 18, '');
 
 -- ----------------------------
 -- Table structure for detail_tarif
@@ -1573,7 +1578,6 @@ CREATE TABLE `vehicule`  (
   `id_article_budgetaire` int(11) NOT NULL,
   `id_categorie` int(11) NOT NULL,
   `id_contribuable` int(11) NOT NULL,
-  `id_taxe` int(11) NULL DEFAULT NULL,
   `numero_chassis` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `numero_plaque` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `model` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -1593,25 +1597,24 @@ CREATE TABLE `vehicule`  (
   INDEX `fk_tblvehicule_tblpersonne`(`id_contribuable`) USING BTREE,
   INDEX `id_agent`(`id_agent`) USING BTREE,
   INDEX `id_site`(`id_site`) USING BTREE,
-  INDEX `id_taxe`(`id_taxe`) USING BTREE,
   CONSTRAINT `fk_tblVehicule_tblarticlebudgetaire1` FOREIGN KEY (`id_article_budgetaire`) REFERENCES `article_budgetaire` (`id_article_budgetaire`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tblVehicule_tblcategorie1` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `vehicule_ibfk_1` FOREIGN KEY (`id_contribuable`) REFERENCES `contribuable` (`id_contribuable`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `vehicule_ibfk_2` FOREIGN KEY (`id_agent`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `vehicule_ibfk_3` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `vehicule_ibfk_4` FOREIGN KEY (`id_taxe`) REFERENCES `taxe` (`id_taxe`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `vehicule_ibfk_3` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of vehicule
 -- ----------------------------
-INSERT INTO `vehicule` VALUES (1, 14, 3, 8, 9, '876PPM098', '2022AI01', 'BENZii', 'MERCEDES', 'GRISE', '12T', '2020-09-09', '2020-09-06 14:58:13', 'false', NULL, NULL);
-INSERT INTO `vehicule` VALUES (9, 2, 2, 10, 1, 'zazazaza', 'zazaza', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-09 09:55:11', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (10, 1, 2, 8, 1, '876PPM09999', '2022AI99012', 'BENZ', 'MERCEDES', 'GRISE', '12T', '2020-02-27', '2020-09-10 02:14:24', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (11, 2, 3, 9, 3, 'zazazazaazazaz', 'zazazazazazaz', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-10 08:30:37', 'false', 18, 41);
-INSERT INTO `vehicule` VALUES (12, 1, 2, 10, 15, 'zazazazaazazaza', 'zazazaaaaa', 'azazaza', 'aa', 'blue', 'zazazaza', '2020-09-26', '2020-09-10 08:36:29', 'false', 18, 41);
-INSERT INTO `vehicule` VALUES (13, 2, 1, 14, 3, 'zazazazaazazazklll', 'zazazazazazazbj n', 'HIAS', 'TOYOTA', 'Jaune', '17tb', '2020-09-11', '2020-09-11 16:11:44', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (14, 2, 3, 15, 15, 'FHGFHGFH', 'dsdsdsdsds', 'HIAS', 'toyota', 'blue', 'zazazaza', '2020-01-30', '2020-09-11 19:29:34', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (1, 14, 3, 8, '876PPM098', '2022AI01', 'BENZii', 'MERCEDES', 'GRISE', '12T', '2020-09-09', '2020-09-06 14:58:13', 'false', NULL, NULL);
+INSERT INTO `vehicule` VALUES (9, 2, 2, 10, 'zazazaza', 'zazaza', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-09 09:55:11', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (10, 1, 2, 8, '876PPM09999', '2022AI99012', 'BENZ', 'MERCEDES', 'GRISE', '12T', '2020-02-27', '2020-09-10 02:14:24', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (11, 2, 3, 9, 'zazazazaazazaz', 'zazazazazazaz', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-10 08:30:37', 'false', 18, 41);
+INSERT INTO `vehicule` VALUES (12, 1, 2, 10, 'zazazazaazazaza', 'zazazaaaaa', 'azazaza', 'aa', 'blue', 'zazazaza', '2020-09-26', '2020-09-10 08:36:29', 'false', 18, 41);
+INSERT INTO `vehicule` VALUES (13, 2, 1, 14, 'zazazazaazazazklll', 'zazazazazazazbj n', 'HIAS', 'TOYOTA', 'Jaune', '17tb', '2020-09-11', '2020-09-11 16:11:44', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (14, 2, 3, 15, 'FHGFHGFH', 'dsdsdsdsds', 'HIAS', 'toyota', 'blue', 'zazazaza', '2020-01-30', '2020-09-11 19:29:34', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (15, 2, 1, 19, 'zz', 'zz', 'zz', 'zz', 'marron', 'zz', '2020-02-27', '2020-09-13 12:05:58', 'true', 18, 41);
 
 -- ----------------------------
 -- View structure for v_all_agent
@@ -1641,7 +1644,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_compte` AS select 
 -- View structure for v_all_contribuable
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_contribuable`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_contribuable` AS select `contribuable`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `nom`,`contribuable`.`telephone` AS `telephone`,`contribuable`.`ville` AS `ville`,`district`.`libelle_district` AS `libelle_district`,`commune`.`libelle_commune` AS `libelle_commune`,`quartier`.`libelle_quartier` AS `libelle_quartier`,`contribuable`.`avenue` AS `avenue`,`contribuable`.`numero` AS `numero`,`contribuable`.`date_creation` AS `date_creation`,`contribuable`.`active` AS `active`,`contribuable`.`id_site` AS `id_site`,`contribuable`.`id_agent` AS `id_agent`,`contribuable`.`observation` AS `observation`,`contribuable`.`id_district` AS `id_district`,`contribuable`.`id_commune` AS `id_commune`,`contribuable`.`id_quartier` AS `id_quartier` from (((`contribuable` join `quartier` on(`contribuable`.`id_quartier` = `quartier`.`id_quartier`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune` and `quartier`.`id_commune` = `commune`.`id_commune`)) join `district` on(`commune`.`id_district` = `district`.`id_district` and `contribuable`.`id_district` = `district`.`id_district`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_contribuable` AS select `contribuable`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `nom`,`contribuable`.`telephone` AS `telephone`,`contribuable`.`ville` AS `ville`,`district`.`libelle_district` AS `libelle_district`,`commune`.`libelle_commune` AS `libelle_commune`,`quartier`.`libelle_quartier` AS `libelle_quartier`,`contribuable`.`avenue` AS `avenue`,`contribuable`.`numero` AS `numero`,`contribuable`.`date_creation` AS `date_creation`,`contribuable`.`active` AS `active`,`contribuable`.`id_site` AS `id_site`,`contribuable`.`id_agent` AS `id_agent`,`contribuable`.`observation` AS `observation`,`contribuable`.`id_district` AS `id_district`,`contribuable`.`id_commune` AS `id_commune`,`contribuable`.`id_quartier` AS `id_quartier` from (((`contribuable` join `quartier` on(`contribuable`.`id_quartier` = `quartier`.`id_quartier`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune`)) join `district` on(`contribuable`.`id_district` = `district`.`id_district`));
 
 -- ----------------------------
 -- View structure for v_all_quartier
@@ -1665,7 +1668,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxation` AS selec
 -- View structure for v_all_vehicule
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_vehicule`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_vehicule` AS select `vehicule`.`id_vehicule` AS `id_vehicule`,`article_budgetaire`.`designation` AS `article_budgetaire`,`categorie`.`designation` AS `categorie`,`contribuable`.`nom` AS `nom`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`vehicule`.`mise_en_circulation` AS `mise_en_circulation`,`vehicule`.`active` AS `active`,`vehicule`.`date_creation` AS `date_creation`,`vehicule`.`id_agent` AS `id_agent`,`vehicule`.`id_site` AS `id_site`,`vehicule`.`id_contribuable` AS `id_contribuable`,`vehicule`.`id_categorie` AS `id_categorie`,`vehicule`.`id_article_budgetaire` AS `id_article_budgetaire`,`vehicule`.`id_taxe` AS `id_taxe`,`taxe`.`designation` AS `taxe` from ((((`vehicule` join `article_budgetaire` on(`vehicule`.`id_article_budgetaire` = `article_budgetaire`.`id_article_budgetaire`)) join `categorie` on(`vehicule`.`id_categorie` = `categorie`.`id_categorie`)) join `contribuable` on(`vehicule`.`id_contribuable` = `contribuable`.`id_contribuable`)) left join `taxe` on(`vehicule`.`id_taxe` = `taxe`.`id_taxe`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_vehicule` AS select `vehicule`.`id_vehicule` AS `id_vehicule`,`article_budgetaire`.`designation` AS `article_budgetaire`,`categorie`.`designation` AS `categorie`,`contribuable`.`nom` AS `nom`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`vehicule`.`mise_en_circulation` AS `mise_en_circulation`,`vehicule`.`active` AS `active`,`vehicule`.`date_creation` AS `date_creation`,`vehicule`.`id_agent` AS `id_agent`,`vehicule`.`id_site` AS `id_site`,`vehicule`.`id_contribuable` AS `id_contribuable`,`vehicule`.`id_categorie` AS `id_categorie`,`vehicule`.`id_article_budgetaire` AS `id_article_budgetaire` from (((`vehicule` join `article_budgetaire` on(`vehicule`.`id_article_budgetaire` = `article_budgetaire`.`id_article_budgetaire`)) join `categorie` on(`vehicule`.`id_categorie` = `categorie`.`id_categorie`)) join `contribuable` on(`vehicule`.`id_contribuable` = `contribuable`.`id_contribuable`));
 
 -- ----------------------------
 -- View structure for v_note_calcul

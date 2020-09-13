@@ -12,11 +12,11 @@ exports.getIdVehicules = (req, res, next) => {
 exports.checkData = (req, res, next) => {
     const {
               id_article_budgetaire, id_categorie, id_contribuable, numero_chassis, numero_plaque, model, marque, couleur,
-              charge_utile, mise_en_circulation, id_taxe,
+              charge_utile, mise_en_circulation,
           } = req.body;
 
     if (!id_article_budgetaire || !id_categorie || !id_contribuable || !numero_chassis || !numero_plaque || !model ||
-        !marque || !couleur || !charge_utile || !mise_en_circulation || !id_taxe) {
+        !marque || !couleur || !charge_utile || !mise_en_circulation) {
         return next(new AppError('Veillez remplir tous champs!', 400));
     }
 

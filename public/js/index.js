@@ -2,13 +2,11 @@ import '@babel/polyfill';
 import dom from './utils/dom';
 import {login, logout} from './login';
 import {changePassword} from './changePassword';
-import {getQuartiers} from './getQuartier';
 import {newPerson} from './newPerson';
 import {updatePerson} from './updatePerson';
 import {desable, desableCar} from './desable';
 import {newVehicule, updateVehicule} from './newVehicule';
-import {getarticle, getTaxe} from './getArticles';
-import {getTaxe2, getVehicules, communeByDistrict,quartiersByCommune} from './utils/select';
+import {getTaxe2, getVehicules, communeByDistrict, quartiersByCommune, articleBytype} from './utils/select';
 import {newTaxation, updateTaxation, desableTaxation, validateTaxation} from './newTaxation';
 import {newAttestation} from './attestation';
 
@@ -45,7 +43,7 @@ if (dom.commune) {
 if (dom.commune) {
     dom.commune.addEventListener('click', async () => {
         const idCommune = dom.commune.value;
-        await getQuartiers(idCommune);
+        await quartiersByCommune(idCommune);
     });
 }
 
@@ -66,6 +64,34 @@ if (dom.communeAr) {
         el.addEventListener('click', async (event) => {
             const idCommune = el.value;
             await quartiersByCommune(idCommune);
+        });
+    });
+}
+
+//5. Get articles budgetaires by type objet
+window.addEventListener('load', async (event) => {
+    if(dom.type){
+        const id = dom.type.value;
+        await articleBytype(id);
+    }
+});
+
+if (dom.types) {
+    Array.from(dom.types)
+    .forEach(el => {
+        el.addEventListener('change', async (event) => {
+            const idType = el.value;
+            await articleBytype(idType);
+        });
+    });
+}
+
+if (dom.types) {
+    Array.from(dom.types)
+    .forEach(el => {
+        el.addEventListener('click', async (event) => {
+            const idType = el.value;
+            await articleBytype(idType);
         });
     });
 }
@@ -91,42 +117,6 @@ if (dom.formChangePassword) {
     dom.formChangePassword.addEventListener('submit', async (event) => {
         event.preventDefault();
         await changePassword(dom.oldPassword.value, dom.newPassword.value, dom.confirmPassword.value);
-    });
-}
-
-//Get articles budgetaires by type objet
-if (dom.type) {
-    dom.type.addEventListener('change', async (event) => {
-        const idType = dom.type.value;
-        await getarticle(idType);
-    });
-}
-
-if (dom.type) {
-    dom.type.addEventListener('change', async (event) => {
-        const idTaxe = dom.type.value;
-        await getTaxe(idTaxe);
-    });
-}
-
-if (dom.types) {
-    Array.from(dom.types)
-    .forEach(el => {
-        el.addEventListener('change', async (event) => {
-            const idType = el.value;
-            console.log(idType);
-            await getarticle(idType);
-        });
-    });
-}
-
-if (dom.types) {
-    Array.from(dom.types)
-    .forEach(el => {
-        el.addEventListener('change', async (event) => {
-            const idTaxe = el.value;
-            await getTaxe(idTaxe);
-        });
     });
 }
 
@@ -204,7 +194,8 @@ if (dom.btnDeleteCar) {
     });
 }
 
-//New vehicule
+//!VEHICULE
+//1. New vehicule
 if (dom.fomrNewVehicule) {
     dom.fomrNewVehicule.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -220,34 +211,28 @@ if (dom.fomrNewVehicule) {
             couleur: dom.couleur.value,
             charge_utile: dom.charge.value,
             mise_en_circulation: dom.circulation.value,
-            id_taxe: dom.taxe.value,
         };
-        console.log(body);
         await newVehicule(body);
     });
-
 }
 
-//Update vehicule
+//2. Update vehicule
 if (dom.formUpdateV) {
     dom.formUpdateV.forEach((el, index) => {
         el.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            console.log(document.querySelectorAll('.taxes')[index].value);
-
             const body = {
-                id_article_budgetaire: document.querySelectorAll('.article')[index].value,
-                id_categorie: document.querySelectorAll('.category')[index].value,
-                id_contribuable: document.querySelectorAll('.contribuable')[index].value,
-                numero_chassis: document.querySelectorAll('.chassis')[index].value,
-                numero_plaque: document.querySelectorAll('.plaque')[index].value,
-                model: document.querySelectorAll('.model')[index].value,
-                marque: document.querySelectorAll('.marque')[index].value,
-                couleur: document.querySelectorAll('.couleur')[index].value,
-                charge_utile: document.querySelectorAll('.charge')[index].value,
-                mise_en_circulation: document.querySelectorAll('.circulation')[index].value,
-                id_taxe: document.querySelectorAll('.taxes')[index].value,
+                id_article_budgetaire: el.querySelector('.article').value,
+                id_categorie: el.querySelector('.category').value,
+                id_contribuable: el.querySelector('.contribuable').value,
+                numero_chassis: el.querySelector('.chassis').value,
+                numero_plaque: el.querySelector('.plaque').value,
+                model: el.querySelector('.model').value,
+                marque: el.querySelector('.marque').value,
+                couleur: el.querySelector('.couleur').value,
+                charge_utile: el.querySelector('.charge').value,
+                mise_en_circulation: document.querySelector('.circulation').value
             };
 
             const id = el.dataset.id;

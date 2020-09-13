@@ -12,7 +12,7 @@ export const newVehicule = async (body) => {
 
         if (res.data.status === 'success') {
             clearHtml(dom.containerError);
-            alert('alert-success', ' Vehicule crée!',dom.containerError);
+            alert('alert-success', ' Vehicule crée!', dom.containerError);
         }
     } catch (err) {
         clearHtml(dom.containerError);
@@ -30,13 +30,13 @@ export const updateVehicule = async (body, id, index) => {
         });
 
         if (res.data.status === 'success') {
-            const container = document.querySelectorAll('.container-error')[index];
+            const container = document.querySelector(`.alert-update-vehicule-${id}`);
             clearHtml(container);
             alert('alert-success', ' Vehicule mise à jour!', container);
 
         }
     } catch (err) {
-        const container = document.querySelectorAll('.container-error')[index];
+        const container = document.querySelector(`.alert-update-vehicule-${id}`);
         clearHtml(container);
         alert('alert-danger', err.response.data.message, container);
     }

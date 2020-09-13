@@ -19,9 +19,8 @@ export const login = async (login, password) => {
             window.location = '/home';
         }
     } catch (err) {
-        //clear container error
         clearHtml(dom.containerError);
-        alert('alert-danger', err.response.data.message);
+        alert('alert-danger', err.response.data.message, dom.containerError);
         console.log(err.response.data.message);
     }
 

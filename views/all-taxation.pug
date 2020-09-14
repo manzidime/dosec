@@ -17,7 +17,6 @@ block content
                                     th Date taxation
                                     th Montant USD
                                     th Montant CDF
-                                    th Receptionniste
                                     th Action
                             tbody.content-table
                                 if taxations
@@ -26,9 +25,8 @@ block content
                                             td=taxation.redevable
                                             td=taxation.description
                                             td=`${taxation.date_taxation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
-                                            td=`${taxation.devise && taxation.devise === 'CDF'?taxation.montant * 1 / taxation.taux:taxation.montant} USD`
-                                            td=`${taxation.devise && taxation.devise === 'USD'?taxation.montant * 1 * taxation.taux:taxation.montant} CDF`
-                                            td=taxation.nom_receptionniste
+                                            td=`${taxation.devise && taxation.devise === 'CDF'?Math.round(taxation.montant * 1 / taxation.taux):Math.round(taxation.montant)} USD`
+                                            td=`${taxation.devise && taxation.devise === 'USD'?Math.round(taxation.montant * 1 * taxation.taux):Math.round(taxation.montant)} CDF`
                                             td
                                                 a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
                                                     i.feather.icon-edit
@@ -71,12 +69,12 @@ block content
                                                                                         option(value=`${taxation.id_vehicule}` disabled selected)=`${taxation.numero_plaque} | ${taxation.numero_chassis} | ${taxation.marque} | ${taxation.couleur} | ${taxation.model}`
                                                                             .col-sm-4
                                                                                 .form-group
-                                                                                    label.floating-label(for='nom_receptionniste') Nom receptionniste
-                                                                                    input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' value=`${taxation.nom_receptionniste}` required='')
+                                                                                    label.floating-label(for='nom_receptionniste') Nom declarant
+                                                                                    input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' value=`${taxation.nom_declarant}` required='')
                                                                             .col-sm-4
                                                                                 .form-group
-                                                                                    label.floating-label(for='telephone_receptionniste') T&eacute;l&eacute;phone receptionniste
-                                                                                    input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' value=`${taxation.telephone_receptioniste}` required='')
+                                                                                    label.floating-label(for='telephone_receptionniste') T&eacute;l&eacute;phone déclarant
+                                                                                    input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' value=`${taxation.telephone_declarant}` required='')
                                                                             .col-sm-12.text-right
                                                                                 button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
                                                                                 button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
@@ -128,6 +126,5 @@ block content
                                         th Date taxation
                                         th Montant USD
                                         th Montant CDF
-                                        th Receptionniste
                                         th Action
         // Individual Column Searching (Text Inputs) end

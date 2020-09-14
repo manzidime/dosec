@@ -6,73 +6,188 @@ module.exports = class Taxation {
         this.data = data;
     }
 
+    async insert(nbActe, globalSum, other, taux) {
+        //3. Insertion de la taxation
+        const [rows] = await DB.query(`
+            INSERT INTO taxation
+            SET taux=?,
+                id_contribuable=?,
+                montant=?,
+                devise=?,
+                id_exercice=?,
+                id_taxe=?,
+                id_site=?,
+                nom_declarant=?,
+                telephone_declarant=?,
+                date_taxation=current_timestamp(),
+                id_agent=?,
+                nombre_acte=?,
+                date_creation=current_timestamp()
+        `, [taux.valeur, this.data.id_contribuable, globalSum,
+            other.devise, this.data.id_exercice, this.data.id_taxe,
+            this.data.id_site, this.data.nom_declarant,
+            this.data.telephone_declarant, this.data.id_agent, nbActe]);
+
+        //4. Definition du numero taxation
+        const lastIdTaxation = rows.insertId;
+        const count = 1000 + lastIdTaxation;
+        const numTaxation = `${count}/${other.code_taxe}/${other.exercice}`;
+
+        await DB.query(`UPDATE taxation SET num_taxation='${numTaxation}' WHERE id_taxation=${lastIdTaxation}`);
+
+        return rows;
+    }
+
     //Creation
     async createOne() {
         try {
 
+            /**********************************************************************
+             * BLOCK 1 : s'il y a plusieurs vehicules
+             * */
+
             //1. Définition du montant
-            const [car] = await DB.query(`
-                SELECT *
-                FROM vehicule
-                WHERE id_vehicule = ?
-            `, this.data.id_vehicule);
+            if (this.data.id_vehicule.length > 1) {
+                const vehicules = this.data.id_vehicule.map(async (el) => {
+                    const [vehicule] = await DB.query(`
+                        SELECT *
+                        FROM vehicule
+                        WHERE id_vehicule = ?
+                    `, el);
 
-            if (car.length !== 1) {
-                throw new AppError('Problème avec le vehicule, veillez contacter l\'administrateur', 403);
+                    if (this.data.id_taxe == 15) {
+                        const [montant] = await DB.query(
+                            `SELECT montant, code_taxe,exercice,devise
+                                 FROM v_all_tarif
+                                 WHERE id_taxe=? 
+                                   AND id_categorie=${vehicule[0].id_categorie} 
+                                   AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
+                                   AND echeance=?`,
+                            [this.data.id_taxe, this.data.echeance],
+                        );
+
+                        return montant;
+
+                    }
+                    else {
+                        const [montant] = await DB.query(
+                            `SELECT montant, code_taxe,exercice,devise
+                                 FROM v_all_tarif
+                                 WHERE id_taxe=? 
+                                   AND id_categorie=${vehicule[0].id_categorie} 
+                                   AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
+                             `,
+                            [this.data.id_taxe],
+                        );
+
+                        return montant;
+                    }
+
+                });
+
+                //2. Définition du taux
+                const [taux] = await DB.query(
+                        `SELECT valeur, date
+                         FROM taux
+                         ORDER BY date DESC
+                         LIMIT 1`);
+
+                //3.Insertion
+
+                //Montant global
+                const montant = await Promise.all(vehicules);
+                const merge = montant.flat(1);
+                const valeurInitiale = 0;
+
+                const sumMontant = merge.reduce((acum, val) => {
+                    return acum + Math.round(val.montant);
+                }, valeurInitiale);
+
+                //Nombre d'acte
+                const nombreActe = montant.length;
+
+                const idTaxation = await this.insert(nombreActe, sumMontant, merge[0], taux[0]);
+
+                //4. Insert in taxation detail
+                const details = this.data.id_vehicule.map(async (el, index) => {
+                    const [details] = await DB.query(
+                            `INSERT INTO detail_taxation
+                             SET id_taxation=?,
+                                 id_vehicule=?,
+                                 montant=?,
+                                 devise=?`, [idTaxation.insertId, el, merge[index].montant, merge[index].devise]);
+                    return details;
+                });
+
             }
 
-            const res = car[0];
+            /**********************************************************************
+             * BLOCK 2 : s'il n'y a qu'un seul vehicule
+             * */
 
-            const [montant] = await DB.query(`
-                    SELECT montant, code_taxe,exercice,devise FROM v_all_tarif WHERE id_taxe=${res.id_taxe} AND id_categorie=${res.id_categorie} AND id_article_budgetaire=${res.id_article_budgetaire}
-                `);
+            else if (this.data.id_vehicule.length === 1) {
+                const [vehicule] = await DB.query(`
+                    SELECT *
+                    FROM vehicule
+                    WHERE id_vehicule = ?
+                `, this.data.id_vehicule[0]);
 
-            //2. Définition du taux
-            const [taux] = await DB.query(`SELECT valeur, date
-                                           FROM taux
-                                           ORDER BY date DESC
-                                           LIMIT 1`);
-            if (taux.length !== 1) {
-                throw new AppError('Problème avec le taux, veillez contacter l\'administrateur', 403);
+                let montant;
+
+                if (this.data.id_taxe == 15) {
+                    const [rows] = await DB.query(
+                        `SELECT montant, code_taxe,exercice,devise
+                                 FROM v_all_tarif
+                                 WHERE id_taxe=? 
+                                   AND id_categorie=${vehicule[0].id_categorie} 
+                                   AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
+                                   AND echeance=?`,
+                        [this.data.id_taxe, this.data.echeance],
+                    );
+
+                    montant = rows;
+                }
+                else {
+                    const [rows] = await DB.query(
+                        `SELECT montant, code_taxe,exercice,devise
+                                 FROM v_all_tarif
+                                 WHERE id_taxe=? 
+                                   AND id_categorie=${vehicule[0].id_categorie} 
+                                   AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
+                             `,
+                        [this.data.id_taxe],
+                    );
+
+                    montant = rows;
+                }
+
+                //2. Définition du taux
+                const [taux] = await DB.query(
+                        `SELECT valeur, date
+                         FROM taux
+                         ORDER BY date DESC
+                         LIMIT 1`);
+
+                //3.Insertion
+
+                //Nombre d'acte
+                const nombreActe = montant.length;
+
+                const idTaxation = await this.insert(nombreActe, montant[0].montant, montant[0], taux[0]);
+
+                //4. Insert in taxation detail
+                const [details] = await DB.query(
+                        `INSERT INTO detail_taxation
+                         SET id_taxation=?,
+                             id_vehicule=?,
+                             montant=?,
+                             devise=?`, [idTaxation.insertId, this.data.id_vehicule, montant[0].montant, montant[0].devise]);
+                return details;
             }
-
-            const vTaux = taux[0];
-
-            //3. Insertion de la taxation
-            const [rows] = await DB.query(`
-                INSERT INTO taxation
-                SET taux=?,
-                    id_contribuable=?,
-                    montant=?,
-                    devise=?,
-                    id_exercice=?,
-                    id_taxe=?,
-                    id_site=?,
-                    nom_receptionniste=?,
-                    telephone_receptioniste=?,
-                    date_taxation=current_timestamp(),
-                    id_agent=?,
-                    id_vehicule=?,
-                    date_creation=current_timestamp()
-            `, [vTaux.valeur, this.data.id_contribuable, montant.length !== 0 ? montant[0].montant : null,
-                montant.length !== 0 ? montant[0].devise : null, this.data.id_exercice, this.data.id_taxe,
-                this.data.id_site, this.data.nom_receptionniste,
-                this.data.telephone_receptioniste, this.data.id_agent,
-                this.data.id_vehicule]);
-
-            //4. Definition du numero taxation
-            const lastIdTaxation = rows.insertId;
-            const count = 1000 + lastIdTaxation;
-            const numTaxation = montant.length === 1 ?
-                `${count}/${montant[0].code_taxe}/${montant[0].exercice}` : null;
-            await DB.query(`UPDATE taxation SET num_taxation='${numTaxation}' WHERE id_taxation=${lastIdTaxation}`);
-
-            return rows;
 
         } catch (err) {
             throw err;
         }
-
     }
 
     //Obtenir tous

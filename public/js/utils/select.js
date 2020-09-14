@@ -9,6 +9,8 @@ export const getTaxe2 = async (id) => {
             url: `/api/v1/taxe/type/${id}`,
         });
 
+        //Desactivation de l'écheance si la taxe controle technique n'est pas selctionné
+
         if (res.data.status === 'success') {
             const taxes = res.data.data.rows;
 
@@ -45,10 +47,8 @@ export const getVehicules = async (id) => {
         if (res.data.status === 'success') {
             const vehicules = res.data.data.rows;
 
-            console.log(vehicules);
-
             const options = vehicules.map((el, index) => {
-                return `<option value="${el.id_vehicule}">${el.numero_plaque} | ${el.numero_chassis} | ${el.marque} | ${el.couleur} | ${el.model} </option>`;
+                return `<option class="f-16" value="${el.id_vehicule}">${el.numero_plaque} | ${el.numero_chassis} | ${el.marque} | ${el.couleur} | ${el.model} </option><hr>`;
             })
             .join(' ');
 
@@ -163,38 +163,6 @@ export const articleBytype = async (id) => {
             if (dom.articles) {
                 clearHtml(dom.articles);
                 dom.articles.innerHTML = options;
-            }
-        }
-    } catch (err) {
-        console.log(err.response.data.message);
-    }
-
-};
-
-export const getTaxe = async (id) => {
-    try {
-        const res = await axios({
-            method: 'GET',
-            url: `/api/v1/taxe/type/${id}`,
-        });
-
-        if (res.data.status === 'success') {
-            const taxes = res.data.data.rows;
-
-            const options = taxes.map((el, index) => {
-                return `<option value="${el.id_taxe}">${el.designation}</option>`;
-            })
-            .join(' ');
-
-            if (dom.types.length !== 0) {
-                dom.types.forEach((el, index) => {
-                    clearHtml(dom.taxes[index]);
-                    dom.taxes[index].innerHTML = options;
-                });
-            }
-
-            if (dom.taxe) {
-                dom.taxe.innerHTML = options;
             }
         }
     } catch (err) {

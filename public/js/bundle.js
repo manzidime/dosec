@@ -6659,10 +6659,12 @@ var _default = {
   vehicules: document.querySelectorAll('.vehicule'),
   service: document.getElementById('service'),
   services: document.querySelectorAll('.services'),
-  nomReceptionniste: document.getElementById('nom_receptionniste'),
-  nomReceptionnistes: document.querySelectorAll('.nom_receptionniste'),
-  telephoneReceptionniste: document.getElementById('telephone_receptionniste'),
-  telephoneReceptionnistes: document.querySelectorAll('.telephone_receptionniste'),
+  nomDeclarant: document.getElementById('nom_declarant'),
+  nomDeclarantUpdate: document.querySelectorAll('.nom_declarant'),
+  telephoneDeclarant: document.getElementById('telephone_declarant'),
+  telephoneDeclarantUpdate: document.querySelectorAll('.telephone_declarant'),
+  echeance: document.getElementById('echeance'),
+  echeanceUpdate: document.querySelectorAll('.echeance'),
   formValidation: document.querySelectorAll('.form-validation-taxation'),
   compte: document.querySelectorAll('.compte'),
   avis: document.querySelectorAll('.avis'),
@@ -9054,7 +9056,7 @@ exports.updateVehicule = updateVehicule;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTaxe = exports.articleBytype = exports.quartiersByCommune = exports.communeByDistrict = exports.getVehicules = exports.getTaxe2 = void 0;
+exports.articleBytype = exports.quartiersByCommune = exports.communeByDistrict = exports.getVehicules = exports.getTaxe2 = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -9085,6 +9087,7 @@ var getTaxe2 = /*#__PURE__*/function () {
           case 3:
             res = _context.sent;
 
+            //Desactivation de l'écheance si la taxe controle technique n'est pas selctionné
             if (res.data.status === 'success') {
               taxes = res.data.data.rows;
               options = taxes.map(function (el, index) {
@@ -9146,9 +9149,8 @@ var getVehicules = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               vehicules = res.data.data.rows;
-              console.log(vehicules);
               options = vehicules.map(function (el, index) {
-                return "<option value=\"".concat(el.id_vehicule, "\">").concat(el.numero_plaque, " | ").concat(el.numero_chassis, " | ").concat(el.marque, " | ").concat(el.couleur, " | ").concat(el.model, " </option>");
+                return "<option class=\"f-16\" value=\"".concat(el.id_vehicule, "\">").concat(el.numero_plaque, " | ").concat(el.numero_chassis, " | ").concat(el.marque, " | ").concat(el.couleur, " | ").concat(el.model, " </option><hr>");
               }).join(' ');
 
               if (_dom.default.contribuables.length !== 0) {
@@ -9368,64 +9370,6 @@ var articleBytype = /*#__PURE__*/function () {
 }();
 
 exports.articleBytype = articleBytype;
-
-var getTaxe = /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(id) {
-    var res, taxes, options;
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return (0, _axios.default)({
-              method: 'GET',
-              url: "/api/v1/taxe/type/".concat(id)
-            });
-
-          case 3:
-            res = _context6.sent;
-
-            if (res.data.status === 'success') {
-              taxes = res.data.data.rows;
-              options = taxes.map(function (el, index) {
-                return "<option value=\"".concat(el.id_taxe, "\">").concat(el.designation, "</option>");
-              }).join(' ');
-
-              if (_dom.default.types.length !== 0) {
-                _dom.default.types.forEach(function (el, index) {
-                  (0, _alert.clearHtml)(_dom.default.taxes[index]);
-                  _dom.default.taxes[index].innerHTML = options;
-                });
-              }
-
-              if (_dom.default.taxe) {
-                _dom.default.taxe.innerHTML = options;
-              }
-            }
-
-            _context6.next = 10;
-            break;
-
-          case 7:
-            _context6.prev = 7;
-            _context6.t0 = _context6["catch"](0);
-            console.log(_context6.t0.response.data.message);
-
-          case 10:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 7]]);
-  }));
-
-  return function getTaxe(_x6) {
-    return _ref6.apply(this, arguments);
-  };
-}();
-
-exports.getTaxe = getTaxe;
 },{"axios":"../../node_modules/axios/index.js","./dom":"utils/dom.js","./alert":"utils/alert.js"}],"newTaxation.js":[function(require,module,exports) {
 "use strict";
 
@@ -9465,7 +9409,7 @@ var newTaxation = /*#__PURE__*/function () {
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              (0, _alert.alert)('alert-success', 'Taxation créée', _dom.default.containerError);
+              (0, _alert.alert)('alert-success', ' Taxation créée', _dom.default.containerError);
 
               _dom.default.formNewTaxation.reset();
             }
@@ -10529,7 +10473,18 @@ if (_dom.default.formUpdateV) {
 }
 /***************************************************************************************
  * TAXATION*/
-//1. get taxe by service
+//activation de l'échéance si le controle technique est selectionné
+
+
+if (_dom.default.taxe || _dom.default.taxes) {
+  _dom.default.taxe.addEventListener('change', function () {
+    _dom.default.echeance.disabled = _dom.default.taxe.value != 15;
+  });
+
+  _dom.default.taxes.forEach(function (el, index) {
+    _dom.default.echeance[index].disabled = el.value != 15;
+  });
+} //1. get taxe by service
 
 
 if (_dom.default.service) {
@@ -10627,24 +10582,34 @@ if (_dom.default.contribuables) {
 if (_dom.default.formNewTaxation) {
   _dom.default.formNewTaxation.addEventListener('submit', /*#__PURE__*/function () {
     var _ref22 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22(event) {
-      var body;
+      var vehicules, body;
       return regeneratorRuntime.wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
               event.preventDefault();
+
+              if (!_dom.default.vehicule) {
+                _context22.next = 6;
+                break;
+              }
+
+              vehicules = Array.from(_dom.default.vehicule.selectedOptions).map(function (el) {
+                return el.value;
+              });
               body = {
                 id_exercice: _dom.default.exercice.value,
                 id_taxe: _dom.default.taxe.value,
-                nom_receptionniste: _dom.default.nomReceptionniste.value,
-                telephone_receptioniste: _dom.default.telephoneReceptionniste.value,
-                id_vehicule: _dom.default.vehicule.value,
-                id_contribuable: _dom.default.contribuable.value
+                nom_declarant: _dom.default.nomDeclarant.value,
+                telephone_declarant: _dom.default.telephoneDeclarant.value,
+                id_vehicule: vehicules,
+                id_contribuable: _dom.default.contribuable.value,
+                echeance: _dom.default.echeance.value
               };
-              _context22.next = 4;
+              _context22.next = 6;
               return (0, _newTaxation.newTaxation)(body);
 
-            case 4:
+            case 6:
             case "end":
               return _context22.stop();
           }

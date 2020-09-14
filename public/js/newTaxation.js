@@ -12,7 +12,7 @@ export const newTaxation = async (body) => {
         });
 
         if (res.data.status === 'success') {
-            alert('alert-success', 'Taxation créée', dom.containerError);
+            alert('alert-success', ' Taxation créée', dom.containerError);
             dom.formNewTaxation.reset();
         }
     } catch (err) {

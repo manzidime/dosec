@@ -12,9 +12,9 @@ exports.getIdUser = (req, res, next) => {
 };
 
 exports.checkData = (req, res, next) => {
-    const {id_exercice, id_taxe, id_site, nom_receptionniste, telephone_receptioniste, id_vehicule} = req.body;
+    const {id_exercice, id_taxe, id_site, nom_declarant, telephone_declarant, id_vehicule} = req.body;
 
-    if (!id_exercice || !id_taxe || !id_site || !nom_receptionniste || !telephone_receptioniste || !id_vehicule) {
+    if (!id_exercice || !id_taxe || !id_site || !nom_declarant || !telephone_declarant || !id_vehicule) {
         return next(new AppError('Veillez remplir tous champs!', 400));
     }
     next();

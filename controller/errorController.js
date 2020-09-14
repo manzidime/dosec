@@ -106,7 +106,6 @@ module.exports = (err, req, res, next) => {
         sendErrorDev(err, req, res);
     }
     if (config.node_env === 'production') {
-        console.log(config.node_env);
         let error = {...err};
         error.message = err.message;
 

@@ -244,6 +244,17 @@ if (dom.formUpdateV) {
 /***************************************************************************************
  * TAXATION*/
 
+//activation de l'échéance si le controle technique est selectionné
+if (dom.taxe || dom.taxes) {
+    dom.taxe.addEventListener('change', () => {
+        dom.echeance.disabled = dom.taxe.value != 15;
+    });
+
+    dom.taxes.forEach((el, index) => {
+        dom.echeance[index].disabled = el.value != 15;
+    });
+}
+
 //1. get taxe by service
 if (dom.service) {
     dom.service.addEventListener('change', async (event) => {
@@ -283,16 +294,25 @@ if (dom.formNewTaxation) {
     dom.formNewTaxation.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const body = {
-            id_exercice: dom.exercice.value,
-            id_taxe: dom.taxe.value,
-            nom_receptionniste: dom.nomReceptionniste.value,
-            telephone_receptioniste: dom.telephoneReceptionniste.value,
-            id_vehicule: dom.vehicule.value,
-            id_contribuable: dom.contribuable.value,
-        };
+        if (dom.vehicule) {
+            const vehicules = Array.from(dom.vehicule.selectedOptions)
+            .map(el => {
+                return el.value;
+            });
 
-        await newTaxation(body);
+            const body = {
+                id_exercice: dom.exercice.value,
+                id_taxe: dom.taxe.value,
+                nom_declarant: dom.nomDeclarant.value,
+                telephone_declarant: dom.telephoneDeclarant.value,
+                id_vehicule: vehicules,
+                id_contribuable: dom.contribuable.value,
+                echeance: dom.echeance.value,
+            };
+
+            await newTaxation(body);
+
+        }
 
     });
 }

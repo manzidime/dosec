@@ -9056,7 +9056,7 @@ exports.updateVehicule = updateVehicule;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.articleBytype = exports.quartiersByCommune = exports.communeByDistrict = exports.getVehicules = exports.getTaxe2 = void 0;
+exports.vehiculesFromTaxation = exports.articleBytype = exports.quartiersByCommune = exports.communeByDistrict = exports.getVehicules = exports.getTaxe2 = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -9132,7 +9132,7 @@ exports.getTaxe2 = getTaxe2;
 
 var getVehicules = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(id) {
-    var res, vehicules, options;
+    var res, vehicules, options, rows;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -9149,14 +9149,19 @@ var getVehicules = /*#__PURE__*/function () {
 
             if (res.data.status === 'success') {
               vehicules = res.data.data.rows;
+              console.log(vehicules); //Les vehicules proviennent de la table vehicules
+
               options = vehicules.map(function (el, index) {
                 return "<option class=\"f-16\" value=\"".concat(el.id_vehicule, "\">").concat(el.numero_plaque, " | ").concat(el.numero_chassis, " | ").concat(el.marque, " | ").concat(el.couleur, " | ").concat(el.model, " </option><hr>");
+              }).join(' ');
+              rows = vehicules.map(function (el, index) {
+                return "<tr><td>".concat(index + 1, "</td><td>").concat(el.numero_chassis, "</td><td>").concat(el.numero_plaque, "</td><td>").concat(el.model, "</td><td>").concat(el.couleur, "</td></tr>");
               }).join(' ');
 
               if (_dom.default.contribuables.length !== 0) {
                 _dom.default.contribuables.forEach(function (el, index) {
                   (0, _alert.clearHtml)(_dom.default.vehicules[index]);
-                  _dom.default.vehicules[index].innerHTML = options;
+                  _dom.default.vehicules[index].innerHTML = rows;
                 });
               }
 
@@ -9370,6 +9375,57 @@ var articleBytype = /*#__PURE__*/function () {
 }();
 
 exports.articleBytype = articleBytype;
+
+var vehiculesFromTaxation = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(id) {
+    var res, vehicules, rows, containerVehicules;
+    return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return (0, _axios.default)({
+              method: 'GET',
+              url: "/api/v1/taxation/vehicules-taxations/".concat(id)
+            });
+
+          case 3:
+            res = _context6.sent;
+
+            if (res.data.status === 'success') {
+              vehicules = res.data.data.all;
+              rows = vehicules.map(function (el, index) {
+                return "<tr><td>".concat(index + 1, "</td><td>").concat(el.montant, "</td><td>").concat(el.devise, "</td><td>").concat(el.numero_chassis, "</td><td>").concat(el.numero_plaque, "</td><td>").concat(el.model, "</td><td>").concat(el.marque, "</td><td>").concat(el.couleur, "</td></tr>");
+              }).join(' ');
+              containerVehicules = document.querySelector(".body-vehicules-".concat(id));
+              console.log(containerVehicules);
+              (0, _alert.clearHtml)(containerVehicules);
+              containerVehicules.innerHTML = rows;
+            }
+
+            _context6.next = 10;
+            break;
+
+          case 7:
+            _context6.prev = 7;
+            _context6.t0 = _context6["catch"](0);
+            console.log(_context6.t0.response.data.message);
+
+          case 10:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 7]]);
+  }));
+
+  return function vehiculesFromTaxation(_x6) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+exports.vehiculesFromTaxation = vehiculesFromTaxation;
 },{"axios":"../../node_modules/axios/index.js","./dom":"utils/dom.js","./alert":"utils/alert.js"}],"newTaxation.js":[function(require,module,exports) {
 "use strict";
 
@@ -10476,13 +10532,18 @@ if (_dom.default.formUpdateV) {
 //activation de l'échéance si le controle technique est selectionné
 
 
-if (_dom.default.taxe || _dom.default.taxes) {
+if (_dom.default.taxe) {
   _dom.default.taxe.addEventListener('change', function () {
-    _dom.default.echeance.disabled = _dom.default.taxe.value != 15;
+    _dom.default.echeance.disabled = _dom.default.taxe.value * 1 !== 15;
   });
+}
 
+if (_dom.default.taxes) {
   _dom.default.taxes.forEach(function (el, index) {
-    _dom.default.echeance[index].disabled = el.value != 15;
+    el.addEventListener('change', function () {
+      console.log(el.value);
+      _dom.default.echeanceUpdate[index].disabled = el.value * 1 !== 15;
+    });
   });
 } //1. get taxe by service
 
@@ -10621,17 +10682,57 @@ if (_dom.default.formNewTaxation) {
       return _ref22.apply(this, arguments);
     };
   }());
+} //Get all vehicules from txation
+
+
+if (_dom.default.btnEdit) {
+  _dom.default.btnEdit.forEach( /*#__PURE__*/function () {
+    var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(el, index) {
+      return regeneratorRuntime.wrap(function _callee24$(_context24) {
+        while (1) {
+          switch (_context24.prev = _context24.next) {
+            case 0:
+              el.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
+                var id;
+                return regeneratorRuntime.wrap(function _callee23$(_context23) {
+                  while (1) {
+                    switch (_context23.prev = _context23.next) {
+                      case 0:
+                        id = el.dataset.id1;
+                        _context23.next = 3;
+                        return (0, _select.vehiculesFromTaxation)(id);
+
+                      case 3:
+                      case "end":
+                        return _context23.stop();
+                    }
+                  }
+                }, _callee23);
+              })));
+
+            case 1:
+            case "end":
+              return _context24.stop();
+          }
+        }
+      }, _callee24);
+    }));
+
+    return function (_x18, _x19) {
+      return _ref23.apply(this, arguments);
+    };
+  }());
 } //4. Update taxation
 
 
 if (_dom.default.formUpdateTaxation) {
   _dom.default.formUpdateTaxation.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23(event) {
+      var _ref25 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee23$(_context23) {
+        return regeneratorRuntime.wrap(function _callee25$(_context25) {
           while (1) {
-            switch (_context23.prev = _context23.next) {
+            switch (_context25.prev = _context25.next) {
               case 0:
                 event.preventDefault();
                 body = {
@@ -10642,78 +10743,10 @@ if (_dom.default.formUpdateTaxation) {
                   id_contribuable: _dom.default.contribuables[index].value
                 };
                 id = el.dataset.id;
-                _context23.next = 5;
+                _context25.next = 5;
                 return (0, _newTaxation.updateTaxation)(body, id, index);
 
               case 5:
-              case "end":
-                return _context23.stop();
-            }
-          }
-        }, _callee23);
-      }));
-
-      return function (_x18) {
-        return _ref23.apply(this, arguments);
-      };
-    }());
-  });
-} //5. Desactive taxation
-
-
-if (_dom.default.btnDeleteTaxation) {
-  _dom.default.btnDeleteTaxation.forEach(function (el, index) {
-    el.addEventListener('click', /*#__PURE__*/function () {
-      var _ref24 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(event) {
-        var id, body;
-        return regeneratorRuntime.wrap(function _callee24$(_context24) {
-          while (1) {
-            switch (_context24.prev = _context24.next) {
-              case 0:
-                event.preventDefault();
-                id = _dom.default.rowData[index].dataset.row;
-                body = {
-                  active: 'false'
-                };
-                _context24.next = 5;
-                return (0, _newTaxation.desableTaxation)(body, id);
-
-              case 5:
-              case "end":
-                return _context24.stop();
-            }
-          }
-        }, _callee24);
-      }));
-
-      return function (_x19) {
-        return _ref24.apply(this, arguments);
-      };
-    }());
-  });
-} //6.Validation taxation
-
-
-if (_dom.default.formValidation) {
-  _dom.default.formValidation.forEach(function (el, index) {
-    el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref25 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(event) {
-        var body, id;
-        return regeneratorRuntime.wrap(function _callee25$(_context25) {
-          while (1) {
-            switch (_context25.prev = _context25.next) {
-              case 0:
-                event.preventDefault();
-                body = {
-                  id_compte: _dom.default.compte[index].value,
-                  avis: _dom.default.avis[index].value
-                };
-                id = el.dataset.id;
-                console.log(body);
-                _context25.next = 6;
-                return (0, _newTaxation.validateTaxation)(body, id, index);
-
-              case 6:
               case "end":
                 return _context25.stop();
             }
@@ -10726,6 +10759,74 @@ if (_dom.default.formValidation) {
       };
     }());
   });
+} //5. Desactive taxation
+
+
+if (_dom.default.btnDeleteTaxation) {
+  _dom.default.btnDeleteTaxation.forEach(function (el, index) {
+    el.addEventListener('click', /*#__PURE__*/function () {
+      var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(event) {
+        var id, body;
+        return regeneratorRuntime.wrap(function _callee26$(_context26) {
+          while (1) {
+            switch (_context26.prev = _context26.next) {
+              case 0:
+                event.preventDefault();
+                id = _dom.default.rowData[index].dataset.row;
+                body = {
+                  active: 'false'
+                };
+                _context26.next = 5;
+                return (0, _newTaxation.desableTaxation)(body, id);
+
+              case 5:
+              case "end":
+                return _context26.stop();
+            }
+          }
+        }, _callee26);
+      }));
+
+      return function (_x21) {
+        return _ref26.apply(this, arguments);
+      };
+    }());
+  });
+} //6.Validation taxation
+
+
+if (_dom.default.formValidation) {
+  _dom.default.formValidation.forEach(function (el, index) {
+    el.addEventListener('submit', /*#__PURE__*/function () {
+      var _ref27 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee27(event) {
+        var body, id;
+        return regeneratorRuntime.wrap(function _callee27$(_context27) {
+          while (1) {
+            switch (_context27.prev = _context27.next) {
+              case 0:
+                event.preventDefault();
+                body = {
+                  id_compte: _dom.default.compte[index].value,
+                  avis: _dom.default.avis[index].value
+                };
+                id = el.dataset.id;
+                console.log(body);
+                _context27.next = 6;
+                return (0, _newTaxation.validateTaxation)(body, id, index);
+
+              case 6:
+              case "end":
+                return _context27.stop();
+            }
+          }
+        }, _callee27);
+      }));
+
+      return function (_x22) {
+        return _ref27.apply(this, arguments);
+      };
+    }());
+  });
 }
 /***************************************************************************************
  * ATTESTATION*/
@@ -10734,11 +10835,11 @@ if (_dom.default.formValidation) {
 
 if (_dom.default.formNewAttestation) {
   _dom.default.formNewAttestation.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(event) {
+    var _ref28 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee28(event) {
       var body;
-      return regeneratorRuntime.wrap(function _callee26$(_context26) {
+      return regeneratorRuntime.wrap(function _callee28$(_context28) {
         while (1) {
-          switch (_context26.prev = _context26.next) {
+          switch (_context28.prev = _context28.next) {
             case 0:
               event.preventDefault();
               body = {
@@ -10750,7 +10851,7 @@ if (_dom.default.formNewAttestation) {
                 numero_bordereau: _dom.default.numeroBordereau.value,
                 date_attestation: _dom.default.dateAttestation.value
               };
-              _context26.next = 4;
+              _context28.next = 4;
               return (0, _attestation.newAttestation)(body);
 
             case 4:
@@ -10758,14 +10859,14 @@ if (_dom.default.formNewAttestation) {
 
             case 5:
             case "end":
-              return _context26.stop();
+              return _context28.stop();
           }
         }
-      }, _callee26);
+      }, _callee28);
     }));
 
-    return function (_x21) {
-      return _ref26.apply(this, arguments);
+    return function (_x23) {
+      return _ref28.apply(this, arguments);
     };
   }());
 }

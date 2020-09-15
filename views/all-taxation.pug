@@ -28,56 +28,75 @@ block content
                                             td=`${taxation.devise && taxation.devise === 'CDF'?Math.round(taxation.montant * 1 / taxation.taux):Math.round(taxation.montant)} USD`
                                             td=`${taxation.devise && taxation.devise === 'USD'?Math.round(taxation.montant * 1 * taxation.taux):Math.round(taxation.montant)} CDF`
                                             td
-                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-id1=`${taxation.id_taxation}` data-target=`.bd-example-modal-lg-${index}`)
                                                     i.feather.icon-edit
                                                 .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
                                                     .modal-dialog.modal-xl
                                                         .modal-content.rounded-0
                                                             .modal-header
-                                                                h5#myLargeModalLabel.modal-title.h4 Mises à jour
+                                                                h5#myLargeModalLabel.modal-title.h4 Details
                                                                 button.close(type='button' data-dismiss='modal' aria-label='Close')
                                                                     span(aria-hidden='true') &times;
                                                             .modal-body
                                                                 .card-body
                                                                     form.needs-validation(novalidate='' data-id=`${taxation.id_taxation}`).form-update-taxation
-                                                                        .container-error
-                                                                        .row
-                                                                            .col-sm-4
-                                                                                .form-group.fill
-                                                                                    label.floating-label(for='service') Service assiette
-                                                                                    select.form-control.form-control-sm.rounded-0(required='').services
-                                                                                        option(disabled selected) Choisir service
-                                                                                        if services
-                                                                                        each service in services
-                                                                                            option(value=`${service.id_serviceAssiette}`)=service.designation
-                                                                            .col-sm-4
-                                                                                .form-group
-                                                                                    label.floating-label(for='taxe') Taxe
-                                                                                    select.form-control.rounded-0.form-control-sm(required='').taxes
-                                                                                        option(value=`${taxation.id_taxe}` disabled selected)=taxation.taxe
-                                                                            .col-sm-4
-                                                                                label.floating-label(for='contribuable') Contribuable
-                                                                                select.form-control.contribuable.form-control-sm.rounded-0
-                                                                                    option(value=`${taxation.id_contribuable}` disabled selected)=taxation.redevable
-                                                                                    if contribuables
-                                                                                        each contribuable in contribuables
-                                                                                            option(value=`${contribuable.id_contribuable}`)=contribuable.nom
-                                                                            .col-sm-4
-                                                                                .form-group
-                                                                                    label.floating-label(for='vehicule') Vehicules
-                                                                                    select.form-control.rounded-0.form-control-sm(required='').vehicule
-                                                                                        option(value=`${taxation.id_vehicule}` disabled selected)=`${taxation.numero_plaque} | ${taxation.numero_chassis} | ${taxation.marque} | ${taxation.couleur} | ${taxation.model}`
-                                                                            .col-sm-4
-                                                                                .form-group
-                                                                                    label.floating-label(for='nom_receptionniste') Nom declarant
-                                                                                    input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' value=`${taxation.nom_declarant}` required='')
-                                                                            .col-sm-4
-                                                                                .form-group
-                                                                                    label.floating-label(for='telephone_receptionniste') T&eacute;l&eacute;phone déclarant
-                                                                                    input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' value=`${taxation.telephone_declarant}` required='')
-                                                                            .col-sm-12.text-right
-                                                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
-                                                                                button.btn.btn-danger.rounded-0.btn-sm(type='Reset') Reprendre
+                                                                        table.table.table-sm.table-borderless
+                                                                            tbody
+                                                                                tr
+                                                                                    th(scope='row') Services
+                                                                                    td
+                                                                                        select.form-control.form-control-sm.rounded-0(required='' disabled).services
+                                                                                            option(disabled selected) Choisir service
+                                                                                            if services
+                                                                                            each service in services
+                                                                                                option(value=`${service.id_serviceAssiette}`)=service.designation
+                                                                                tr
+                                                                                    th(scope='row') Taxe
+                                                                                    td
+                                                                                        select.form-control.rounded-0.form-control-sm(required='' disabled).taxes
+                                                                                            option(value=`${taxation.id_taxe}` disabled selected)=taxation.taxe
+                                                                                tr
+                                                                                    th(scope='row') Nom déclarant
+                                                                                    td
+                                                                                        input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' disabled value=`${taxation.nom_declarant}` required='')
+                                                                                tr
+                                                                                    th(scope='row') Téléphone déclarant
+                                                                                    td
+                                                                                        input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' disabled value=`${taxation.telephone_declarant}` required='')
+                                                                                tr
+                                                                                    th(scope='row') Echéance
+                                                                                    td
+                                                                                        select.echeance.form-control.form-control-sm.rounded-0(disabled)
+                                                                                            option(selected disabled value='') Choix échéance
+                                                                                            option(value='1') Premier semestre
+                                                                                            option(value='2') Deuxième semestre
+                                                                                tr
+                                                                                    th(scope='row') Contribuable
+                                                                                    td
+                                                                                        select.form-control.contribuable.form-control-sm.rounded-0(disabled)
+                                                                                            option(value=`${taxation.id_contribuable}` disabled selected)=taxation.redevable
+                                                                                            if contribuables
+                                                                                                each contribuable in contribuables
+                                                                                                    option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                                                                tr
+                                                                                    th(scope='row') Vehicules
+                                                                                    td
+                                                                                        table.table.table-sm
+                                                                                            thead
+                                                                                                tr
+                                                                                                    th Nombre
+                                                                                                    th Montant
+                                                                                                    th Devise
+                                                                                                    th Chassis
+                                                                                                    th Plaque
+                                                                                                    th Model
+                                                                                                    th Marque
+                                                                                                    th Couleur
+                                                                                            tbody(class=`body-vehicules-${taxation.id_taxation} vehicule`)
+
+                                                                                //tr
+                                                                                //    td
+                                                                                //        button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
                                                 a.btn.btn-success.mr-1.btn-sm.rounded-0.btn-validate-taxation(href='#' data-toggle='modal' data-title='Validation' data-target=`.validation-taxation-${index}`)
                                                     i.feather.icon-check
                                                 .modal.fade(tabindex='-1' role='dialog' class=`validation-taxation-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')

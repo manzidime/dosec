@@ -47,15 +47,25 @@ export const getVehicules = async (id) => {
         if (res.data.status === 'success') {
             const vehicules = res.data.data.rows;
 
+            console.log(vehicules);
+
+            //Les vehicules proviennent de la table vehicules
             const options = vehicules.map((el, index) => {
                 return `<option class="f-16" value="${el.id_vehicule}">${el.numero_plaque} | ${el.numero_chassis} | ${el.marque} | ${el.couleur} | ${el.model} </option><hr>`;
             })
             .join(' ');
 
+            const rows = vehicules.map((el, index) => {
+                return `<tr><td>${index +
+                1}</td><td>${el.numero_chassis}</td><td>${el.numero_plaque}</td><td>${el.model}</td><td>${el.couleur}</td></tr>`;
+            })
+            .join(' ');
+
+
             if (dom.contribuables.length !== 0) {
                 dom.contribuables.forEach((el, index) => {
                     clearHtml(dom.vehicules[index]);
-                    dom.vehicules[index].innerHTML = options;
+                    dom.vehicules[index].innerHTML = rows;
                 });
             }
 
@@ -169,4 +179,30 @@ export const articleBytype = async (id) => {
         console.log(err.response.data.message);
     }
 
+};
+
+export const vehiculesFromTaxation = async (id) => {
+    try {
+        const res = await axios({
+            method: 'GET',
+            url: `/api/v1/taxation/vehicules-taxations/${id}`,
+        });
+        if (res.data.status === 'success') {
+            const vehicules = res.data.data.all;
+
+            const rows = vehicules.map((el, index) => {
+                return `<tr><td>${index +
+                1}</td><td>${el.montant}</td><td>${el.devise}</td><td>${el.numero_chassis}</td><td>${el.numero_plaque}</td><td>${el.model}</td><td>${el.marque}</td><td>${el.couleur}</td></tr>`;
+            })
+            .join(' ');
+
+            const containerVehicules = document.querySelector(`.body-vehicules-${id}`);
+            console.log(containerVehicules);
+            clearHtml(containerVehicules);
+            containerVehicules.innerHTML = rows;
+
+        }
+    } catch (err) {
+        console.log(err.response.data.message);
+    }
 };

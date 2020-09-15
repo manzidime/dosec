@@ -116,7 +116,7 @@ exports.newTaxation = catchAsync(async (req, res, next) => {
 exports.allTaxation = catchAsync(async (req, res, next) => {
     const taxations = await new Taxation().getAll(req.user);
     const services = await new Service().getAll();
-    const contribuables = await new Contribuable().getAll(req.user);
+    const contribuables = await new Contribuable().getAllVehicules();
     const exercices = await new Exercice().getAll();
     const comptes = await new Compte().getAll();
 

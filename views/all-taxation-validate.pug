@@ -26,9 +26,9 @@ block content
                                             td=taxation.redevable
                                             td=taxation.description
                                             td=`${taxation.date_validation.toLocaleString('en-FR',{year: "numeric", month: "numeric", day: "numeric"})}`
-                                            td=`${taxation.devise && taxation.devise === 'CDF'?taxation.montant * 1 / taxation.taux:taxation.montant} USD`
-                                            td=`${taxation.devise && taxation.devise === 'USD'?taxation.montant * 1 * taxation.taux:taxation.montant} CDF`
-                                            td=taxation.nom_receptionniste
+                                            td=`${taxation.devise && taxation.devise === 'CDF'?Math.round(taxation.montant * 1 / taxation.taux):taxation.montant} USD`
+                                            td=`${taxation.devise && taxation.devise === 'USD'?Math.round(taxation.montant * 1 * taxation.taux):taxation.montant} CDF`
+                                            td=taxation.nom_declarant
                                             td
                                                 a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
                                                     i.feather.icon-edit
@@ -66,7 +66,7 @@ block content
                                                                             .col-sm-4
                                                                                 .form-group
                                                                                     label.floating-label(for='nom_receptionniste') Nom receptionniste
-                                                                                    input.form-control.rounded-0.form-control-sm(disabled value=`${taxation.nom_receptionniste}`)
+                                                                                    input.form-control.rounded-0.form-control-sm(disabled value=`${taxation.nom_declarant}`)
                                                                             .col-sm-4
                                                                                 .form-group
                                                                                     label.floating-label(for='') Taxe

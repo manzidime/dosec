@@ -20,6 +20,20 @@ exports.checkData = (req, res, next) => {
     next();
 };
 
+//All vehicules from taxation
+exports.getAllVehiculesTaxation = catchAsync(async (req, res, next) => {
+    const all = await new Taxation().getAllVehiculesTaxation(req.params.id);
+
+    res.status(200)
+    .json({
+        status: 'success',
+        results: all.length,
+        data: {
+            all,
+        },
+    });
+});
+
 //Validate taxation
 exports.validateTaxation = catchAsync(async (req, res, next) => {
     const validation = await new Taxation(req.body).validateTaxation(req.params.id);

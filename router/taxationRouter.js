@@ -10,6 +10,7 @@ router.use(authController.protect);
 router.delete('/disableOrActive/:id', taxationController.disableOrActive);
 router.patch('/activateTaxation/:id', taxationController.getIdUser, taxationController.validateTaxation);
 router.get('/taxation-valide', taxationController.getAllValide);
+router.get('/vehicules-taxations/:id', taxationController.getAllVehiculesTaxation);
 
 router.route('/')
 .post(taxationController.getIdUser,

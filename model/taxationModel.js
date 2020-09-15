@@ -56,31 +56,48 @@ module.exports = class Taxation {
                     `, el);
 
                     if (this.data.id_taxe == 15) {
-                        const [montant] = await DB.query(
-                            `SELECT montant, code_taxe,exercice,devise
+                        try {
+                            const [montant] = await DB.query(
+                                `SELECT montant, code_taxe,exercice,devise
                                  FROM v_all_tarif
                                  WHERE id_taxe=? 
                                    AND id_categorie=${vehicule[0].id_categorie} 
                                    AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
                                    AND echeance=?`,
-                            [this.data.id_taxe, this.data.echeance],
-                        );
+                                [this.data.id_taxe, this.data.echeance],
+                            );
 
-                        return montant;
+                            if (montant.length === 0) {
+                                throw new AppError('Problème entre la taxe et le vehicule!', 400);
+                            }
+
+                            return montant;
+                        } catch (err) {
+                            throw err;
+                        }
 
                     }
                     else {
-                        const [montant] = await DB.query(
-                            `SELECT montant, code_taxe,exercice,devise
+                        try {
+                            const [montant] = await DB.query(
+                                `SELECT montant, code_taxe,exercice,devise
                                  FROM v_all_tarif
                                  WHERE id_taxe=? 
                                    AND id_categorie=${vehicule[0].id_categorie} 
                                    AND id_article_budgetaire=${vehicule[0].id_article_budgetaire} 
                              `,
-                            [this.data.id_taxe],
-                        );
+                                [this.data.id_taxe],
+                            );
 
-                        return montant;
+                            if (montant.length === 0) {
+                                throw new AppError('Problème entre la taxe et le vehicule!', 400);
+                            }
+
+                            return montant;
+                        } catch (err) {
+                            throw err;
+                        }
+
                     }
 
                 });
@@ -161,6 +178,10 @@ module.exports = class Taxation {
                     montant = rows;
                 }
 
+                if (montant.length === 0) {
+                    throw new AppError('Problème entre la taxe et le vehicule', 400);
+                }
+
                 //2. Définition du taux
                 const [taux] = await DB.query(
                         `SELECT valeur, date
@@ -171,6 +192,7 @@ module.exports = class Taxation {
                 //3.Insertion
 
                 //Nombre d'acte
+                console.log(montant);
                 const nombreActe = montant.length;
 
                 const idTaxation = await this.insert(nombreActe, montant[0].montant, montant[0], taux[0]);
@@ -181,7 +203,8 @@ module.exports = class Taxation {
                          SET id_taxation=?,
                              id_vehicule=?,
                              montant=?,
-                             devise=?`, [idTaxation.insertId, this.data.id_vehicule, montant[0].montant, montant[0].devise]);
+                             devise=?`,
+                    [idTaxation.insertId, this.data.id_vehicule, montant[0].montant, montant[0].devise]);
                 return details;
             }
 
@@ -219,6 +242,19 @@ module.exports = class Taxation {
             throw err;
         }
 
+    }
+
+    //Get all vehicules from taxations
+    async getAllVehiculesTaxation(id) {
+        try {
+            const [rows] = await DB.query(
+                    `SELECT *
+                     FROM v_all_vehicules_taxations
+                     WHERE id_taxation = ?`, id);
+            return rows;
+        } catch (err) {
+            throw err;
+        }
     }
 
     //Ger all taxation valide

@@ -6,7 +6,14 @@ import {newPerson} from './newPerson';
 import {updatePerson} from './updatePerson';
 import {desable, desableCar} from './desable';
 import {newVehicule, updateVehicule} from './newVehicule';
-import {getTaxe2, getVehicules, communeByDistrict, quartiersByCommune, articleBytype} from './utils/select';
+import {
+    getTaxe2,
+    getVehicules,
+    communeByDistrict,
+    quartiersByCommune,
+    articleBytype,
+    vehiculesFromTaxation,
+} from './utils/select';
 import {newTaxation, updateTaxation, desableTaxation, validateTaxation} from './newTaxation';
 import {newAttestation} from './attestation';
 
@@ -245,14 +252,20 @@ if (dom.formUpdateV) {
  * TAXATION*/
 
 //activation de l'échéance si le controle technique est selectionné
-if (dom.taxe || dom.taxes) {
+if (dom.taxe) {
     dom.taxe.addEventListener('change', () => {
-        dom.echeance.disabled = dom.taxe.value != 15;
+        dom.echeance.disabled = dom.taxe.value * 1 !== 15;
+    });
+}
+
+if (dom.taxes) {
+    dom.taxes.forEach((el, index) => {
+        el.addEventListener('change', () => {
+            console.log(el.value);
+            dom.echeanceUpdate[index].disabled = el.value * 1 !== 15;
+        });
     });
 
-    dom.taxes.forEach((el, index) => {
-        dom.echeance[index].disabled = el.value != 15;
-    });
 }
 
 //1. get taxe by service
@@ -313,6 +326,17 @@ if (dom.formNewTaxation) {
             await newTaxation(body);
 
         }
+
+    });
+}
+
+//Get all vehicules from txation
+if (dom.btnEdit) {
+    dom.btnEdit.forEach(async (el, index) => {
+        el.addEventListener('click', async () => {
+            const id = el.dataset.id1;
+            await vehiculesFromTaxation(id);
+        });
 
     });
 }

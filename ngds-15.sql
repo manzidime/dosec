@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 14/09/2020 19:29:31
+ Date: 15/09/2020 13:00:00
 */
 
 SET NAMES utf8mb4;
@@ -400,7 +400,7 @@ CREATE TABLE `detail_taxation`  (
   INDEX `id_vehicule`(`id_vehicule`) USING BTREE,
   CONSTRAINT `detail_taxation_ibfk_1` FOREIGN KEY (`id_taxation`) REFERENCES `taxation` (`id_taxation`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `detail_taxation_ibfk_2` FOREIGN KEY (`id_vehicule`) REFERENCES `vehicule` (`id_vehicule`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of detail_taxation
@@ -410,6 +410,7 @@ INSERT INTO `detail_taxation` VALUES (2, 39, 10, 25000, 'CDF');
 INSERT INTO `detail_taxation` VALUES (3, 40, 1, 120, 'USD');
 INSERT INTO `detail_taxation` VALUES (4, 40, 10, 95, 'USD');
 INSERT INTO `detail_taxation` VALUES (5, 41, 11, 145, 'USD');
+INSERT INTO `detail_taxation` VALUES (6, 42, 11, 40000, 'CDF');
 
 -- ----------------------------
 -- Table structure for district
@@ -1500,7 +1501,7 @@ CREATE TABLE `taxation`  (
   CONSTRAINT `taxation_ibfk_3` FOREIGN KEY (`id_compte`) REFERENCES `compte` (`id_compte`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `taxation_ibfk_4` FOREIGN KEY (`id_validateur`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `taxation_ibfk_6` FOREIGN KEY (`id_contribuable`) REFERENCES `contribuable` (`id_contribuable`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of taxation
@@ -1528,9 +1529,10 @@ INSERT INTO `taxation` VALUES (22, 1, 1, 41, NULL, '2020-09-11 11:16:51', 18, 'a
 INSERT INTO `taxation` VALUES (36, 1, 1, 41, '1036/TD/2020', '2020-09-14 10:09:26', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:09:26', 8, NULL, 'favorable', 2);
 INSERT INTO `taxation` VALUES (37, 1, 1, 41, '1037/TD/2020', '2020-09-14 10:10:58', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:10:58', 8, NULL, 'favorable', 2);
 INSERT INTO `taxation` VALUES (38, 1, 1, 41, '1038/TD/2020', '2020-09-14 10:19:21', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:19:21', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (39, 1, 1, 41, '1039/TD/2020', '2020-09-14 10:25:00', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:25:00', 8, NULL, 'favorable', 2);
+INSERT INTO `taxation` VALUES (39, 1, 1, 41, '1039/TD/2020', '2020-09-14 10:25:00', 18, 'malonda', '+243', 65000, 'CDF', 1, 1800.00, '2020-09-15 10:18:46', 18, 'ord', 'true', '2020-09-14 10:25:00', 8, NULL, 'favorable', 2);
 INSERT INTO `taxation` VALUES (40, 1, 15, 41, '1040/CTCH/2020', '2020-09-14 15:04:52', 18, 'malonda', '+243', 215, 'USD', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 15:04:52', 8, NULL, 'favorable', 2);
 INSERT INTO `taxation` VALUES (41, 1, 15, 41, '1041/CTCH/2020', '2020-09-14 15:07:22', 18, 'malonda', '+243', 145, 'USD', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 15:07:22', 9, NULL, 'favorable', 1);
+INSERT INTO `taxation` VALUES (42, 1, 1, 41, '1042/TD/2020', '2020-09-15 00:38:16', 18, 'malonda', '+243', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-15 00:38:16', 9, NULL, 'favorable', 1);
 
 -- ----------------------------
 -- Table structure for taxe
@@ -1693,13 +1695,19 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_tarif` AS select `
 -- View structure for v_all_taxation
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_taxation`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxation` AS select `taxation`.`id_taxation` AS `id_taxation`,`taxation`.`id_exercice` AS `id_exercice`,`taxation`.`id_taxe` AS `id_taxe`,`taxation`.`id_site` AS `id_site`,`taxation`.`devise` AS `devise`,`taxation`.`num_taxation` AS `num_taxation`,`taxation`.`date_taxation` AS `date_taxation`,`taxation`.`taux` AS `taux`,`taxation`.`id_agent` AS `id_agent`,`taxation`.`date_creation` AS `date_creation`,`taxation`.`active` AS `active`,`taxation`.`state` AS `state`,`taxation`.`id_compte` AS `id_compte`,`taxation`.`date_validation` AS `date_validation`,`taxation`.`id_validateur` AS `id_validateur`,`exercice`.`annee` AS `exercice`,`site`.`lieu` AS `lieu`,`taxateur`.`nom` AS `nom_taxateur`,`taxateur`.`prenom` AS `prenom_taxateur`,`validateur`.`nom` AS `nom_validateur`,`validateur`.`prenom` AS `prenom_validateur`,`taxation`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `redevable`,`taxation`.`montant` AS `montant`,`taxe`.`description` AS `description`,`taxation`.`penalite` AS `penalite`,`taxe`.`designation` AS `taxe`,`taxation`.`telephone_declarant` AS `telephone_declarant`,`taxation`.`nom_declarant` AS `nom_declarant`,`taxation`.`nombre_acte` AS `nombre_acte`,`taxation`.`avis` AS `avis` from ((((((`taxation` join `exercice` on(`taxation`.`id_exercice` = `exercice`.`id_exercice`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) join `site` on(`taxation`.`id_site` = `site`.`id`)) left join `agent` `taxateur` on(`taxation`.`id_agent` = `taxateur`.`id_agent`)) left join `agent` `validateur` on(`taxation`.`id_validateur` = `validateur`.`id_agent`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxation` AS select `taxation`.`id_taxation` AS `id_taxation`,`taxation`.`id_exercice` AS `id_exercice`,`taxation`.`id_taxe` AS `id_taxe`,`taxation`.`id_site` AS `id_site`,`taxation`.`devise` AS `devise`,`taxation`.`num_taxation` AS `num_taxation`,`taxation`.`date_taxation` AS `date_taxation`,`taxation`.`taux` AS `taux`,`taxation`.`date_creation` AS `date_creation`,`taxation`.`active` AS `active`,`taxation`.`state` AS `state`,`taxation`.`date_validation` AS `date_validation`,`exercice`.`annee` AS `exercice`,`site`.`lieu` AS `lieu`,`taxateur`.`nom` AS `nom_taxateur`,`taxateur`.`prenom` AS `prenom_taxateur`,`validateur`.`nom` AS `nom_validateur`,`validateur`.`prenom` AS `prenom_validateur`,`taxation`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `redevable`,`taxation`.`montant` AS `montant`,`taxe`.`description` AS `description`,`taxation`.`penalite` AS `penalite`,`taxe`.`designation` AS `taxe`,`taxation`.`telephone_declarant` AS `telephone_declarant`,`taxation`.`nom_declarant` AS `nom_declarant`,`taxation`.`nombre_acte` AS `nombre_acte`,`taxation`.`avis` AS `avis`,`taxation`.`id_validateur` AS `id_validateur`,`taxation`.`id_compte` AS `id_compte`,`taxation`.`id_agent` AS `id_agent`,`detail_taxation`.`id_vehicule` AS `id_vehicule`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile` from ((((((((`taxation` join `exercice` on(`taxation`.`id_exercice` = `exercice`.`id_exercice`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) join `site` on(`taxation`.`id_site` = `site`.`id`)) left join `agent` `taxateur` on(`taxation`.`id_agent` = `taxateur`.`id_agent`)) left join `agent` `validateur` on(`taxation`.`id_validateur` = `validateur`.`id_agent`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) group by `taxation`.`id_taxation`;
 
 -- ----------------------------
 -- View structure for v_all_vehicule
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_vehicule`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_vehicule` AS select `vehicule`.`id_vehicule` AS `id_vehicule`,`article_budgetaire`.`designation` AS `article_budgetaire`,`categorie`.`designation` AS `categorie`,`contribuable`.`nom` AS `nom`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`vehicule`.`mise_en_circulation` AS `mise_en_circulation`,`vehicule`.`active` AS `active`,`vehicule`.`date_creation` AS `date_creation`,`vehicule`.`id_agent` AS `id_agent`,`vehicule`.`id_site` AS `id_site`,`vehicule`.`id_contribuable` AS `id_contribuable`,`vehicule`.`id_categorie` AS `id_categorie`,`vehicule`.`id_article_budgetaire` AS `id_article_budgetaire` from (((`vehicule` join `article_budgetaire` on(`vehicule`.`id_article_budgetaire` = `article_budgetaire`.`id_article_budgetaire`)) join `categorie` on(`vehicule`.`id_categorie` = `categorie`.`id_categorie`)) join `contribuable` on(`vehicule`.`id_contribuable` = `contribuable`.`id_contribuable`));
+
+-- ----------------------------
+-- View structure for v_all_vehicules_taxations
+-- ----------------------------
+DROP VIEW IF EXISTS `v_all_vehicules_taxations`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_vehicules_taxations` AS select `detail_taxation`.`montant` AS `montant`,`detail_taxation`.`devise` AS `devise`,`taxation`.`id_taxation` AS `id_taxation`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`article_budgetaire`.`designation` AS `designation` from (((`taxation` join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) join `article_budgetaire` on(`vehicule`.`id_article_budgetaire` = `article_budgetaire`.`id_article_budgetaire`));
 
 -- ----------------------------
 -- View structure for v_id_taxation_tarif

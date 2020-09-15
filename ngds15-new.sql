@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 15/09/2020 13:00:00
+ Date: 15/09/2020 13:19:50
 */
 
 SET NAMES utf8mb4;
@@ -188,8 +188,6 @@ CREATE TABLE `attestation`  (
 -- ----------------------------
 -- Records of attestation
 -- ----------------------------
-INSERT INTO `attestation` VALUES (1, '2020-09-10', 'BGFI008', 10, 2800, 0, 28000, 'favorable', 'true', 18, 41, '2020-09-10 13:38:57');
-INSERT INTO `attestation` VALUES (2, '2020-09-11', 'aazazazazazazazz', 6, 1334750, 0, 1334750, 'defavorable', 'true', 18, 41, '2020-09-11 09:47:59');
 
 -- ----------------------------
 -- Table structure for banque
@@ -352,20 +350,6 @@ CREATE TABLE `contribuable`  (
 -- ----------------------------
 -- Records of contribuable
 -- ----------------------------
-INSERT INTO `contribuable` VALUES (8, 'EFAMBE', '+243852058798', 'Kinshasa', 3, 20, 79, 'Kadima', '8', '2020-09-06 01:59:44', 'false', 41, NULL, NULL);
-INSERT INTO `contribuable` VALUES (9, 'malonda', '+2438', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8896', '2020-09-06 19:30:31', 'false', 41, 18, NULL);
-INSERT INTO `contribuable` VALUES (10, 'malonda', '+243852058798', 'Kinshasa', 2, 14, 266, 'Kadima', '8', '2020-09-07 20:20:23', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (11, 'malonda', '+243852058798', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 06:49:08', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (12, 'malonda', '+243', 'kinshasa', 3, 20, 85, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 11:23:10', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (13, 'malonda', '+243852058798', 'kinshasa', 2, 4, 200, 'TOMBALBAYE N°07/42 ', '8', '2020-09-08 11:25:03', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (14, 'MANGUNGU KASSAY ALLAI', '+243819488420', 'kinshasa', 3, 20, 78, '14 rue', '15', '2020-09-11 16:07:23', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (15, 'MALONDA NZITA Dieu-Merci', '+243852058798', 'kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-11 19:13:28', 'false', 41, 18, '');
-INSERT INTO `contribuable` VALUES (16, 'nzita', '28999', 'kinshasa', 3, 24, 446, 'azazazaz', '155896', '2020-09-12 11:07:22', 'false', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (17, 'noel', '+243852058798', 'kinshasa', 2, 4, 239, 'bangala', '8', '2020-09-13 00:35:20', 'true', 41, 18, '');
-INSERT INTO `contribuable` VALUES (18, 'MALONDA NZITA Dieu-Merci', '+243852058798', 'kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-13 00:41:54', 'true', 41, 18, '');
-INSERT INTO `contribuable` VALUES (19, 'john', '+00005896', 'Kinshasa', 1, 11, 40, '14 rue', '6', '2020-09-13 01:05:12', 'true', 41, 18, 'ok');
-INSERT INTO `contribuable` VALUES (20, 'MAKIESE MALONDA brielle', '+243896831088', 'Kinshasa', 2, 14, 266, 'kadima', '8', '2020-09-13 01:10:07', 'true', 41, 18, '');
-INSERT INTO `contribuable` VALUES (21, 'nsoki', '78', 'Kinshasa', 3, 20, 86, 'azazaz', 'zazazaz', '2020-09-13 01:52:20', 'true', 41, 18, '');
 
 -- ----------------------------
 -- Table structure for detail_tarif
@@ -405,12 +389,6 @@ CREATE TABLE `detail_taxation`  (
 -- ----------------------------
 -- Records of detail_taxation
 -- ----------------------------
-INSERT INTO `detail_taxation` VALUES (1, 39, 1, 40000, 'CDF');
-INSERT INTO `detail_taxation` VALUES (2, 39, 10, 25000, 'CDF');
-INSERT INTO `detail_taxation` VALUES (3, 40, 1, 120, 'USD');
-INSERT INTO `detail_taxation` VALUES (4, 40, 10, 95, 'USD');
-INSERT INTO `detail_taxation` VALUES (5, 41, 11, 145, 'USD');
-INSERT INTO `detail_taxation` VALUES (6, 42, 11, 40000, 'CDF');
 
 -- ----------------------------
 -- Table structure for district
@@ -1506,33 +1484,6 @@ CREATE TABLE `taxation`  (
 -- ----------------------------
 -- Records of taxation
 -- ----------------------------
-INSERT INTO `taxation` VALUES (3, 1, 1, 35, 'blabla', '2020-09-09 00:00:00', 18, 'malondaa', '+243', 20000, 'CDF', 1, 2019.00, '2020-09-09 21:03:16', NULL, 'tax', 'false', '2020-09-09 17:11:38', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (4, 1, 1, 41, 'blabla', '2020-09-09 00:00:00', 18, 'malonda', '+243', 20000, 'USD', 1, 1968.00, '2020-09-11 00:18:27', 18, 'ord', 'true', '2020-09-09 17:12:43', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (5, 1, 1, 41, 'blabla', '2020-09-09 00:00:00', 18, 'malonda', '+243', 20000, 'USD', 1, 2000.00, '2020-09-10 23:37:34', 18, 'tax', 'false', '2020-09-09 20:48:39', 8, NULL, 'non favorable', NULL);
-INSERT INTO `taxation` VALUES (6, 1, 1, 41, 'blabla', '2020-09-09 00:00:00', 18, 'malonda', '+243', 20000, 'USD', 1, 2000.00, '2020-09-11 01:22:14', 18, 'ord', 'true', '2020-09-09 20:52:02', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (7, 1, 1, 41, 'blabla', '2020-09-09 21:19:07', 18, 'malonda', '+243', 20000, 'USD', 1, 2000.00, '2020-09-11 11:18:15', 18, 'ord', 'true', '2020-09-09 21:19:07', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (8, 1, 1, 41, 'blabla', '2020-09-09 21:23:52', 18, 'malonda', '+243', 20000, 'CDF', 1, 2019.00, '2020-09-09 21:26:46', 18, 'tax', 'false', '2020-09-09 21:23:52', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (9, 1, 1, 41, 'blabla', '2020-09-10 02:23:49', 18, 'malonda', '+243', 400000, 'USD', 2, 2000.00, '2020-09-11 01:04:10', 18, 'ord', 'true', '2020-09-10 02:23:49', 8, NULL, 'non favorable', NULL);
-INSERT INTO `taxation` VALUES (10, 1, 1, 41, 'blabla', '2020-09-10 02:25:15', 18, 'malondaaa', '+243', 400000, 'USD', 1, 2000.00, '2020-09-11 16:17:46', 18, 'ord', 'true', '2020-09-10 02:25:15', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (11, 1, 1, 41, 'blabla', '2020-09-10 02:26:09', 18, 'malonda', '+243', 400000, 'CDF', 2, 2000.00, '2020-09-11 00:08:36', 18, 'tax', 'true', '2020-09-10 02:26:09', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (12, 1, 1, 41, 'blabla', '2020-09-10 11:13:52', 18, 'malonda', '+243', 400000, 'CDF', NULL, 2000.00, NULL, NULL, 'tax', 'false', '2020-09-10 11:13:52', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (13, 1, 1, 41, 'blabla', '2020-09-10 12:04:27', 18, 'malonda', '+243', 25000, 'CDF', NULL, 2000.00, NULL, NULL, 'tax', 'false', '2020-09-10 12:04:27', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (14, 1, 1, 41, 'blabla', '2020-09-10 12:18:43', 18, 'malonda', '+243', 25000, 'CDF', 1, 2000.00, '2020-09-11 16:29:59', 18, 'ord', 'true', '2020-09-10 12:18:43', 8, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (15, 1, 1, 41, 'blabla', '2020-09-10 12:56:42', 18, 'malonda', '+243', 25000, 'CDF', 1, 1800.00, '2020-09-10 22:17:35', 18, 'tax', 'true', '2020-09-10 12:56:42', 8, NULL, 'non favorable', NULL);
-INSERT INTO `taxation` VALUES (16, 1, 9, 41, 'blabla', '2020-09-10 15:42:32', 18, 'ekila nkumu nono', '+243', 25000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-10 15:42:32', 10, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (17, 1, 3, 41, NULL, '2020-09-11 10:27:52', 18, 'ekila nkumu nono', '+243852058798', NULL, NULL, NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 10:27:52', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (18, 1, 3, 41, NULL, '2020-09-11 11:02:03', 18, 'ekila nkumu nono', 'zazazaz', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 11:02:03', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (19, 1, 3, 41, '000+19/TD/2020', '2020-09-11 11:06:04', 18, 'ekila nkumu nono', 'zazazaz', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 11:06:04', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (20, 1, 1, 41, NULL, '2020-09-11 11:12:42', 18, 'aaza', 'zazazaz', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 11:12:42', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (21, 1, 1, 41, NULL, '2020-09-11 11:16:49', 18, 'aaza', 'zazazaz', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 11:16:49', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (22, 1, 1, 41, NULL, '2020-09-11 11:16:51', 18, 'aaza', 'zazazaz', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-11 11:16:51', 9, NULL, 'favorable', NULL);
-INSERT INTO `taxation` VALUES (36, 1, 1, 41, '1036/TD/2020', '2020-09-14 10:09:26', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:09:26', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (37, 1, 1, 41, '1037/TD/2020', '2020-09-14 10:10:58', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:10:58', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (38, 1, 1, 41, '1038/TD/2020', '2020-09-14 10:19:21', 18, 'malonda', '+243', 65000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 10:19:21', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (39, 1, 1, 41, '1039/TD/2020', '2020-09-14 10:25:00', 18, 'malonda', '+243', 65000, 'CDF', 1, 1800.00, '2020-09-15 10:18:46', 18, 'ord', 'true', '2020-09-14 10:25:00', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (40, 1, 15, 41, '1040/CTCH/2020', '2020-09-14 15:04:52', 18, 'malonda', '+243', 215, 'USD', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 15:04:52', 8, NULL, 'favorable', 2);
-INSERT INTO `taxation` VALUES (41, 1, 15, 41, '1041/CTCH/2020', '2020-09-14 15:07:22', 18, 'malonda', '+243', 145, 'USD', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-14 15:07:22', 9, NULL, 'favorable', 1);
-INSERT INTO `taxation` VALUES (42, 1, 1, 41, '1042/TD/2020', '2020-09-15 00:38:16', 18, 'malonda', '+243', 40000, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-15 00:38:16', 9, NULL, 'favorable', 1);
 
 -- ----------------------------
 -- Table structure for taxe
@@ -1634,14 +1585,6 @@ CREATE TABLE `vehicule`  (
 -- ----------------------------
 -- Records of vehicule
 -- ----------------------------
-INSERT INTO `vehicule` VALUES (1, 3, 2, 8, '876PPM098', '2022AI01', 'BENZii', 'MERCEDES', 'GRISE', '12T', '2020-09-09', '2020-09-06 14:58:13', 'false', NULL, NULL);
-INSERT INTO `vehicule` VALUES (9, 2, 2, 10, 'zazazaza', 'zazaza', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-09 09:55:11', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (10, 1, 2, 8, '876PPM09999', '2022AI990128888', 'BENZ', 'MERCEDES', 'GRISE', '12T', '2020-02-27', '2020-09-10 02:14:24', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (11, 2, 2, 9, 'zazazazaazazaz', 'zazazazazazaz', 'azazaza', 'azazazaz', 'azazaza', 'zazazaza', '2020-09-25', '2020-09-10 08:30:37', 'false', 18, 41);
-INSERT INTO `vehicule` VALUES (12, 1, 2, 10, 'zazazazaazazaza', 'zazazaaaaa', 'azazaza', 'aa', 'blue', 'zazazaza', '2020-09-26', '2020-09-10 08:36:29', 'false', 18, 41);
-INSERT INTO `vehicule` VALUES (13, 2, 1, 14, 'zazazazaazazazklll', 'zazazazazazazbj n', 'HIAS', 'TOYOTA', 'Jaune', '17tb', '2020-09-11', '2020-09-11 16:11:44', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (14, 2, 2, 15, 'FHGFHGFH', 'dsdsdsdsds', 'HIAS', 'toyota', 'blue', 'zazazaza', '2020-01-30', '2020-09-11 19:29:34', 'true', 18, 41);
-INSERT INTO `vehicule` VALUES (15, 2, 1, 19, 'zz', 'zz', 'zz', 'zz', 'marron', 'zz', '2020-02-27', '2020-09-13 12:05:58', 'true', 18, 41);
 
 -- ----------------------------
 -- View structure for v_all_agent
@@ -1719,19 +1662,13 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_id_taxation_tarif` AS 
 -- View structure for v_note_calcul
 -- ----------------------------
 DROP VIEW IF EXISTS `v_note_calcul`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_note_calcul` AS select `taxation`.`montant` AS `montant_taxe`,`taxation`.`date_taxation` AS `date_taxation`,`agent`.`nom` AS `nom_taxateur`,`fonction`.`libelle_fonction` AS `fonction_taxateur`,`contribuable`.`nom` AS `nom_redevable`,`contribuable`.`avenue` AS `avenue_redevable`,`quartier`.`libelle_quartier` AS `quartier_redevable`,`commune`.`libelle_commune` AS `commune_redevable`,`contribuable`.`numero` AS `numro_avenue_redevable`,`contribuable`.`telephone` AS `telephone_redevable`,`taxation`.`num_taxation` AS `num_taxation`,`article_budgetaire`.`designation` AS `article_budgetaire`,`taxe`.`designation` AS `acte_generateur`,`service_assiette`.`designation` AS `service_taxateur`,`taxation`.`devise` AS `devise` from ((((((((((`attestation` join `taxation` on(`attestation`.`id_taxation` = `taxation`.`id_taxation`)) join `agent` on(`taxation`.`id_agent` = `agent`.`id_agent`)) join `fonction` on(`agent`.`id_fonction` = `fonction`.`id_fonction`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `quartier` on(`contribuable`.`id_quartier` = `quartier`.`id_quartier`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune`)) join `vehicule` on(`ngds`.`taxation`.`id_vehicule` = `ngds`.`vehicule`.`id_vehicule`)) join `article_budgetaire` on(`ngds`.`vehicule`.`id_article_budgetaire` = `ngds`.`article_budgetaire`.`id_article_budgetaire`)) join `service_assiette`) join `taxe` on(`ngds`.`service_assiette`.`id_serviceAssiette` = `ngds`.`taxe`.`id_service_assiette` and `ngds`.`taxation`.`id_taxe` = `ngds`.`taxe`.`id_taxe`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_note_calcul` AS select `taxation`.`montant` AS `montant_taxe`,`taxation`.`date_taxation` AS `date_taxation`,`agent`.`nom` AS `nom_taxateur`,`fonction`.`libelle_fonction` AS `fonction_taxateur`,`contribuable`.`nom` AS `nom_redevable`,`contribuable`.`avenue` AS `avenue_redevable`,`quartier`.`libelle_quartier` AS `quartier_redevable`,`commune`.`libelle_commune` AS `commune_redevable`,`contribuable`.`numero` AS `numro_avenue_redevable`,`contribuable`.`telephone` AS `telephone_redevable`,`taxation`.`num_taxation` AS `num_taxation`,`taxe`.`designation` AS `acte_generateur`,`service_assiette`.`designation` AS `service_taxateur`,`taxation`.`devise` AS `devise` from ((((((((`attestation` join `taxation` on(`attestation`.`id_taxation` = `taxation`.`id_taxation`)) join `agent` on(`taxation`.`id_agent` = `agent`.`id_agent`)) join `fonction` on(`agent`.`id_fonction` = `fonction`.`id_fonction`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `quartier` on(`contribuable`.`id_quartier` = `quartier`.`id_quartier`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune`)) join `service_assiette`) join `taxe` on(`service_assiette`.`id_serviceAssiette` = `taxe`.`id_service_assiette` and `taxation`.`id_taxe` = `taxe`.`id_taxe`));
 
 -- ----------------------------
 -- View structure for v_part_dosec
 -- ----------------------------
 DROP VIEW IF EXISTS `v_part_dosec`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_part_dosec` AS select `taxation`.`num_taxation` AS `num_taxation`,date_format(`taxation`.`date_taxation`,'%d-%m-%Y') AS `date_taxation`,date_format(`attestation`.`date_attestation`,'%d-%m-%Y') AS `date_attestation`,`attestation`.`montant` AS `montant`,`taxe`.`designation` AS `taxe`,`attestation`.`montant` * 0.45 AS `part_dosec`,`attestation`.`montant` * 0.55 AS `part_ministere` from ((`taxation` join `attestation` on(`taxation`.`id_taxation` = `attestation`.`id_taxation`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`));
-
--- ----------------------------
--- View structure for v_tarif_taxation
--- ----------------------------
-DROP VIEW IF EXISTS `v_tarif_taxation`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_tarif_taxation` AS select `ngds`.`tarif`.`montant` AS `montant`,`ngds`.`tarif`.`devise` AS `devise`,`v_id_taxation_tarif`.`id_vehicule` AS `id_vehicule`,`v_id_taxation_tarif`.`id_article_budgetaire` AS `id_article_budgetaire`,`v_id_taxation_tarif`.`id_categorie` AS `id_categorie`,`v_id_taxation_tarif`.`id_taxe` AS `id_taxe` from (`v_id_taxation_tarif` join `tarif` on(`v_id_taxation_tarif`.`id_article_budgetaire` = `ngds`.`tarif`.`id_article_budgetaire` and `v_id_taxation_tarif`.`id_categorie` = `ngds`.`tarif`.`id_categorie` and `v_id_taxation_tarif`.`id_taxe` = `ngds`.`tarif`.`id_taxe`)) group by `v_id_taxation_tarif`.`id_vehicule`;
 
 -- ----------------------------
 -- Triggers structure for table document_mvt

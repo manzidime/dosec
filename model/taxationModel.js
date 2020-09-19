@@ -7,11 +7,17 @@ module.exports = class Taxation {
     }
 
     async insert(nbActe, globalSum, other, taux) {
+        let penalite;
+        if (this.data.penalite * 1 !== 0) {
+            penalite = (Math.round(globalSum * this.data.penalite / 100) * 1) + (globalSum * 1);
+        }
+
         //3. Insertion de la taxation
         const [rows] = await DB.query(`
             INSERT INTO taxation
             SET taux=?,
                 id_contribuable=?,
+                montant_global=?,
                 montant=?,
                 devise=?,
                 id_exercice=?,
@@ -22,11 +28,15 @@ module.exports = class Taxation {
                 date_taxation=current_timestamp(),
                 id_agent=?,
                 nombre_acte=?,
+                penalite=?,
+                echeance=?,
                 date_creation=current_timestamp()
-        `, [taux.valeur, this.data.id_contribuable, globalSum,
+        `, [taux.valeur, this.data.id_contribuable, typeof penalite !== 'undefined' ? penalite : this.data.penalite = 0,
+            globalSum,
             other.devise, this.data.id_exercice, this.data.id_taxe,
             this.data.id_site, this.data.nom_declarant,
-            this.data.telephone_declarant, this.data.id_agent, nbActe]);
+            this.data.telephone_declarant, this.data.id_agent, nbActe,
+            this.data.penalite * 1 !== 0 ? this.data.penalite : this.data.penalite = 0, this.data.echeance]);
 
         //4. Definition du numero taxation
         const lastIdTaxation = rows.insertId;
@@ -55,6 +65,15 @@ module.exports = class Taxation {
                         WHERE id_vehicule = ?
                     `, el);
 
+                    //Test si ces articles budgetaires font déjà parti d'une même taxation
+                    const [check] = await DB.query(
+                        `SELECT id_vehicule,numero_chassis,numero_plaque FROM v_check_taxation WHERE id_vehicule=${this.data.id_vehicule} AND id_taxe=${this.data.id_taxe} `);
+                    console.log(check);
+                    if (check.length >= 1) {
+                        throw new AppError(
+                            `le vehicule portant ce numero du chassis:${check[0].numero_chassis} et ce numero de plaque:${check[0].numero_plaque} est déjà taxé pour la taxe:${check[0].taxe}`);
+                    }
+
                     if (this.data.id_taxe == 15) {
                         try {
                             const [montant] = await DB.query(
@@ -68,7 +87,8 @@ module.exports = class Taxation {
                             );
 
                             if (montant.length === 0) {
-                                throw new AppError('Problème entre la taxe et le vehicule!', 400);
+                                throw new AppError(
+                                    'Cet article n\'est pas affecté à cette taxe, veillez choisir autre taxe', 400);
                             }
 
                             return montant;
@@ -90,7 +110,8 @@ module.exports = class Taxation {
                             );
 
                             if (montant.length === 0) {
-                                throw new AppError('Problème entre la taxe et le vehicule!', 400);
+                                throw new AppError(
+                                    'Cet article n\'est pas affecté à cette taxe, veillez choisir autre taxe', 400);
                             }
 
                             return montant;
@@ -143,6 +164,16 @@ module.exports = class Taxation {
              * */
 
             else if (this.data.id_vehicule.length === 1) {
+
+                //Test si ces articles budgetaires font déjà parti d'une même taxation
+                const [check] = await DB.query(
+                    `SELECT id_vehicule,numero_chassis,numero_plaque,taxe FROM v_check_taxation WHERE id_vehicule=${this.data.id_vehicule} AND id_taxe=${this.data.id_taxe} `);
+
+                if (check.length >= 1) {
+                    throw new AppError(
+                        `le vehicule portant ce numero du chassis:${check[0].numero_chassis} et ce numero de plaque:${check[0].numero_plaque} est déjà taxé pour la taxe:${check[0].taxe}`);
+                }
+
                 const [vehicule] = await DB.query(`
                     SELECT *
                     FROM vehicule
@@ -179,7 +210,7 @@ module.exports = class Taxation {
                 }
 
                 if (montant.length === 0) {
-                    throw new AppError('Problème entre la taxe et le vehicule', 400);
+                    throw new AppError('Cet article n\'est pas affecté à cette taxe, veillez choisir autre taxe', 400);
                 }
 
                 //2. Définition du taux
@@ -192,7 +223,6 @@ module.exports = class Taxation {
                 //3.Insertion
 
                 //Nombre d'acte
-                console.log(montant);
                 const nombreActe = montant.length;
 
                 const idTaxation = await this.insert(nombreActe, montant[0].montant, montant[0], taux[0]);
@@ -383,4 +413,29 @@ module.exports = class Taxation {
         }
 
     }
+
+    //note
+    async note() {
+        try {
+            const [rows] = await DB.query(
+                    `SELECT *
+                     FROM v_note_calcul`);
+            return rows;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    //note
+    async getOneDoc(id) {
+        try {
+            const [rows] = await DB.query(
+                    `SELECT *
+                     FROM v_note_calcul WHERE id_taxation=?`,id);
+            return rows;
+        } catch (err) {
+            throw err;
+        }
+    }
+
 };

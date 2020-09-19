@@ -59,8 +59,8 @@ export default {
 
     formUpdateV: document.querySelectorAll('.form-update-vehicule'),
     formUpdateTaxation: document.querySelectorAll('.form-update-taxation'),
-    formNewAttestation: document.querySelector('.form-new-attestation'),
-
+    formNewAttestation: document.querySelectorAll('.form-new-attestation'),
+    penalite:document.getElementById('penalite'),
     formNewTaxation: document.getElementById('form-new-taxation'),
     exercice: document.getElementById('exercice'),
     vehicule: document.getElementById('vehicule'),

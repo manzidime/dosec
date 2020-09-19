@@ -1,0 +1,89 @@
+html{
+    -webkit-print-color-adjust: exact;
+}
+
+.page-note {
+    padding: 10px;
+    background: #fff;
+    font-family: Lato, sans-serif;
+    -webkit-print-color-adjust: exact;
+}
+
+.sub-page {
+    background: url('http://127.0.0.1:5100/images/ville.jpg') no-repeat center;
+    background-size: contain;
+}
+
+.top-bar{
+    border-left: 10px solid #012b8f;
+    padding-left: 5px;
+}
+
+.top-bar h1 {
+    font-family: Yellowtail, serif;
+    line-height: 25px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.objet {
+    border-bottom: 1px solid #222222;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.objet h1 {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    font-weight: 900;
+}
+
+.bloc-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.bloc-taxation{
+    border-right: 1px solid #222222;
+    padding-right: 5px;
+    flex-basis: 65%;
+}
+
+.nb {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.info_taxation ul li, .info-contribuable ul li{
+    font-style: italic;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.title-bloc-taxation {
+    background: #696969;
+}
+
+.title-bloc-contribuable{
+    font-size: 16px;
+    text-decoration: underline;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.table-taxation td {
+    font-size: 13px;
+}
+
+.qr{
+    font-size: 12px;
+}

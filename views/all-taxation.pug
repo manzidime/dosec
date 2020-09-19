@@ -43,41 +43,31 @@ block content
                                                                         table.table.table-sm.table-borderless
                                                                             tbody
                                                                                 tr
-                                                                                    th(scope='row') Services
-                                                                                    td
-                                                                                        select.form-control.form-control-sm.rounded-0(required='' disabled).services
-                                                                                            option(disabled selected) Choisir service
-                                                                                            if services
-                                                                                            each service in services
-                                                                                                option(value=`${service.id_serviceAssiette}`)=service.designation
-                                                                                tr
                                                                                     th(scope='row') Taxe
                                                                                     td
                                                                                         select.form-control.rounded-0.form-control-sm(required='' disabled).taxes
                                                                                             option(value=`${taxation.id_taxe}` disabled selected)=taxation.taxe
                                                                                 tr
+                                                                                    th(scope='row') Montant
+                                                                                    td=taxation.montant
+                                                                                tr
+                                                                                    th(scope='row') Pénalité
+                                                                                    td=`${Math.round((taxation.montant * 1) * (taxation.penalite * 1) / 100)}`
+                                                                                tr
+                                                                                    th(scope='row') Montant global
+                                                                                    td=taxation.montant_global
+                                                                                tr
                                                                                     th(scope='row') Nom déclarant
-                                                                                    td
-                                                                                        input.form-control.rounded-0.form-control-sm.nom_receptionniste(type='text' disabled value=`${taxation.nom_declarant}` required='')
+                                                                                    td=taxation.nom_declarant
                                                                                 tr
                                                                                     th(scope='row') Téléphone déclarant
-                                                                                    td
-                                                                                        input.form-control.rounded-0.form-control-sm.telephone_receptionniste(type='text' disabled value=`${taxation.telephone_declarant}` required='')
-                                                                                tr
-                                                                                    th(scope='row') Echéance
-                                                                                    td
-                                                                                        select.echeance.form-control.form-control-sm.rounded-0(disabled)
-                                                                                            option(selected disabled value='') Choix échéance
-                                                                                            option(value='1') Premier semestre
-                                                                                            option(value='2') Deuxième semestre
+                                                                                    td=taxation.telephone_declarant
+                                                                                //tr
+                                                                                //    th(scope='row') Echéance
+                                                                                //    td=`${taxation.echeance==='1'?'Premier semestre':'Deuxième semestre'}`
                                                                                 tr
                                                                                     th(scope='row') Contribuable
-                                                                                    td
-                                                                                        select.form-control.contribuable.form-control-sm.rounded-0(disabled)
-                                                                                            option(value=`${taxation.id_contribuable}` disabled selected)=taxation.redevable
-                                                                                            if contribuables
-                                                                                                each contribuable in contribuables
-                                                                                                    option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                                                                    td=taxation.redevable
                                                                                 tr
                                                                                     th(scope='row') Vehicules
                                                                                     td
@@ -114,15 +104,15 @@ block content
                                                                             .col-sm-4
                                                                                 .form-group
                                                                                     label.floating-label(for='') Montant
-                                                                                    input.form-control.rounded-0.form-control-sm.montant(type='text' value=`${!taxation.montant?0+' '+taxation.devise:taxation.montant+' '+taxation.devise}` required='')
+                                                                                    input.form-control.rounded-0.form-control-sm.montant(type='text' disabled value=`${!taxation.montant?0+' '+taxation.devise:taxation.montant+' '+taxation.devise}` required='')
                                                                             .col-sm-4
                                                                                 .form-group
                                                                                     label.floating-label(for='') Pénalités
-                                                                                    input.form-control.rounded-0.form-control-sm.penalite(type='text' value=`${!taxation.penalite?0+' '+taxation.devise:taxation.penalite+' '+taxation.penalite}` required='')
+                                                                                    input.form-control.rounded-0.form-control-sm.penalite(type='text' disabled value=`${!taxation.penalite?0+' '+taxation.devise:Math.round((taxation.montant*1) * (taxation.penalite*1)/100)+' '+taxation.devise}` required='')
                                                                             .col-sm-4
                                                                                 .form-group
                                                                                     label.floating-label(for='') Mont global
-                                                                                    input.form-control.rounded-0.form-control-sm.montant_global(type='text' value=`${!taxation.montant_global?0+' '+taxation.devise:taxation.montant_global+' '+taxation.devise}` required='')
+                                                                                    input.form-control.rounded-0.form-control-sm.montant_global(type='text' disabled value=`${!taxation.montant_global?0+' '+taxation.devise:taxation.montant_global+' '+taxation.devise}` required='')
                                                                             .col-sm-4
                                                                                 label.floating-label(for='') Mode de paiement
                                                                                 select.form-control.compte.form-control-sm.rounded-0

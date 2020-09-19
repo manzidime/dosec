@@ -1,5 +1,6 @@
 import '@babel/polyfill';
 import dom from './utils/dom';
+import {alert, clearHtml} from './utils/alert';
 import {login, logout} from './login';
 import {changePassword} from './changePassword';
 import {newPerson} from './newPerson';
@@ -255,6 +256,9 @@ if (dom.formUpdateV) {
 if (dom.taxe) {
     dom.taxe.addEventListener('change', () => {
         dom.echeance.disabled = dom.taxe.value * 1 !== 15;
+        console.log(dom.taxe.value);
+        dom.contribuable.disabled = false;
+        clearHtml(dom.containerError);
     });
 }
 
@@ -287,9 +291,24 @@ if (dom.services) {
 
 //2. get vehicule by contribuable
 if (dom.contribuable) {
-    dom.contribuable.addEventListener('input', async () => {
+    dom.contribuable.addEventListener('change', async () => {
+        if (!dom.taxe.value) {
+            dom.contribuable.disabled = true;
+            clearHtml(dom.containerError);
+            alert('alert-danger', 'Veillez d\'abord choisir la taxe', dom.containerError);
+        }
         const idContribuable = dom.contribuable.value;
         await getVehicules(idContribuable);
+    });
+}
+
+if (dom.contribuable) {
+    dom.contribuable.addEventListener('click', async () => {
+        if (!dom.taxe.value) {
+            dom.contribuable.disabled = true;
+            clearHtml(dom.containerError);
+            alert('alert-danger', 'Veillez d\'abord choisir la taxe', dom.containerError);
+        }
     });
 }
 
@@ -321,7 +340,12 @@ if (dom.formNewTaxation) {
                 id_vehicule: vehicules,
                 id_contribuable: dom.contribuable.value,
                 echeance: dom.echeance.value,
+                penalite: dom.penalite.value,
             };
+
+            if (!body.echeance) {
+                body.echeance = '1';
+            }
 
             await newTaxation(body);
 
@@ -398,19 +422,42 @@ if (dom.formValidation) {
  * ATTESTATION*/
 //1. create
 if (dom.formNewAttestation) {
-    dom.formNewAttestation.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const body = {
-            avis: document.querySelector('input[name="avis"]:checked').value,
-            id_taxation: dom.taxation.value,
-            montant: dom.montant.value,
-            montant_global: dom.montantGlobal.value,
-            montant_penalite: dom.montantPenalite.value,
-            numero_bordereau: dom.numeroBordereau.value,
-            date_attestation: dom.dateAttestation.value,
-        };
+    Array.from(dom.formNewAttestation)
+    .forEach((el, index) => {
+        el.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const id = el.dataset.id;
+            const body = {
+                avis: el.querySelector('.avis').value,
+                id_taxation: el.querySelector('.taxation').value,
+                montant: el.querySelector('.montant').value,
+                montant_global: el.querySelector('.montant_global').value,
+                montant_penalite: el.querySelector('.penalite').value,
+                numero_bordereau: el.querySelector('.numero_bordereau').value,
+                date_attestation: el.querySelector('.date_attestation').value,
+            };
 
-        await newAttestation(body);
-        console.log(body);
+            const container = document.querySelector(`.container-alert-${id}`);
+            if (body.avis === 'defavorable') {
+                alert('alert-danger', `Cet attestation n'est pas validé compte tenu de votre avis defavorable`,
+                    container);
+                return false;
+            }
+
+            await newAttestation(body, container);
+        });
+
+    });
+
+}
+
+/*GENERATE CODE QR*/
+console.log(document.querySelectorAll('.qr-code'));
+if (document.querySelector('.qr-code')) {
+    const qr = document.querySelector('.qr-code');
+    const idDocument = qr.dataset.id;
+
+    QRCode.toCanvas(qr, `/home/all-ov/free/${idDocument}`, function (error) {
+        if (error) console.error(error);
     });
 }

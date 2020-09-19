@@ -9,6 +9,13 @@ module.exports = class Attestation {
     //Creation
     async createOne() {
         try {
+            const [att] = await DB.query(
+                `SELECT id_taxation FROM attestation WHERE id_taxation=${this.data.id_taxation}`);
+
+            if(att.length === 1){
+                throw new AppError(`Cette taxation a déjà été attestée`, 400)
+            }
+
             const [rows] = await DB.query(`
                 INSERT INTO attestation
                 SET date_attestation=?,
@@ -25,6 +32,10 @@ module.exports = class Attestation {
                 this.data.montant_penalite,
                 this.data.montant_global,
                 this.data.avis, this.data.id_site, this.data.id_agent]);
+
+            if (rows.insertId) {
+                await DB.query(`UPDATE taxation SET state='att' WHERE id_taxation=${this.data.id_taxation}`);
+            }
             return rows;
         } catch (err) {
             throw err;
@@ -39,16 +50,14 @@ module.exports = class Attestation {
             if (user.id_fonction === 1) {
                 query = `
                     SELECT *
-                    FROM v_all_attestation
-                    WHERE active = 'true'
+                    FROM v_taxation_ord
                 `;
             }
             else {
                 query = `
                     SELECT *
-                    FROM v_all_attestation
+                    FROM v_taxation_ord
                     WHERE id_site = ?
-                      AND active = 'true'
                 `;
             }
 
@@ -143,13 +152,12 @@ module.exports = class Attestation {
 
     //note de cacul
     async noteCalcul() {
-        try{
+        try {
             const [rows] = await DB.query(`SELECT *
-                                      FROM v_note_calcul`);
-            return rows
-        }
-        catch(err){
-            throw err
+                                           FROM v_note_calcul`);
+            return rows;
+        } catch (err) {
+            throw err;
         }
     }
 };

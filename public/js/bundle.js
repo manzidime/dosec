@@ -6652,7 +6652,8 @@ var _default = {
   btnDeleteTaxation: document.querySelectorAll('.btn-delete-taxation'),
   formUpdateV: document.querySelectorAll('.form-update-vehicule'),
   formUpdateTaxation: document.querySelectorAll('.form-update-taxation'),
-  formNewAttestation: document.querySelector('.form-new-attestation'),
+  formNewAttestation: document.querySelectorAll('.form-new-attestation'),
+  penalite: document.getElementById('penalite'),
   formNewTaxation: document.getElementById('form-new-taxation'),
   exercice: document.getElementById('exercice'),
   vehicule: document.getElementById('vehicule'),
@@ -6677,7 +6678,33 @@ var _default = {
   containerError: document.getElementById('container-error')
 };
 exports.default = _default;
-},{}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+},{}],"utils/alert.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clearHtml = exports.alert = void 0;
+
+var _dom = _interopRequireDefault(require("./dom"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//Alert
+var alert = function alert(type, message, container) {
+  var sta = type === 'alert-danger' ? 'Erreur!' : 'Opération réussie';
+  var alert = "<div class=\"alert rounded-0 ".concat(type, " alert-dismissible fade show\" role=\"alert\">\n        <strong>").concat(sta, "</strong>").concat(message, "\n        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n        </button>\n        </div>");
+  container.insertAdjacentHTML('beforeend', alert);
+};
+
+exports.alert = alert;
+
+var clearHtml = function clearHtml(container) {
+  container.innerHTML = '';
+};
+
+exports.clearHtml = clearHtml;
+},{"./dom":"utils/dom.js"}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -8467,33 +8494,7 @@ module.exports.default = axios;
 
 },{"./utils":"../../node_modules/axios/lib/utils.js","./helpers/bind":"../../node_modules/axios/lib/helpers/bind.js","./core/Axios":"../../node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"../../node_modules/axios/lib/core/mergeConfig.js","./defaults":"../../node_modules/axios/lib/defaults.js","./cancel/Cancel":"../../node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"../../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"../../node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"../../node_modules/axios/lib/helpers/spread.js"}],"../../node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"../../node_modules/axios/lib/axios.js"}],"utils/alert.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.clearHtml = exports.alert = void 0;
-
-var _dom = _interopRequireDefault(require("./dom"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//Alert
-var alert = function alert(type, message, container) {
-  var sta = type === 'alert-danger' ? 'Erreur!' : 'Opération réussie';
-  var alert = "<div class=\"alert rounded-0 ".concat(type, " alert-dismissible fade show\" role=\"alert\">\n        <strong>").concat(sta, "</strong>").concat(message, "\n        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n        </button>\n        </div>");
-  container.insertAdjacentHTML('beforeend', alert);
-};
-
-exports.alert = alert;
-
-var clearHtml = function clearHtml(container) {
-  container.innerHTML = '';
-};
-
-exports.clearHtml = clearHtml;
-},{"./dom":"utils/dom.js"}],"login.js":[function(require,module,exports) {
+},{"./lib/axios":"../../node_modules/axios/lib/axios.js"}],"login.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9148,8 +9149,7 @@ var getVehicules = /*#__PURE__*/function () {
             res = _context2.sent;
 
             if (res.data.status === 'success') {
-              vehicules = res.data.data.rows;
-              console.log(vehicules); //Les vehicules proviennent de la table vehicules
+              vehicules = res.data.data.rows; //Les vehicules proviennent de la table vehicules
 
               options = vehicules.map(function (el, index) {
                 return "<option class=\"f-16\" value=\"".concat(el.id_vehicule, "\">").concat(el.numero_plaque, " | ").concat(el.numero_chassis, " | ").concat(el.marque, " | ").concat(el.couleur, " | ").concat(el.model, " </option><hr>");
@@ -9667,7 +9667,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var newAttestation = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(body) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(body, container) {
     var res;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -9685,9 +9685,7 @@ var newAttestation = /*#__PURE__*/function () {
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              (0, _alert.alert)('alert-success', 'Attestation créée', _dom.default.containerError);
-
-              _dom.default.formNewAttestation.reset();
+              (0, _alert.alert)('alert-success', ' Attestation créée', container);
             }
 
             _context.next = 11;
@@ -9696,8 +9694,8 @@ var newAttestation = /*#__PURE__*/function () {
           case 7:
             _context.prev = 7;
             _context.t0 = _context["catch"](0);
-            (0, _alert.clearHtml)(_dom.default.containerError);
-            (0, _alert.alert)('alert-danger', _context.t0.response.data.message, _dom.default.containerError);
+            (0, _alert.clearHtml)(container);
+            (0, _alert.alert)('alert-danger', _context.t0.response.data.message, container);
 
           case 11:
           case "end":
@@ -9707,7 +9705,7 @@ var newAttestation = /*#__PURE__*/function () {
     }, _callee, null, [[0, 7]]);
   }));
 
-  return function newAttestation(_x) {
+  return function newAttestation(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -9973,6 +9971,8 @@ require("core-js/modules/web.dom.iterable");
 require("regenerator-runtime/runtime");
 
 var _dom = _interopRequireDefault(require("./utils/dom"));
+
+var _alert = require("./utils/alert");
 
 var _login = require("./login");
 
@@ -10535,6 +10535,9 @@ if (_dom.default.formUpdateV) {
 if (_dom.default.taxe) {
   _dom.default.taxe.addEventListener('change', function () {
     _dom.default.echeance.disabled = _dom.default.taxe.value * 1 !== 15;
+    console.log(_dom.default.taxe.value);
+    _dom.default.contribuable.disabled = false;
+    (0, _alert.clearHtml)(_dom.default.containerError);
   });
 }
 
@@ -10598,17 +10601,23 @@ if (_dom.default.services) {
 
 
 if (_dom.default.contribuable) {
-  _dom.default.contribuable.addEventListener('input', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
+  _dom.default.contribuable.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20() {
     var idContribuable;
     return regeneratorRuntime.wrap(function _callee20$(_context20) {
       while (1) {
         switch (_context20.prev = _context20.next) {
           case 0:
+            if (!_dom.default.taxe.value) {
+              _dom.default.contribuable.disabled = true;
+              (0, _alert.clearHtml)(_dom.default.containerError);
+              (0, _alert.alert)('alert-danger', 'Veillez d\'abord choisir la taxe', _dom.default.containerError);
+            }
+
             idContribuable = _dom.default.contribuable.value;
-            _context20.next = 3;
+            _context20.next = 4;
             return (0, _select.getVehicules)(idContribuable);
 
-          case 3:
+          case 4:
           case "end":
             return _context20.stop();
         }
@@ -10617,24 +10626,45 @@ if (_dom.default.contribuable) {
   })));
 }
 
+if (_dom.default.contribuable) {
+  _dom.default.contribuable.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+    return regeneratorRuntime.wrap(function _callee21$(_context21) {
+      while (1) {
+        switch (_context21.prev = _context21.next) {
+          case 0:
+            if (!_dom.default.taxe.value) {
+              _dom.default.contribuable.disabled = true;
+              (0, _alert.clearHtml)(_dom.default.containerError);
+              (0, _alert.alert)('alert-danger', 'Veillez d\'abord choisir la taxe', _dom.default.containerError);
+            }
+
+          case 1:
+          case "end":
+            return _context21.stop();
+        }
+      }
+    }, _callee21);
+  })));
+}
+
 if (_dom.default.contribuables) {
   _dom.default.contribuables.forEach(function (el) {
-    el.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21() {
+    el.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22() {
       var idContribuable;
-      return regeneratorRuntime.wrap(function _callee21$(_context21) {
+      return regeneratorRuntime.wrap(function _callee22$(_context22) {
         while (1) {
-          switch (_context21.prev = _context21.next) {
+          switch (_context22.prev = _context22.next) {
             case 0:
               idContribuable = el.value;
-              _context21.next = 3;
+              _context22.next = 3;
               return (0, _select.getVehicules)(idContribuable);
 
             case 3:
             case "end":
-              return _context21.stop();
+              return _context22.stop();
           }
         }
-      }, _callee21);
+      }, _callee22);
     })));
   });
 } //3. Create taxation
@@ -10642,16 +10672,16 @@ if (_dom.default.contribuables) {
 
 if (_dom.default.formNewTaxation) {
   _dom.default.formNewTaxation.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref22 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22(event) {
+    var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23(event) {
       var vehicules, body;
-      return regeneratorRuntime.wrap(function _callee22$(_context22) {
+      return regeneratorRuntime.wrap(function _callee23$(_context23) {
         while (1) {
-          switch (_context22.prev = _context22.next) {
+          switch (_context23.prev = _context23.next) {
             case 0:
               event.preventDefault();
 
               if (!_dom.default.vehicule) {
-                _context22.next = 6;
+                _context23.next = 7;
                 break;
               }
 
@@ -10665,21 +10695,27 @@ if (_dom.default.formNewTaxation) {
                 telephone_declarant: _dom.default.telephoneDeclarant.value,
                 id_vehicule: vehicules,
                 id_contribuable: _dom.default.contribuable.value,
-                echeance: _dom.default.echeance.value
+                echeance: _dom.default.echeance.value,
+                penalite: _dom.default.penalite.value
               };
-              _context22.next = 6;
+
+              if (!body.echeance) {
+                body.echeance = '1';
+              }
+
+              _context23.next = 7;
               return (0, _newTaxation.newTaxation)(body);
 
-            case 6:
+            case 7:
             case "end":
-              return _context22.stop();
+              return _context23.stop();
           }
         }
-      }, _callee22);
+      }, _callee23);
     }));
 
     return function (_x17) {
-      return _ref22.apply(this, arguments);
+      return _ref23.apply(this, arguments);
     };
   }());
 } //Get all vehicules from txation
@@ -10687,39 +10723,39 @@ if (_dom.default.formNewTaxation) {
 
 if (_dom.default.btnEdit) {
   _dom.default.btnEdit.forEach( /*#__PURE__*/function () {
-    var _ref23 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24(el, index) {
-      return regeneratorRuntime.wrap(function _callee24$(_context24) {
+    var _ref24 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(el, index) {
+      return regeneratorRuntime.wrap(function _callee25$(_context25) {
         while (1) {
-          switch (_context24.prev = _context24.next) {
+          switch (_context25.prev = _context25.next) {
             case 0:
-              el.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee23() {
+              el.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee24() {
                 var id;
-                return regeneratorRuntime.wrap(function _callee23$(_context23) {
+                return regeneratorRuntime.wrap(function _callee24$(_context24) {
                   while (1) {
-                    switch (_context23.prev = _context23.next) {
+                    switch (_context24.prev = _context24.next) {
                       case 0:
                         id = el.dataset.id1;
-                        _context23.next = 3;
+                        _context24.next = 3;
                         return (0, _select.vehiculesFromTaxation)(id);
 
                       case 3:
                       case "end":
-                        return _context23.stop();
+                        return _context24.stop();
                     }
                   }
-                }, _callee23);
+                }, _callee24);
               })));
 
             case 1:
             case "end":
-              return _context24.stop();
+              return _context25.stop();
           }
         }
-      }, _callee24);
+      }, _callee25);
     }));
 
     return function (_x18, _x19) {
-      return _ref23.apply(this, arguments);
+      return _ref24.apply(this, arguments);
     };
   }());
 } //4. Update taxation
@@ -10728,11 +10764,11 @@ if (_dom.default.btnEdit) {
 if (_dom.default.formUpdateTaxation) {
   _dom.default.formUpdateTaxation.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref25 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee25(event) {
+      var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee25$(_context25) {
+        return regeneratorRuntime.wrap(function _callee26$(_context26) {
           while (1) {
-            switch (_context25.prev = _context25.next) {
+            switch (_context26.prev = _context26.next) {
               case 0:
                 event.preventDefault();
                 body = {
@@ -10743,41 +10779,8 @@ if (_dom.default.formUpdateTaxation) {
                   id_contribuable: _dom.default.contribuables[index].value
                 };
                 id = el.dataset.id;
-                _context25.next = 5;
-                return (0, _newTaxation.updateTaxation)(body, id, index);
-
-              case 5:
-              case "end":
-                return _context25.stop();
-            }
-          }
-        }, _callee25);
-      }));
-
-      return function (_x20) {
-        return _ref25.apply(this, arguments);
-      };
-    }());
-  });
-} //5. Desactive taxation
-
-
-if (_dom.default.btnDeleteTaxation) {
-  _dom.default.btnDeleteTaxation.forEach(function (el, index) {
-    el.addEventListener('click', /*#__PURE__*/function () {
-      var _ref26 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee26(event) {
-        var id, body;
-        return regeneratorRuntime.wrap(function _callee26$(_context26) {
-          while (1) {
-            switch (_context26.prev = _context26.next) {
-              case 0:
-                event.preventDefault();
-                id = _dom.default.rowData[index].dataset.row;
-                body = {
-                  active: 'false'
-                };
                 _context26.next = 5;
-                return (0, _newTaxation.desableTaxation)(body, id);
+                return (0, _newTaxation.updateTaxation)(body, id, index);
 
               case 5:
               case "end":
@@ -10787,8 +10790,41 @@ if (_dom.default.btnDeleteTaxation) {
         }, _callee26);
       }));
 
-      return function (_x21) {
+      return function (_x20) {
         return _ref26.apply(this, arguments);
+      };
+    }());
+  });
+} //5. Desactive taxation
+
+
+if (_dom.default.btnDeleteTaxation) {
+  _dom.default.btnDeleteTaxation.forEach(function (el, index) {
+    el.addEventListener('click', /*#__PURE__*/function () {
+      var _ref27 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee27(event) {
+        var id, body;
+        return regeneratorRuntime.wrap(function _callee27$(_context27) {
+          while (1) {
+            switch (_context27.prev = _context27.next) {
+              case 0:
+                event.preventDefault();
+                id = _dom.default.rowData[index].dataset.row;
+                body = {
+                  active: 'false'
+                };
+                _context27.next = 5;
+                return (0, _newTaxation.desableTaxation)(body, id);
+
+              case 5:
+              case "end":
+                return _context27.stop();
+            }
+          }
+        }, _callee27);
+      }));
+
+      return function (_x21) {
+        return _ref27.apply(this, arguments);
       };
     }());
   });
@@ -10798,11 +10834,11 @@ if (_dom.default.btnDeleteTaxation) {
 if (_dom.default.formValidation) {
   _dom.default.formValidation.forEach(function (el, index) {
     el.addEventListener('submit', /*#__PURE__*/function () {
-      var _ref27 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee27(event) {
+      var _ref28 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee28(event) {
         var body, id;
-        return regeneratorRuntime.wrap(function _callee27$(_context27) {
+        return regeneratorRuntime.wrap(function _callee28$(_context28) {
           while (1) {
-            switch (_context27.prev = _context27.next) {
+            switch (_context28.prev = _context28.next) {
               case 0:
                 event.preventDefault();
                 body = {
@@ -10811,19 +10847,19 @@ if (_dom.default.formValidation) {
                 };
                 id = el.dataset.id;
                 console.log(body);
-                _context27.next = 6;
+                _context28.next = 6;
                 return (0, _newTaxation.validateTaxation)(body, id, index);
 
               case 6:
               case "end":
-                return _context27.stop();
+                return _context28.stop();
             }
           }
-        }, _callee27);
+        }, _callee28);
       }));
 
       return function (_x22) {
-        return _ref27.apply(this, arguments);
+        return _ref28.apply(this, arguments);
       };
     }());
   });
@@ -10834,43 +10870,66 @@ if (_dom.default.formValidation) {
 
 
 if (_dom.default.formNewAttestation) {
-  _dom.default.formNewAttestation.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref28 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee28(event) {
-      var body;
-      return regeneratorRuntime.wrap(function _callee28$(_context28) {
-        while (1) {
-          switch (_context28.prev = _context28.next) {
-            case 0:
-              event.preventDefault();
-              body = {
-                avis: document.querySelector('input[name="avis"]:checked').value,
-                id_taxation: _dom.default.taxation.value,
-                montant: _dom.default.montant.value,
-                montant_global: _dom.default.montantGlobal.value,
-                montant_penalite: _dom.default.montantPenalite.value,
-                numero_bordereau: _dom.default.numeroBordereau.value,
-                date_attestation: _dom.default.dateAttestation.value
-              };
-              _context28.next = 4;
-              return (0, _attestation.newAttestation)(body);
+  Array.from(_dom.default.formNewAttestation).forEach(function (el, index) {
+    el.addEventListener('submit', /*#__PURE__*/function () {
+      var _ref29 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee29(event) {
+        var id, body, container;
+        return regeneratorRuntime.wrap(function _callee29$(_context29) {
+          while (1) {
+            switch (_context29.prev = _context29.next) {
+              case 0:
+                event.preventDefault();
+                id = el.dataset.id;
+                body = {
+                  avis: el.querySelector('.avis').value,
+                  id_taxation: el.querySelector('.taxation').value,
+                  montant: el.querySelector('.montant').value,
+                  montant_global: el.querySelector('.montant_global').value,
+                  montant_penalite: el.querySelector('.penalite').value,
+                  numero_bordereau: el.querySelector('.numero_bordereau').value,
+                  date_attestation: el.querySelector('.date_attestation').value
+                };
+                container = document.querySelector(".container-alert-".concat(id));
 
-            case 4:
-              console.log(body);
+                if (!(body.avis === 'defavorable')) {
+                  _context29.next = 7;
+                  break;
+                }
 
-            case 5:
-            case "end":
-              return _context28.stop();
+                (0, _alert.alert)('alert-danger', "Cet attestation n'est pas valid\xE9 compte tenu de votre avis defavorable", container);
+                return _context29.abrupt("return", false);
+
+              case 7:
+                _context29.next = 9;
+                return (0, _attestation.newAttestation)(body, container);
+
+              case 9:
+              case "end":
+                return _context29.stop();
+            }
           }
-        }
-      }, _callee28);
-    }));
+        }, _callee29);
+      }));
 
-    return function (_x23) {
-      return _ref28.apply(this, arguments);
-    };
-  }());
+      return function (_x23) {
+        return _ref29.apply(this, arguments);
+      };
+    }());
+  });
 }
-},{"core-js/modules/es6.array.copy-within":"../../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-primitive":"../../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.function.has-instance":"../../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es7.object.values":"../../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.int8-array":"../../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./utils/dom":"utils/dom.js","./login":"login.js","./changePassword":"changePassword.js","./newPerson":"newPerson.js","./updatePerson":"updatePerson.js","./desable":"desable.js","./newVehicule":"newVehicule.js","./utils/select":"utils/select.js","./newTaxation":"newTaxation.js","./attestation":"attestation.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+/*GENERATE CODE QR*/
+
+
+console.log(document.querySelectorAll('.qr-code'));
+
+if (document.querySelector('.qr-code')) {
+  var qr = document.querySelector('.qr-code');
+  var idDocument = qr.dataset.id;
+  QRCode.toCanvas(qr, "/home/all-ov/free/".concat(idDocument), function (error) {
+    if (error) console.error(error);
+  });
+}
+},{"core-js/modules/es6.array.copy-within":"../../node_modules/core-js/modules/es6.array.copy-within.js","core-js/modules/es6.array.fill":"../../node_modules/core-js/modules/es6.array.fill.js","core-js/modules/es6.array.find":"../../node_modules/core-js/modules/es6.array.find.js","core-js/modules/es6.array.find-index":"../../node_modules/core-js/modules/es6.array.find-index.js","core-js/modules/es7.array.flat-map":"../../node_modules/core-js/modules/es7.array.flat-map.js","core-js/modules/es6.array.from":"../../node_modules/core-js/modules/es6.array.from.js","core-js/modules/es7.array.includes":"../../node_modules/core-js/modules/es7.array.includes.js","core-js/modules/es6.array.iterator":"../../node_modules/core-js/modules/es6.array.iterator.js","core-js/modules/es6.array.of":"../../node_modules/core-js/modules/es6.array.of.js","core-js/modules/es6.array.sort":"../../node_modules/core-js/modules/es6.array.sort.js","core-js/modules/es6.array.species":"../../node_modules/core-js/modules/es6.array.species.js","core-js/modules/es6.date.to-primitive":"../../node_modules/core-js/modules/es6.date.to-primitive.js","core-js/modules/es6.function.has-instance":"../../node_modules/core-js/modules/es6.function.has-instance.js","core-js/modules/es6.function.name":"../../node_modules/core-js/modules/es6.function.name.js","core-js/modules/es6.map":"../../node_modules/core-js/modules/es6.map.js","core-js/modules/es6.math.acosh":"../../node_modules/core-js/modules/es6.math.acosh.js","core-js/modules/es6.math.asinh":"../../node_modules/core-js/modules/es6.math.asinh.js","core-js/modules/es6.math.atanh":"../../node_modules/core-js/modules/es6.math.atanh.js","core-js/modules/es6.math.cbrt":"../../node_modules/core-js/modules/es6.math.cbrt.js","core-js/modules/es6.math.clz32":"../../node_modules/core-js/modules/es6.math.clz32.js","core-js/modules/es6.math.cosh":"../../node_modules/core-js/modules/es6.math.cosh.js","core-js/modules/es6.math.expm1":"../../node_modules/core-js/modules/es6.math.expm1.js","core-js/modules/es6.math.fround":"../../node_modules/core-js/modules/es6.math.fround.js","core-js/modules/es6.math.hypot":"../../node_modules/core-js/modules/es6.math.hypot.js","core-js/modules/es6.math.imul":"../../node_modules/core-js/modules/es6.math.imul.js","core-js/modules/es6.math.log1p":"../../node_modules/core-js/modules/es6.math.log1p.js","core-js/modules/es6.math.log10":"../../node_modules/core-js/modules/es6.math.log10.js","core-js/modules/es6.math.log2":"../../node_modules/core-js/modules/es6.math.log2.js","core-js/modules/es6.math.sign":"../../node_modules/core-js/modules/es6.math.sign.js","core-js/modules/es6.math.sinh":"../../node_modules/core-js/modules/es6.math.sinh.js","core-js/modules/es6.math.tanh":"../../node_modules/core-js/modules/es6.math.tanh.js","core-js/modules/es6.math.trunc":"../../node_modules/core-js/modules/es6.math.trunc.js","core-js/modules/es6.number.constructor":"../../node_modules/core-js/modules/es6.number.constructor.js","core-js/modules/es6.number.epsilon":"../../node_modules/core-js/modules/es6.number.epsilon.js","core-js/modules/es6.number.is-finite":"../../node_modules/core-js/modules/es6.number.is-finite.js","core-js/modules/es6.number.is-integer":"../../node_modules/core-js/modules/es6.number.is-integer.js","core-js/modules/es6.number.is-nan":"../../node_modules/core-js/modules/es6.number.is-nan.js","core-js/modules/es6.number.is-safe-integer":"../../node_modules/core-js/modules/es6.number.is-safe-integer.js","core-js/modules/es6.number.max-safe-integer":"../../node_modules/core-js/modules/es6.number.max-safe-integer.js","core-js/modules/es6.number.min-safe-integer":"../../node_modules/core-js/modules/es6.number.min-safe-integer.js","core-js/modules/es6.number.parse-float":"../../node_modules/core-js/modules/es6.number.parse-float.js","core-js/modules/es6.number.parse-int":"../../node_modules/core-js/modules/es6.number.parse-int.js","core-js/modules/es6.object.assign":"../../node_modules/core-js/modules/es6.object.assign.js","core-js/modules/es7.object.define-getter":"../../node_modules/core-js/modules/es7.object.define-getter.js","core-js/modules/es7.object.define-setter":"../../node_modules/core-js/modules/es7.object.define-setter.js","core-js/modules/es7.object.entries":"../../node_modules/core-js/modules/es7.object.entries.js","core-js/modules/es6.object.freeze":"../../node_modules/core-js/modules/es6.object.freeze.js","core-js/modules/es6.object.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.object.get-own-property-descriptor.js","core-js/modules/es7.object.get-own-property-descriptors":"../../node_modules/core-js/modules/es7.object.get-own-property-descriptors.js","core-js/modules/es6.object.get-own-property-names":"../../node_modules/core-js/modules/es6.object.get-own-property-names.js","core-js/modules/es6.object.get-prototype-of":"../../node_modules/core-js/modules/es6.object.get-prototype-of.js","core-js/modules/es7.object.lookup-getter":"../../node_modules/core-js/modules/es7.object.lookup-getter.js","core-js/modules/es7.object.lookup-setter":"../../node_modules/core-js/modules/es7.object.lookup-setter.js","core-js/modules/es6.object.prevent-extensions":"../../node_modules/core-js/modules/es6.object.prevent-extensions.js","core-js/modules/es6.object.to-string":"../../node_modules/core-js/modules/es6.object.to-string.js","core-js/modules/es6.object.is":"../../node_modules/core-js/modules/es6.object.is.js","core-js/modules/es6.object.is-frozen":"../../node_modules/core-js/modules/es6.object.is-frozen.js","core-js/modules/es6.object.is-sealed":"../../node_modules/core-js/modules/es6.object.is-sealed.js","core-js/modules/es6.object.is-extensible":"../../node_modules/core-js/modules/es6.object.is-extensible.js","core-js/modules/es6.object.keys":"../../node_modules/core-js/modules/es6.object.keys.js","core-js/modules/es6.object.seal":"../../node_modules/core-js/modules/es6.object.seal.js","core-js/modules/es7.object.values":"../../node_modules/core-js/modules/es7.object.values.js","core-js/modules/es6.promise":"../../node_modules/core-js/modules/es6.promise.js","core-js/modules/es7.promise.finally":"../../node_modules/core-js/modules/es7.promise.finally.js","core-js/modules/es6.reflect.apply":"../../node_modules/core-js/modules/es6.reflect.apply.js","core-js/modules/es6.reflect.construct":"../../node_modules/core-js/modules/es6.reflect.construct.js","core-js/modules/es6.reflect.define-property":"../../node_modules/core-js/modules/es6.reflect.define-property.js","core-js/modules/es6.reflect.delete-property":"../../node_modules/core-js/modules/es6.reflect.delete-property.js","core-js/modules/es6.reflect.get":"../../node_modules/core-js/modules/es6.reflect.get.js","core-js/modules/es6.reflect.get-own-property-descriptor":"../../node_modules/core-js/modules/es6.reflect.get-own-property-descriptor.js","core-js/modules/es6.reflect.get-prototype-of":"../../node_modules/core-js/modules/es6.reflect.get-prototype-of.js","core-js/modules/es6.reflect.has":"../../node_modules/core-js/modules/es6.reflect.has.js","core-js/modules/es6.reflect.is-extensible":"../../node_modules/core-js/modules/es6.reflect.is-extensible.js","core-js/modules/es6.reflect.own-keys":"../../node_modules/core-js/modules/es6.reflect.own-keys.js","core-js/modules/es6.reflect.prevent-extensions":"../../node_modules/core-js/modules/es6.reflect.prevent-extensions.js","core-js/modules/es6.reflect.set":"../../node_modules/core-js/modules/es6.reflect.set.js","core-js/modules/es6.reflect.set-prototype-of":"../../node_modules/core-js/modules/es6.reflect.set-prototype-of.js","core-js/modules/es6.regexp.constructor":"../../node_modules/core-js/modules/es6.regexp.constructor.js","core-js/modules/es6.regexp.flags":"../../node_modules/core-js/modules/es6.regexp.flags.js","core-js/modules/es6.regexp.match":"../../node_modules/core-js/modules/es6.regexp.match.js","core-js/modules/es6.regexp.replace":"../../node_modules/core-js/modules/es6.regexp.replace.js","core-js/modules/es6.regexp.split":"../../node_modules/core-js/modules/es6.regexp.split.js","core-js/modules/es6.regexp.search":"../../node_modules/core-js/modules/es6.regexp.search.js","core-js/modules/es6.regexp.to-string":"../../node_modules/core-js/modules/es6.regexp.to-string.js","core-js/modules/es6.set":"../../node_modules/core-js/modules/es6.set.js","core-js/modules/es6.symbol":"../../node_modules/core-js/modules/es6.symbol.js","core-js/modules/es7.symbol.async-iterator":"../../node_modules/core-js/modules/es7.symbol.async-iterator.js","core-js/modules/es6.string.anchor":"../../node_modules/core-js/modules/es6.string.anchor.js","core-js/modules/es6.string.big":"../../node_modules/core-js/modules/es6.string.big.js","core-js/modules/es6.string.blink":"../../node_modules/core-js/modules/es6.string.blink.js","core-js/modules/es6.string.bold":"../../node_modules/core-js/modules/es6.string.bold.js","core-js/modules/es6.string.code-point-at":"../../node_modules/core-js/modules/es6.string.code-point-at.js","core-js/modules/es6.string.ends-with":"../../node_modules/core-js/modules/es6.string.ends-with.js","core-js/modules/es6.string.fixed":"../../node_modules/core-js/modules/es6.string.fixed.js","core-js/modules/es6.string.fontcolor":"../../node_modules/core-js/modules/es6.string.fontcolor.js","core-js/modules/es6.string.fontsize":"../../node_modules/core-js/modules/es6.string.fontsize.js","core-js/modules/es6.string.from-code-point":"../../node_modules/core-js/modules/es6.string.from-code-point.js","core-js/modules/es6.string.includes":"../../node_modules/core-js/modules/es6.string.includes.js","core-js/modules/es6.string.italics":"../../node_modules/core-js/modules/es6.string.italics.js","core-js/modules/es6.string.iterator":"../../node_modules/core-js/modules/es6.string.iterator.js","core-js/modules/es6.string.link":"../../node_modules/core-js/modules/es6.string.link.js","core-js/modules/es7.string.pad-start":"../../node_modules/core-js/modules/es7.string.pad-start.js","core-js/modules/es7.string.pad-end":"../../node_modules/core-js/modules/es7.string.pad-end.js","core-js/modules/es6.string.raw":"../../node_modules/core-js/modules/es6.string.raw.js","core-js/modules/es6.string.repeat":"../../node_modules/core-js/modules/es6.string.repeat.js","core-js/modules/es6.string.small":"../../node_modules/core-js/modules/es6.string.small.js","core-js/modules/es6.string.starts-with":"../../node_modules/core-js/modules/es6.string.starts-with.js","core-js/modules/es6.string.strike":"../../node_modules/core-js/modules/es6.string.strike.js","core-js/modules/es6.string.sub":"../../node_modules/core-js/modules/es6.string.sub.js","core-js/modules/es6.string.sup":"../../node_modules/core-js/modules/es6.string.sup.js","core-js/modules/es7.string.trim-left":"../../node_modules/core-js/modules/es7.string.trim-left.js","core-js/modules/es7.string.trim-right":"../../node_modules/core-js/modules/es7.string.trim-right.js","core-js/modules/es6.typed.array-buffer":"../../node_modules/core-js/modules/es6.typed.array-buffer.js","core-js/modules/es6.typed.int8-array":"../../node_modules/core-js/modules/es6.typed.int8-array.js","core-js/modules/es6.typed.uint8-array":"../../node_modules/core-js/modules/es6.typed.uint8-array.js","core-js/modules/es6.typed.uint8-clamped-array":"../../node_modules/core-js/modules/es6.typed.uint8-clamped-array.js","core-js/modules/es6.typed.int16-array":"../../node_modules/core-js/modules/es6.typed.int16-array.js","core-js/modules/es6.typed.uint16-array":"../../node_modules/core-js/modules/es6.typed.uint16-array.js","core-js/modules/es6.typed.int32-array":"../../node_modules/core-js/modules/es6.typed.int32-array.js","core-js/modules/es6.typed.uint32-array":"../../node_modules/core-js/modules/es6.typed.uint32-array.js","core-js/modules/es6.typed.float32-array":"../../node_modules/core-js/modules/es6.typed.float32-array.js","core-js/modules/es6.typed.float64-array":"../../node_modules/core-js/modules/es6.typed.float64-array.js","core-js/modules/es6.weak-map":"../../node_modules/core-js/modules/es6.weak-map.js","core-js/modules/es6.weak-set":"../../node_modules/core-js/modules/es6.weak-set.js","core-js/modules/web.timers":"../../node_modules/core-js/modules/web.timers.js","core-js/modules/web.immediate":"../../node_modules/core-js/modules/web.immediate.js","core-js/modules/web.dom.iterable":"../../node_modules/core-js/modules/web.dom.iterable.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","./utils/dom":"utils/dom.js","./utils/alert":"utils/alert.js","./login":"login.js","./changePassword":"changePassword.js","./newPerson":"newPerson.js","./updatePerson":"updatePerson.js","./desable":"desable.js","./newVehicule":"newVehicule.js","./utils/select":"utils/select.js","./newTaxation":"newTaxation.js","./attestation":"attestation.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10898,7 +10957,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "14332" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8874" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

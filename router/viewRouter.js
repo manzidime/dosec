@@ -23,6 +23,8 @@ router.get('/home/new-attestation', viewController.newAttestation);
 router.get('/home/all-attestation', viewController.allAttestation);
 router.get('/home/parts', viewController.partDosec);
 router.get('/home/api-dosec', viewController.apiDosec);
+router.get('/home/note', viewController.note);
+router.get('/home/note/doc/:id', viewController.doc);
 
 //Export router
 module.exports = router;

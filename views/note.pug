@@ -1,0 +1,42 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Note de calcul
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Numero taxation
+                                    th Taxe
+                                    th Date taxation
+                                    th Montant
+                                    th Imprimer
+                            tbody.content-table
+                                if notes
+                                    each note,index in notes
+                                        tr
+                                            td=note.contribuable
+                                            td=note.num_taxation
+                                            td=note.description
+                                            td=note.date_taxation
+                                            td=note.montant_global+' '+note.devise
+                                            td.text-center
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1(href=`/home/note/doc/${note.id_taxation}` target='_blank')
+                                                    i.feather.icon-edit
+
+                            tfoot
+                                tr
+                                    th Redevable
+                                    th Numero taxation
+                                    th Taxe
+                                    th Date taxation
+                                    th Montant
+                                    th Imprimer
+        // Individual Column Searching (Text Inputs) end

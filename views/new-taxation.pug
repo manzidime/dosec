@@ -43,13 +43,16 @@ block content
                                         option(selected disabled value='') Choix échéance
                                         option(value='1') Premier semestre
                                         option(value='2') Deuxième semestre
-                            .col-sm-12.mb-3
+                            .col-sm-6.mb-3
                                 label.floating-label(for='contribuable') Contribuable
                                 select.form-control.form-control-sm.rounded-0#contribuable
                                     option(disabled selected) Choisir contribuable
                                     if contribuables
                                         each contribuable in contribuables
                                             option.f-15(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                            .col-sm-6.mb-3
+                                label.floating-label(for='penalite') Penalite
+                                input.form-control.rounded-0.form-control-sm(type='text' id='penalite')
                             .col-sm-12.mb-3
                                 label.floating-label(for='vehicule') Choix des vehivules
                                 select#vehicule.form-control.rounded-0.form-control-sm(multiple='multiple')

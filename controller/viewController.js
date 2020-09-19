@@ -1,3 +1,9 @@
+//const pdf = require('html-pdf');
+const fs = require('fs');
+path = require('path');
+const qr = require('qrcode');
+const numberToletter = require('./../utils/numberToLetter');
+
 const catchAsync = require('./../utils/catchAsync');
 const District = require('./../model/districtModel');
 const Contribuable = require('./../model/contribuableModel');
@@ -12,6 +18,8 @@ const Taxation = require('./../model/taxationModel');
 const Compte = require('./../model/compteModel');
 const Attestation = require('./../model/attestationModel');
 const PartDosec = require('./../model/attestationModel');
+
+// let file = fs.readFileSync(path.join(__dirname, './../views/doc.pug'), 'utf-8');
 
 //Login
 exports.login = (req, res) => {
@@ -183,6 +191,38 @@ exports.apiDosec = catchAsync(async (req, res, next) => {
     .render('api-dosec', {
         title: 'Api',
         notes,
+    });
+});
+
+exports.note = catchAsync(async (req, res, next) => {
+    const notes = await new Taxation().note();
+    res.status(200)
+    .render('note', {
+        title: 'Note',
+        notes,
+    });
+});
+
+exports.doc = catchAsync(async (req, res, next) => {
+    const doc = await new Taxation().getOneDoc(req.params.id);
+    doc[0].montant_letter = numberToletter(`${doc[0].montant_global}`);
+    res.status(200)
+    .renderPDF('doc', {
+        title: 'document',
+        doc,
+    }, {
+        printBackground: true,
+        filename: 'note_calcul.pdf',
+        pdfOptions: {
+            format: 'A5',
+            landscape: true,
+            margin: {
+                top: '10px',
+                bottom: '10px',
+                left: '10px',
+                right: '10px',
+            },
+        },
     });
 });
 

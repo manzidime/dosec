@@ -1,0 +1,56 @@
+link(href='http://127.0.0.1:5100/css/note.css' rel='stylesheet')
+.page-note
+    .sub-page
+        .top-bar
+            h1 République Démocratique du Congo
+            h1 Minisère provinvial des Finances
+            h1 Ville de Kinshasa
+        .objet
+            h1 NOTE DE CALCUL/#{doc[0].num_taxation}
+            h1=user.lieu
+        .main-note
+            h2.nb *A remplir par le service taxateur
+            .bloc-content
+                .bloc-taxation
+                    .info_taxation
+                        ul
+                            li Service taxateur :
+                                strong #{doc[0].service_taxateur}
+                            li Acte g&eacute;n&eacute;rateur :
+                                strong #{doc[0].acte_generateur}
+                            li Num&eacute;ro taxation :
+                                strong #{doc[0].num_taxation}
+                            li Nombre d&apos;actes :
+                                strong #{doc[0].nombre_acte}
+                            li Article budg&eacute;taire :
+                                strong (1)Jeep
+                            li Arr&ecirc;t&eacute; N&deg; :
+                                strong=` ${doc[0].numero_arrete}`
+                            li Montant tax&eacute
+                                ul
+                                    li en chiffres :
+                                        strong #{doc[0].montant_global+''+doc[0].devise}
+                                    li en lettres :
+                                        -const devise = doc[0].devise === 'CDF' ? 'Francs congolais' : 'Dollars americains'
+                                        strong=` ${doc[0].montant_letter} ${devise}`
+                            li Date de taxation :
+                                strong #{doc[0].date_taxation}
+                            li Taxateur:
+                                strong #{doc[0].nom_taxateur}
+                            li Qualit&eacute :
+                                strong #{doc[0].qualite_taxateur}
+                .bloc-contribuable
+                    h2.title-bloc-contribuable Identification de l&apos;assujettit
+                    .info-contribuable
+                        ul
+                            li Nom ou Raison sociale :
+                                strong #{doc[0].contribuable}
+                            li Avenue/rue :
+                                strong #{doc[0].avenue} n°#{doc[0].numero}
+                            li Commune :
+                                strong #{doc[0].commune}
+                            li &eacute;l&eacute;phone :
+                                strong #{doc[0].telephone_contribuable}
+                    div.qr
+
+

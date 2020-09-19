@@ -43,12 +43,12 @@ nav.pc-sidebar
                         li.pc-item
                             a.pc-link(href='/home/all-taxation-validate') Taxation validée
                 li.pc-item.pc-hasmenu
-                    a.pc-link(href='/home/note')
+                    a.pc-link(href='#!')
                         span.pc-micon
                             i.fas.fa-file-invoice-dollar
                         span.pc-mtext Note de calcul
                 li.pc-item.pc-hasmenu
-                    a.pc-link(href='#!')
+                    a.pc-link(href='/home/note')
                         span.pc-micon
                             i.fas.fa-file-alt
                         span.pc-mtext Attestation

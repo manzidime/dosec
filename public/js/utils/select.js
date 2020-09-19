@@ -47,8 +47,6 @@ export const getVehicules = async (id) => {
         if (res.data.status === 'success') {
             const vehicules = res.data.data.rows;
 
-            console.log(vehicules);
-
             //Les vehicules proviennent de la table vehicules
             const options = vehicules.map((el, index) => {
                 return `<option class="f-16" value="${el.id_vehicule}">${el.numero_plaque} | ${el.numero_chassis} | ${el.marque} | ${el.couleur} | ${el.model} </option><hr>`;

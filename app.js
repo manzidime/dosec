@@ -1,6 +1,9 @@
 const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const pdfRenderer = require('@ministryofjustice/express-template-to-pdf');
+pdf = require('express-pdf');
+
 
 const userRouter = require('./router/userRouter');
 const contribuableRouter = require('./router/contribuableRouter');
@@ -28,6 +31,8 @@ app.use(cookieParser());
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(pdfRenderer());
+app.use(pdf);
 
 //Router
 app.use('/api/v1/users', userRouter);

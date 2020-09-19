@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : empako-local
- Source Server Type    : MySQL
+ Source Server         : mpako
+ Source Server Type    : MariaDB
  Source Server Version : 100410
  Source Host           : localhost:3306
  Source Schema         : ngds
 
- Target Server Type    : MySQL
+ Target Server Type    : MariaDB
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 15/09/2020 13:19:50
+ Date: 19/09/2020 15:29:15
 */
 
 SET NAMES utf8mb4;
@@ -61,27 +61,36 @@ INSERT INTO `agent` VALUES (19, 'EKILA', 'nono', '90032', 1, 'masculin', 'merdi-
 -- ----------------------------
 DROP TABLE IF EXISTS `arrete`;
 CREATE TABLE `arrete`  (
-  `idArrete` int(11) NOT NULL AUTO_INCREMENT,
+  `id_arrete` int(11) NOT NULL AUTO_INCREMENT,
   `fonction` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `signataire` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `idExercice` int(11) NOT NULL,
-  `idTaxe` int(11) NOT NULL,
-  `uniteDelai` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `numeroArrete` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `id_exercice` int(11) NOT NULL,
+  `id_taxe` int(11) NOT NULL,
+  `unite_delai` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `numero_arrete` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `date` date NOT NULL,
-  `dateFinalePaiement` date NOT NULL,
+  `date_finale_paiement` date NOT NULL,
   `delai` int(11) NOT NULL,
-  `libelle` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  PRIMARY KEY (`idArrete`) USING BTREE,
-  INDEX `fk_tblarrete_tblexercice1_idx`(`idExercice`) USING BTREE,
-  INDEX `fk_tblarrete_tbltaxe1_idx`(`idTaxe`) USING BTREE,
-  CONSTRAINT `fk_tblarrete_tblexercice1` FOREIGN KEY (`idExercice`) REFERENCES `exercice` (`id_exercice`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tblarrete_tbltaxe1` FOREIGN KEY (`idTaxe`) REFERENCES `taxe` (`id_taxe`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  `libelle` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id_arrete`) USING BTREE,
+  INDEX `fk_tblarrete_tblexercice1_idx`(`id_exercice`) USING BTREE,
+  INDEX `fk_tblarrete_tbltaxe1_idx`(`id_taxe`) USING BTREE,
+  CONSTRAINT `fk_tblarrete_tblexercice1` FOREIGN KEY (`id_exercice`) REFERENCES `exercice` (`id_exercice`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblarrete_tbltaxe1` FOREIGN KEY (`id_taxe`) REFERENCES `taxe` (`id_taxe`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of arrete
 -- ----------------------------
+INSERT INTO `arrete` VALUES (1, 'CHEFs DE SERVICE URBAIN DE TRANSPORT', 'MASSANGU YOLOLA CHARLES', 1, 1, 'JOURS', '021', '2015-01-26', '2015-12-31', 7, 'ARRETE URBAIN NÂ° 021/BUR-MAIRE/VILLE/L\'SHI/2014 du 22/02/2014 PORTANT FIXATION DU TAUX ET DES TAXES SUR :STATIONNEMENT DANS LA VILLE DE LUBUMBASHI');
+INSERT INTO `arrete` VALUES (2, 'LE CHEF DE SERVICE URBAIN DE IPMEA', 'NÂ° 13/0013 du 23 fÃ©vrier 2013', 1, 2, 'jours', '011', '2015-01-30', '2015-12-31', 7, 'ARRETE URBAIN NÂ° 008/BUR-MAIRE/VILLE/L\'SHI/2015 DUB 17/02/2015 PORTANT PERCEPTION ET FIXATION DES TAUX DE PRODUITS DE VENTE DES FICHES DE RECENSEMENT DES PME DANS LA VILLE DE LUBUMBASHI');
+INSERT INTO `arrete` VALUES (3, 'LE CHEF DE SERCVICE URBAIN DE TRANSPORT', 'MASANGU YOLOLA CHARLES', 1, 3, 'JOURS', 'Ord loi nÂ° 13/001 du 13 juillet 2011', '2015-02-19', '2015-12-31', 7, 'ARRETE URBAIN NÃ‚Â° 011/BUR-MAIRE/VILLE/L\'SHI/2015 DU 19/02/2015 PORTANT FIXATION DU TAUX DE LA TAXE SUR L\'AUTORISATION ANNUELLE DE TRANSPORT URBAIN DANS LA VILLE DE LUBUMBASHI');
+INSERT INTO `arrete` VALUES (4, 'LE CHEF DE SERVICE URBAIN DE TRANSPORT', 'MASSANGU YOLOLA', 1, 13, 'JOURS', 'ORD LOI 0013/001 DU 22 FEVRIER 2015', '2015-01-01', '2015-12-31', 7, 'ARRETE URBAIN NÂ° 012/BUR-MAIRE/VILLE/LSHI/2015 DU 19/02/2015 PORTANT FIXATION DE LA TAXE SUR LA NUMEROTATION DE MOYEN DE TRANSPORT EN COMMUN DANS LA VILLE DE LUBUMBASHI');
+INSERT INTO `arrete` VALUES (5, 'LE CHEF DE SERVICE URBAIN DE L\'IPMEA', '.........', 1, 14, 'JOURS', '017/BUR-MAIRE/VILLE/L\'SHI/2015', '2015-02-17', '2015-12-31', 7, 'ARRETE URBAIN NÂ° 017/BUR-MAIRE/VILLE/L\'SHI/2015 DU 17/02/2015 PORTANT FIXATION DES TAUX DE LA TAXE SPECIFIQUE RELATIVE AU RECENSEMENT ANNUEL DES PETITES ET MOYENNES INDUSTRIES DANS LA VILLE DE LUBUMBASHI');
+INSERT INTO `arrete` VALUES (6, 'ORDONNATEUR DE LA NOTE', 'MUKUNA KALOMBO', 1, 15, 'Jours', '14102/AEC/TECG', '2016-01-01', '2016-06-30', 7, 'TEST3');
+INSERT INTO `arrete` VALUES (7, 'CHEF DE SERVICE', 'MUKOLO MUNA', 1, 16, 'Jours', 'Ord loi nÂ° 13/001 du 13 janvier 2020', '2019-10-03', '2019-10-11', 7, 'Ord loi nÂ° 13/001 du 13 juillet 2011');
+INSERT INTO `arrete` VALUES (8, 'PREMIER MINISTRE', 'ILUNGA ILKAMBA', 1, 7, 'Jours', 'Ordonnance Loi nÂ° 3520/A', '2018-07-04', '2019-12-31', 7, 'LibellÃ©');
+INSERT INTO `arrete` VALUES (9, 'CHEF DE DIVISION', '.', 1, 17, 'Jour', 'Ordonnance Loi 452/B', '2019-02-05', '2020-12-31', 7, 'LIBELLE');
 
 -- ----------------------------
 -- Table structure for article_budgetaire
@@ -183,11 +192,14 @@ CREATE TABLE `attestation`  (
   CONSTRAINT `attestation_ibfk_1` FOREIGN KEY (`id_taxation`) REFERENCES `taxation` (`id_taxation`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `attestation_ibfk_2` FOREIGN KEY (`id_agent`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `attestation_ibfk_3` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of attestation
 -- ----------------------------
+INSERT INTO `attestation` VALUES (14, '2020-09-01', 'zzazaz', 55, 25000, NULL, 27500, 'favorable', 'true', 18, 41, '2020-09-18 16:54:42');
+INSERT INTO `attestation` VALUES (15, '2020-08-31', 'azazazaz', 55, 25000, 2500, 27500, 'favorable', 'true', 18, 41, '2020-09-18 17:05:31');
+INSERT INTO `attestation` VALUES (16, '2020-08-31', 'azazazaz', 55, 25000, 2500, 27500, 'favorable', 'true', 18, 41, '2020-09-18 17:06:18');
 
 -- ----------------------------
 -- Table structure for banque
@@ -237,7 +249,7 @@ CREATE TABLE `categorie_detail_tarif`  (
   `idCategorie` int(11) NOT NULL AUTO_INCREMENT,
   `id_compte` int(11) NOT NULL,
   `designation` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`idCategorie`) USING BTREE,
   INDEX `fk_tblcategorie_detail_tarif_tblcompte1_idx`(`id_compte`) USING BTREE,
   CONSTRAINT `fk_tblcategorie_detail_tarif_tblcompte1` FOREIGN KEY (`id_compte`) REFERENCES `compte` (`id_compte`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -345,11 +357,13 @@ CREATE TABLE `contribuable`  (
   CONSTRAINT `contribuable_ibfk_3` FOREIGN KEY (`id_quartier`) REFERENCES `quartier` (`id_quartier`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `contribuable_ibfk_4` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `contribuable_ibfk_5` FOREIGN KEY (`id_agent`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contribuable
 -- ----------------------------
+INSERT INTO `contribuable` VALUES (22, 'EKMU Nono', '+243852058798', 'Kinshasa', 2, 14, 146, 'kadima', '8', '2020-09-15 14:58:17', 'true', 41, 18, '');
+INSERT INTO `contribuable` VALUES (23, 'nsoki akanda jp', '+243', 'Kinshasa', 3, 6, 342, 'songo', '48', '2020-09-15 19:13:24', 'true', 41, 18, '');
 
 -- ----------------------------
 -- Table structure for detail_tarif
@@ -359,7 +373,7 @@ CREATE TABLE `detail_tarif`  (
   `id_detail` int(11) NOT NULL AUTO_INCREMENT,
   `id_categorie_tarif` int(11) NOT NULL,
   `designation` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_detail`) USING BTREE,
   INDEX `fk_tbldetail_tarif_tblcategorie_detail_tarif1_idx`(`id_categorie_tarif`) USING BTREE,
   CONSTRAINT `fk_tbldetail_tarif_tblcategorie_detail_tarif1` FOREIGN KEY (`id_categorie_tarif`) REFERENCES `categorie_detail_tarif` (`idCategorie`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -384,11 +398,15 @@ CREATE TABLE `detail_taxation`  (
   INDEX `id_vehicule`(`id_vehicule`) USING BTREE,
   CONSTRAINT `detail_taxation_ibfk_1` FOREIGN KEY (`id_taxation`) REFERENCES `taxation` (`id_taxation`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `detail_taxation_ibfk_2` FOREIGN KEY (`id_vehicule`) REFERENCES `vehicule` (`id_vehicule`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of detail_taxation
 -- ----------------------------
+INSERT INTO `detail_taxation` VALUES (19, 55, 16, 25000, 'CDF');
+INSERT INTO `detail_taxation` VALUES (22, 58, 16, 25000, 'CDF');
+INSERT INTO `detail_taxation` VALUES (23, 59, 17, 95, 'USD');
+INSERT INTO `detail_taxation` VALUES (24, 60, 17, 25000, 'CDF');
 
 -- ----------------------------
 -- Table structure for district
@@ -1452,18 +1470,20 @@ CREATE TABLE `taxation`  (
   `nom_declarant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `telephone_declarant` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `montant` int(11) NULL DEFAULT NULL,
+  `montant_global` int(11) NULL DEFAULT NULL,
   `devise` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `id_compte` int(11) NULL DEFAULT NULL,
   `taux` double(18, 2) NULL DEFAULT NULL,
   `date_validation` datetime(0) NULL DEFAULT NULL,
   `id_validateur` int(11) NULL DEFAULT NULL,
-  `state` enum('tax','ord') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'tax',
+  `state` enum('tax','ord','att') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'tax',
   `active` enum('true','false') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'true',
   `date_creation` datetime(0) NULL DEFAULT NULL,
   `id_contribuable` int(11) NULL DEFAULT NULL,
-  `penalite` int(11) NULL DEFAULT NULL,
+  `penalite` int(11) NULL DEFAULT 0,
   `avis` enum('favorable','non favorable') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'favorable',
   `nombre_acte` int(11) NULL DEFAULT NULL,
+  `echeance` enum('1','2') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_taxation`) USING BTREE,
   INDEX `fk_tblTaxation_tblTaxe1_idx`(`id_taxe`) USING BTREE,
   INDEX `fk_tbltaxation_tblexercice1_idx`(`id_exercice`) USING BTREE,
@@ -1479,11 +1499,15 @@ CREATE TABLE `taxation`  (
   CONSTRAINT `taxation_ibfk_3` FOREIGN KEY (`id_compte`) REFERENCES `compte` (`id_compte`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `taxation_ibfk_4` FOREIGN KEY (`id_validateur`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `taxation_ibfk_6` FOREIGN KEY (`id_contribuable`) REFERENCES `contribuable` (`id_contribuable`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of taxation
 -- ----------------------------
+INSERT INTO `taxation` VALUES (55, 1, 1, 41, '1055/TD/2020', '2020-09-15 16:26:40', 18, 'malonda', '+243', 25000, 27500, 'CDF', 1, 1800.00, '2020-09-17 08:50:41', 18, 'att', 'true', '2020-09-15 16:26:40', 22, 10, 'favorable', 1, '1');
+INSERT INTO `taxation` VALUES (58, 1, 1, 41, '1058/TD/2020', '2020-09-15 18:31:09', 18, 'malonda', '+243', 25000, 27500, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-15 18:31:09', 22, 10, 'favorable', 1, '1');
+INSERT INTO `taxation` VALUES (59, 1, 15, 41, '1059/CTCH/2020', '2020-09-15 19:14:54', 18, 'BRIELLE', '+243', 95, 143, 'USD', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-15 19:14:54', 23, 50, 'favorable', 1, '2');
+INSERT INTO `taxation` VALUES (60, 1, 1, 41, '1060/TD/2020', '2020-09-17 08:41:14', 18, 'malonda', '+243', 25000, 27500, 'CDF', NULL, 1800.00, NULL, NULL, 'tax', 'true', '2020-09-17 08:41:14', 23, 10, 'favorable', 1, '1');
 
 -- ----------------------------
 -- Table structure for taxe
@@ -1494,8 +1518,8 @@ CREATE TABLE `taxe`  (
   `id_type_objet` int(11) NOT NULL,
   `id_service_assiette` int(11) NOT NULL,
   `designation` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `libelle` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
+  `description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `libelle` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `delai_jour` int(11) NOT NULL,
   `designation_document` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `periodicite` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -1580,23 +1604,19 @@ CREATE TABLE `vehicule`  (
   CONSTRAINT `vehicule_ibfk_1` FOREIGN KEY (`id_contribuable`) REFERENCES `contribuable` (`id_contribuable`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `vehicule_ibfk_2` FOREIGN KEY (`id_agent`) REFERENCES `agent` (`id_agent`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `vehicule_ibfk_3` FOREIGN KEY (`id_site`) REFERENCES `site` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of vehicule
 -- ----------------------------
+INSERT INTO `vehicule` VALUES (16, 1, 2, 22, 'super!!!!', 'zazazazazazaz', 'azazaza', 'TOYOTA', 'blue', '17tb', '2020-09-02', '2020-09-15 14:58:57', 'true', 18, 41);
+INSERT INTO `vehicule` VALUES (17, 1, 2, 23, 'fhuj5968522', 'bz8569', 'QQD', 'DQD', 'QDD', 'DQDQ', '2020-01-08', '2020-09-15 19:14:16', 'true', 18, 41);
 
 -- ----------------------------
 -- View structure for v_all_agent
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_agent`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_agent` AS select `agent`.`id_agent` AS `id_agent`,`agent`.`nom` AS `nom`,`agent`.`prenom` AS `prenom`,`agent`.`matricule` AS `matricule`,`agent`.`sexe` AS `sexe`,`agent`.`login` AS `login`,`agent`.`password` AS `password`,`agent`.`id_site` AS `id_site`,`agent`.`peutTaxer` AS `peutTaxer`,`agent`.`peutApurer` AS `peutApurer`,`agent`.`id_fonction` AS `id_fonction`,`agent`.`peutEncoder` AS `peutEncoder`,`agent`.`peutOrdonnancer` AS `peutOrdonnancer`,`agent`.`peutAdministrer` AS `peutAdministrer`,`agent`.`peutFaireRapport` AS `peutFaireRapport`,`agent`.`peutImprimer` AS `peutImprimer`,`agent`.`peutSite` AS `peutSite`,`agent`.`peutStock` AS `peutStock`,`agent`.`active` AS `active`,`agent`.`slug` AS `slug`,`fonction`.`libelle_fonction` AS `libelle_fonction`,`site`.`lieu` AS `lieu`,`site`.`id_commune` AS `id_commune` from ((`agent` join `fonction` on(`agent`.`id_fonction` = `fonction`.`id_fonction`)) join `site` on(`agent`.`id_site` = `site`.`id`));
-
--- ----------------------------
--- View structure for v_all_attestation
--- ----------------------------
-DROP VIEW IF EXISTS `v_all_attestation`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_attestation` AS select `attestation`.`montant` AS `montant`,`taxation`.`num_taxation` AS `num_taxation`,`taxation`.`date_taxation` AS `date_taxation`,`taxation`.`devise` AS `devise`,`taxation`.`date_validation` AS `date_validation`,`contribuable`.`nom` AS `nom`,`attestation`.`active` AS `active`,`taxation`.`id_taxe` AS `id_taxe`,`taxe`.`description` AS `description` from (((`attestation` join `taxation` on(`attestation`.`id_taxation` = `taxation`.`id_taxation`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`));
 
 -- ----------------------------
 -- View structure for v_all_commune
@@ -1638,7 +1658,13 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_tarif` AS select `
 -- View structure for v_all_taxation
 -- ----------------------------
 DROP VIEW IF EXISTS `v_all_taxation`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxation` AS select `taxation`.`id_taxation` AS `id_taxation`,`taxation`.`id_exercice` AS `id_exercice`,`taxation`.`id_taxe` AS `id_taxe`,`taxation`.`id_site` AS `id_site`,`taxation`.`devise` AS `devise`,`taxation`.`num_taxation` AS `num_taxation`,`taxation`.`date_taxation` AS `date_taxation`,`taxation`.`taux` AS `taux`,`taxation`.`date_creation` AS `date_creation`,`taxation`.`active` AS `active`,`taxation`.`state` AS `state`,`taxation`.`date_validation` AS `date_validation`,`exercice`.`annee` AS `exercice`,`site`.`lieu` AS `lieu`,`taxateur`.`nom` AS `nom_taxateur`,`taxateur`.`prenom` AS `prenom_taxateur`,`validateur`.`nom` AS `nom_validateur`,`validateur`.`prenom` AS `prenom_validateur`,`taxation`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `redevable`,`taxation`.`montant` AS `montant`,`taxe`.`description` AS `description`,`taxation`.`penalite` AS `penalite`,`taxe`.`designation` AS `taxe`,`taxation`.`telephone_declarant` AS `telephone_declarant`,`taxation`.`nom_declarant` AS `nom_declarant`,`taxation`.`nombre_acte` AS `nombre_acte`,`taxation`.`avis` AS `avis`,`taxation`.`id_validateur` AS `id_validateur`,`taxation`.`id_compte` AS `id_compte`,`taxation`.`id_agent` AS `id_agent`,`detail_taxation`.`id_vehicule` AS `id_vehicule`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile` from ((((((((`taxation` join `exercice` on(`taxation`.`id_exercice` = `exercice`.`id_exercice`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) join `site` on(`taxation`.`id_site` = `site`.`id`)) left join `agent` `taxateur` on(`taxation`.`id_agent` = `taxateur`.`id_agent`)) left join `agent` `validateur` on(`taxation`.`id_validateur` = `validateur`.`id_agent`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) group by `taxation`.`id_taxation`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxation` AS select `taxation`.`id_taxation` AS `id_taxation`,`taxation`.`id_exercice` AS `id_exercice`,`taxation`.`id_taxe` AS `id_taxe`,`taxation`.`id_site` AS `id_site`,`taxation`.`devise` AS `devise`,`taxation`.`num_taxation` AS `num_taxation`,date_format(`taxation`.`date_taxation`,'%d-%m-%Y') AS `date_taxation`,`taxation`.`taux` AS `taux`,`taxation`.`date_creation` AS `date_creation`,`taxation`.`active` AS `active`,`taxation`.`state` AS `state`,`taxation`.`date_validation` AS `date_validation`,`exercice`.`annee` AS `exercice`,`site`.`lieu` AS `lieu`,`taxateur`.`nom` AS `nom_taxateur`,`taxateur`.`prenom` AS `prenom_taxateur`,`validateur`.`nom` AS `nom_validateur`,`validateur`.`prenom` AS `prenom_validateur`,`taxation`.`id_contribuable` AS `id_contribuable`,`contribuable`.`nom` AS `redevable`,`taxation`.`montant` AS `montant`,`taxe`.`description` AS `description`,`taxation`.`penalite` AS `penalite`,`taxe`.`designation` AS `taxe`,`taxation`.`telephone_declarant` AS `telephone_declarant`,`taxation`.`nom_declarant` AS `nom_declarant`,`taxation`.`nombre_acte` AS `nombre_acte`,`taxation`.`avis` AS `avis`,`taxation`.`id_validateur` AS `id_validateur`,`taxation`.`id_compte` AS `id_compte`,`taxation`.`id_agent` AS `id_agent`,`detail_taxation`.`id_vehicule` AS `id_vehicule`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`taxation`.`echeance` AS `echeance`,`taxation`.`montant_global` AS `montant_global` from ((((((((`taxation` join `exercice` on(`taxation`.`id_exercice` = `exercice`.`id_exercice`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) join `site` on(`taxation`.`id_site` = `site`.`id`)) left join `agent` `taxateur` on(`taxation`.`id_agent` = `taxateur`.`id_agent`)) left join `agent` `validateur` on(`taxation`.`id_validateur` = `validateur`.`id_agent`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) group by `taxation`.`id_taxation`;
+
+-- ----------------------------
+-- View structure for v_all_taxe_articles
+-- ----------------------------
+DROP VIEW IF EXISTS `v_all_taxe_articles`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_taxe_articles` AS select `taxe`.`designation` AS `taxe`,`type_objet`.`designation` AS `type_objet`,`type_objet`.`id_type_objet` AS `id_type_objet`,`article_budgetaire`.`designation` AS `article_budgetaire`,`article_budgetaire`.`id_article_budgetaire` AS `id_article_budgetaire`,`taxe`.`id_taxe` AS `id_taxe` from (`article_budgetaire` left join (`taxe` join `type_objet` on(`taxe`.`id_type_objet` = `type_objet`.`id_type_objet`)) on(`type_objet`.`id_type_objet` = `article_budgetaire`.`id_type_objet`)) where `type_objet`.`id_type_objet` = 1;
 
 -- ----------------------------
 -- View structure for v_all_vehicule
@@ -1653,6 +1679,12 @@ DROP VIEW IF EXISTS `v_all_vehicules_taxations`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_all_vehicules_taxations` AS select `detail_taxation`.`montant` AS `montant`,`detail_taxation`.`devise` AS `devise`,`taxation`.`id_taxation` AS `id_taxation`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`vehicule`.`model` AS `model`,`vehicule`.`marque` AS `marque`,`vehicule`.`couleur` AS `couleur`,`vehicule`.`charge_utile` AS `charge_utile`,`article_budgetaire`.`designation` AS `designation` from (((`taxation` join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) join `article_budgetaire` on(`vehicule`.`id_article_budgetaire` = `article_budgetaire`.`id_article_budgetaire`));
 
 -- ----------------------------
+-- View structure for v_check_taxation
+-- ----------------------------
+DROP VIEW IF EXISTS `v_check_taxation`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_check_taxation` AS select `taxation`.`id_taxe` AS `id_taxe`,`detail_taxation`.`id_vehicule` AS `id_vehicule`,`vehicule`.`id_article_budgetaire` AS `id_article_budgetaire`,`vehicule`.`numero_chassis` AS `numero_chassis`,`vehicule`.`numero_plaque` AS `numero_plaque`,`taxe`.`designation` AS `taxe` from (((`taxation` join `detail_taxation` on(`taxation`.`id_taxation` = `detail_taxation`.`id_taxation`)) join `vehicule` on(`detail_taxation`.`id_vehicule` = `vehicule`.`id_vehicule`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`));
+
+-- ----------------------------
 -- View structure for v_id_taxation_tarif
 -- ----------------------------
 DROP VIEW IF EXISTS `v_id_taxation_tarif`;
@@ -1662,13 +1694,19 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_id_taxation_tarif` AS 
 -- View structure for v_note_calcul
 -- ----------------------------
 DROP VIEW IF EXISTS `v_note_calcul`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_note_calcul` AS select `taxation`.`montant` AS `montant_taxe`,`taxation`.`date_taxation` AS `date_taxation`,`agent`.`nom` AS `nom_taxateur`,`fonction`.`libelle_fonction` AS `fonction_taxateur`,`contribuable`.`nom` AS `nom_redevable`,`contribuable`.`avenue` AS `avenue_redevable`,`quartier`.`libelle_quartier` AS `quartier_redevable`,`commune`.`libelle_commune` AS `commune_redevable`,`contribuable`.`numero` AS `numro_avenue_redevable`,`contribuable`.`telephone` AS `telephone_redevable`,`taxation`.`num_taxation` AS `num_taxation`,`taxe`.`designation` AS `acte_generateur`,`service_assiette`.`designation` AS `service_taxateur`,`taxation`.`devise` AS `devise` from ((((((((`attestation` join `taxation` on(`attestation`.`id_taxation` = `taxation`.`id_taxation`)) join `agent` on(`taxation`.`id_agent` = `agent`.`id_agent`)) join `fonction` on(`agent`.`id_fonction` = `fonction`.`id_fonction`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `quartier` on(`contribuable`.`id_quartier` = `quartier`.`id_quartier`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune`)) join `service_assiette`) join `taxe` on(`service_assiette`.`id_serviceAssiette` = `taxe`.`id_service_assiette` and `taxation`.`id_taxe` = `taxe`.`id_taxe`));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_note_calcul` AS select `taxe`.`designation` AS `acte_generateur`,`service_assiette`.`designation` AS `service_taxateur`,`taxation`.`num_taxation` AS `num_taxation`,`taxation`.`nombre_acte` AS `nombre_acte`,`taxation`.`montant_global` AS `montant_global`,date_format(`taxation`.`date_taxation`,'%d-%m-%Y') AS `date_taxation`,`agent`.`nom` AS `nom_taxateur`,`fonction`.`libelle_fonction` AS `qualite_taxateur`,`contribuable`.`nom` AS `contribuable`,`contribuable`.`telephone` AS `telephone_contribuable`,`contribuable`.`avenue` AS `avenue`,`contribuable`.`numero` AS `numero`,`commune`.`libelle_commune` AS `commune`,`taxation`.`devise` AS `devise`,`taxation`.`id_taxation` AS `id_taxation`,`arrete`.`numero_arrete` AS `numero_arrete`,`taxe`.`description` AS `description` from (((((((`taxation` join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) join `service_assiette` on(`taxe`.`id_service_assiette` = `service_assiette`.`id_serviceAssiette`)) join `agent` on(`taxation`.`id_agent` = `agent`.`id_agent`)) join `fonction` on(`agent`.`id_fonction` = `fonction`.`id_fonction`)) join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `commune` on(`contribuable`.`id_commune` = `commune`.`id_commune`)) join `arrete` on(`taxe`.`id_taxe` = `arrete`.`id_taxe`)) where `taxation`.`state` = 'ord' or `taxation`.`state` = 'att';
 
 -- ----------------------------
 -- View structure for v_part_dosec
 -- ----------------------------
 DROP VIEW IF EXISTS `v_part_dosec`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_part_dosec` AS select `taxation`.`num_taxation` AS `num_taxation`,date_format(`taxation`.`date_taxation`,'%d-%m-%Y') AS `date_taxation`,date_format(`attestation`.`date_attestation`,'%d-%m-%Y') AS `date_attestation`,`attestation`.`montant` AS `montant`,`taxe`.`designation` AS `taxe`,`attestation`.`montant` * 0.45 AS `part_dosec`,`attestation`.`montant` * 0.55 AS `part_ministere` from ((`taxation` join `attestation` on(`taxation`.`id_taxation` = `attestation`.`id_taxation`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`));
+
+-- ----------------------------
+-- View structure for v_taxation_ord
+-- ----------------------------
+DROP VIEW IF EXISTS `v_taxation_ord`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_taxation_ord` AS select `taxation`.`num_taxation` AS `num_taxation`,`taxation`.`montant` AS `montant`,`taxation`.`montant_global` AS `montant_global`,`taxation`.`devise` AS `devise`,`taxation`.`penalite` AS `penalite`,`taxation`.`id_taxation` AS `id_taxation`,date_format(`taxation`.`date_taxation`,'%d-%m-%Y') AS `date_taxation`,date_format(`taxation`.`date_validation`,'%d-%m-%Y') AS `date_validation`,`contribuable`.`nom` AS `nom`,`taxe`.`description` AS `taxe` from ((`taxation` join `contribuable` on(`taxation`.`id_contribuable` = `contribuable`.`id_contribuable`)) join `taxe` on(`taxation`.`id_taxe` = `taxe`.`id_taxe`)) where `taxation`.`state` = 'ord';
 
 -- ----------------------------
 -- Triggers structure for table document_mvt

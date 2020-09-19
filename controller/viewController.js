@@ -18,6 +18,7 @@ const Taxation = require('./../model/taxationModel');
 const Compte = require('./../model/compteModel');
 const Attestation = require('./../model/attestationModel');
 const PartDosec = require('./../model/attestationModel');
+const User = require('./../model/userModel');
 
 // let file = fs.readFileSync(path.join(__dirname, './../views/doc.pug'), 'utf-8');
 
@@ -30,12 +31,26 @@ exports.login = (req, res) => {
 };
 
 //Home
-exports.home = (req, res) => {
+exports.home = catchAsync(async (req, res, next) => {
+    const users = await new User().getAll(req.user);
+    const taxations = await new Taxation().getAll(req.user);
+    const taxationValide = await new Taxation().getValide(req.user);
+    const notes = await new Taxation().getValide(req.user);
+    const contribuables = await new Contribuable().getAll(req.user);
+    const attestations = await new Attestation().getAll(req.user);
+    const vehicules = await new Vehicule().getAll(req.user);
     res.status(200)
     .render('home', {
         title: 'home',
+        users,
+        taxations,
+        contribuables,
+        taxationValide,
+        attestations,
+        notes,
+        vehicules
     });
-};
+});
 
 //My acount
 exports.myAcount = (req, res) => {
@@ -158,12 +173,11 @@ exports.allTaxationValidate = catchAsync(async (req, res, next) => {
 });
 
 exports.newAttestation = catchAsync(async (req, res, next) => {
-    const taxations = await new Taxation().getValide(req.user);
-
+    const attestations = await new Attestation().getTaxOrd(req.user);
     res.status(200)
     .render('new-attestation', {
         title: 'new attestation',
-        taxations,
+        attestations,
     });
 });
 

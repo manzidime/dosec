@@ -1,75 +1,49 @@
 .row
-    // customar project  start
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-user-md.f-36.text-info
-                    .col-auto
-                        h6.text-muted.m-b-10 Agent
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-user-injured.f-36.text-danger
-                    .col-auto
-                        h6.text-muted.m-b-10 Assujetits
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-user-nurse.f-36.text-success
-                    .col-auto
-                        h6.text-muted.m-b-10 Vehicules
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-prescription-bottle-alt.f-36.text-primary
-                    .col-auto
-                        h6.text-muted.m-b-10 Taxations
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-flask.f-36.text-warning
-                    .col-auto
-                        h6.text-muted.m-b-10 Ordonnancement
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-user-tie.f-36.text-primary
-                    .col-auto
-                        h6.text-muted.m-b-10 Attestations
-                        h2.m-b-0 0
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-file-invoice-dollar.f-36.text-danger
-                    .col-auto
-                        h6.text-muted.m-b-10 Payment
-                        h2.m-b-0 79
-    .col-xl-3.col-md-6
-        .card
-            .card-body
-                .row.align-items-center.m-l-0
-                    .col-auto
-                        i.fas.fa-pills.f-36.text-info
-                    .col-auto
-                        h6.text-muted.m-b-10 Medicine
-                        h2.m-b-0 10
-    // customar project  end
+    .col-sm-3
+        .card.bg-primary.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=users.length !== 0?users.length:0
+                h6.text-white Agents
+                i.feather.icon-user-plus
+    .col-sm-3
+        .card.bg-success.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=contribuables.length !== 0?contribuables.length:0
+                h6.text-white Contribuables
+                i.feather.icon-user-check
+    .col-sm-3
+        .card.bg-danger.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=taxations.length !== 0?taxations.length:0
+                h6.text-white Taxations
+                i.feather.icon-user-minus
+    .col-sm-3
+        .card.bg-warning.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=taxationValide && taxationValide.length !== 0?taxationValide.length:0
+                h6.text-white Taxation validée
+                i.feather.icon-users
+    .col-sm-3
+        .card.bg-primary.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=attestations && attestations.length !== 0?attestations.length:0
+                h6.text-white Attestations
+                i.feather.icon-users
+    .col-sm-3
+        .card.bg-danger.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=taxationValide && taxationValide.length !== 0?taxationValide.length:0
+                h6.text-white Note de calcul
+                i.feather.icon-user-minus
+    .col-sm-3
+        .card.bg-success.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white=vehicules && vehicules.length !== 0?vehicules.length:0
+                h6.text-white Vehicules
+                i.feather.icon-user-check
+    .col-sm-3
+        .card.bg-warning.text-white.widget-visitor-card
+            .card-body.text-center
+                h2.text-white 0
+                h6.text-white Imprimés
+                i.feather.icon-user-check

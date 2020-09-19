@@ -52,7 +52,7 @@ module.exports = class Vehicule {
             if (user.id_fonction === 1) {
                 query = `
                     SELECT *
-                    FROM v_all_vehicule WHERE active='true'
+                    FROM v_all_vehicule
                 `;
             }
             else {

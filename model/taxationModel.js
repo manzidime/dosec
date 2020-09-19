@@ -294,9 +294,7 @@ module.exports = class Taxation {
             if (user.id_fonction === 1) {
                 query = `
                     SELECT *
-                    FROM v_all_taxation
-                    WHERE active = 'true'
-                      AND state = 'ord'
+                    FROM v_all_taxation WHERE state = 'ord' OR state = 'att'
                 `;
             }
             else {
@@ -304,7 +302,6 @@ module.exports = class Taxation {
                     SELECT *
                     FROM v_all_taxation
                     WHERE id_site = ?
-                      AND active = 'true'
                       AND state = 'ord'
                 `;
             }

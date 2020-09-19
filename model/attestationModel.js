@@ -43,8 +43,34 @@ module.exports = class Attestation {
 
     }
 
-    //Obtenir tous
     async getAll(user) {
+        try {
+            let query;
+            if (user.id_fonction === 1) {
+                query = `
+                    SELECT *
+                    FROM v_all_attestation
+                `;
+            }
+            else {
+                query = `
+                    SELECT *
+                    FROM v_all_attestation
+                    WHERE id_site = ?
+                `;
+            }
+
+            const [rows] = await DB.query(query, user.id_site);
+
+            return rows;
+        } catch (err) {
+            throw err;
+        }
+
+    }
+
+    //Obtenir toutes les taxations ordonnancées
+    async getTaxOrd(user) {
         try {
             let query;
             if (user.id_fonction === 1) {

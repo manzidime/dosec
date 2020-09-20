@@ -30888,16 +30888,20 @@ var _dom = _interopRequireDefault(require("./utils/dom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var data4 = {
-  labels: ["Taxations non validées", "Taxations validées", "Taxations attestées"],
-  datasets: [{
-    data: [30, 30, 40],
-    backgroundColor: ['#1c7cc6', '#0e9e4a', '#7267EF'],
-    hoverBackgroundColor: ['#17C666', '#0e9e4a', '#7267EF']
-  }]
-};
-
 if (_dom.default.chartOne) {
+  var data = document.getElementById('data');
+  var statAtt = JSON.parse(data.dataset.statatt);
+  var statTax = JSON.parse(data.dataset.stattax);
+  console.log(statAtt);
+  console.log(statTax);
+  var data4 = {
+    labels: ['Taxations non validées CDF', 'Taxations non validées USD', 'Taxations validées CDF', 'Taxations validées USD', 'Taxations attestées CDF', 'Taxations attestées USD'],
+    datasets: [{
+      data: [statTax.sumTaxationNoValidCDF, statTax.sumTaxationNoValidUSD, statTax.sumTaxationValidCDF, statTax.sumTaxationValidUSD, statAtt.sumCDF, statAtt.sumUSD],
+      backgroundColor: ['#c60600', '#232a33', '#009cef', '#efa003', '#d315ab', '#0c931d'],
+      hoverBackgroundColor: ['#c60600', '#232a33', '#009cef', '#efa003', '#d315ab', '#0c931d']
+    }]
+  };
   var myPieChart = new _chart.default(_dom.default.chartOne.getContext('2d'), {
     type: 'pie',
     data: data4,

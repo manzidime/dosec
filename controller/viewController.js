@@ -41,7 +41,10 @@ exports.home = catchAsync(async (req, res, next) => {
     const vehicules = await new Vehicule().getAll(req.user);
 
     const statAtt = await new Attestation().stat(req.user);
-    //console.log(statAtt);
+    const statTax = await new Taxation().stat(req.user);
+
+    console.log(statTax);
+
     res.status(200)
     .render('home', {
         title: 'home',
@@ -52,6 +55,8 @@ exports.home = catchAsync(async (req, res, next) => {
         attestations,
         notes,
         vehicules,
+        statAtt,
+        statTax
     });
 });
 

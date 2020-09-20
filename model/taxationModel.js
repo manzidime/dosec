@@ -435,4 +435,103 @@ module.exports = class Taxation {
         }
     }
 
+    //stat
+    async stat(user){
+        try {
+            let sumTaxationNoValidCDF;
+            let sumTaxationNoValidUSD;
+            let sumTaxationValidCDF;
+            let sumTaxationValidUSD;
+            if (user.id_fonction === 1) {
+                sumTaxationNoValidCDF = `
+                    SELECT *
+                    FROM v_sum_taxation_no_valide_cdf
+                `;
+
+                sumTaxationNoValidUSD = `
+                    SELECT *
+                    FROM v_sum_taxation_no_valide_usd
+                `;
+
+                sumTaxationValidCDF = `
+                    SELECT *
+                    FROM v_sum_taxation_valid_cdf
+                `;
+
+                sumTaxationValidUSD = `
+                    SELECT *
+                    FROM v_sum_taxation_valid_usd
+                `;
+            }
+            else {
+                sumTaxationNoValidCDF = `
+                    SELECT *
+                    FROM v_sum_taxation_no_valide_cdf
+                    WHERE id_site = ?
+                `;
+                sumTaxationNoValidUSD = `
+                    SELECT *
+                    FROM v_sum_taxation_no_valide_usd
+                    WHERE id_site = ?
+                `;
+                sumTaxationValidCDF = `
+                    SELECT *
+                    FROM v_sum_taxation_valid_cdf
+                    WHERE id_site = ?
+                `;
+
+                sumTaxationValidUSD = `
+                    SELECT *
+                    FROM v_sum_taxation_valid_usd
+                    WHERE id_site = ?
+                `;
+            }
+
+            const [row1] = await DB.query(sumTaxationNoValidCDF, user.id_site);
+            const [row2] = await DB.query(sumTaxationNoValidUSD, user.id_site);
+            const [row3] = await DB.query(sumTaxationValidCDF, user.id_site);
+            const [row4] = await DB.query(sumTaxationValidUSD, user.id_site);
+
+            //Si l'utilisateur est administrateur, nous additions les sommes de tous les sites
+            if (user.id_fonction === 1) {
+
+                let valeurInitiale = 0;
+
+                const sumTaxationNoValidCDF = row1.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                const sumTaxationNoValidUSD = row2.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                const sumTaxationValidCDF = row2.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                const sumTaxationValidUSD = row2.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                return {
+                    sumTaxationNoValidCDF,
+                    sumTaxationNoValidUSD,
+                    sumTaxationValidCDF,
+                    sumTaxationValidUSD
+                };
+
+            }
+
+            //Dans le cas contraire nous envoyons uniquement la somme d'un site
+            return {
+                row1,
+                row2,
+                row3,
+                row4,
+            };
+        } catch (err) {
+            throw err;
+        }
+    }
+
 };

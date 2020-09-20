@@ -12,8 +12,8 @@ module.exports = class Attestation {
             const [att] = await DB.query(
                 `SELECT id_taxation FROM attestation WHERE id_taxation=${this.data.id_taxation}`);
 
-            if(att.length === 1){
-                throw new AppError(`Cette taxation a déjà été attestée`, 400)
+            if (att.length === 1) {
+                throw new AppError(`Cette taxation a déjà été attestée`, 400);
             }
 
             const [rows] = await DB.query(`
@@ -32,7 +32,7 @@ module.exports = class Attestation {
             `, [this.data.date_attestation, this.data.numero_bordereau, this.data.id_taxation, this.data.montant,
                 this.data.montant_penalite,
                 this.data.montant_global,
-                this.data.avis, this.data.id_site, this.data.id_agent,this.data.devise]);
+                this.data.avis, this.data.id_site, this.data.id_agent, this.data.devise]);
 
             if (rows.insertId) {
                 await DB.query(`UPDATE taxation SET state='att' WHERE id_taxation=${this.data.id_taxation}`);
@@ -189,7 +189,7 @@ module.exports = class Attestation {
     }
 
     //Statistiques
-    async stat(user){
+    async stat(user) {
         try {
             let sumCdf;
             let sumUsd;
@@ -206,26 +206,43 @@ module.exports = class Attestation {
             else {
                 sumCdf = `
                     SELECT *
-                    FROM v_sum_attestation_cdf WHERE id_site = ?
+                    FROM v_sum_attestation_cdf
+                    WHERE id_site = ?
                 `;
                 sumUsd = `
                     SELECT *
-                    FROM v_sum_attestation_usd WHERE id_site = ?
+                    FROM v_sum_attestation_usd
+                    WHERE id_site = ?
                 `;
             }
 
             const [row1] = await DB.query(sumCdf, user.id_site);
             const [row2] = await DB.query(sumUsd, user.id_site);
 
-            if(user.id_fonction === 1){
-                const allrow1 = row1.forEach(el=>{
-                    console.log(el)
-                })
+            //Si l'utilisateur est administrateur, nous additions les sommes de tous les sites
+            if (user.id_fonction === 1) {
+
+                let valeurInitiale = 0;
+
+                const sumCDF = row1.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                const sumUSD = row2.reduce((cum, el) => {
+                    return cum + (el.sum * 1);
+                }, valeurInitiale);
+
+                return {
+                    sumCDF,
+                    sumUSD,
+                };
+
             }
 
-            return{
+            //Dans le cas contraire nous envoyons uniquement la somme d'un site
+            return {
                 row1,
-                row2
+                row2,
             };
         } catch (err) {
             throw err;

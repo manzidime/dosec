@@ -87,4 +87,6 @@ export default {
 
 
     containerError: document.getElementById('container-error'),
+
+    chartOne: document.getElementById('chartOne'),
 };

@@ -7,6 +7,7 @@ import {newPerson} from './newPerson';
 import {updatePerson} from './updatePerson';
 import {desable, desableCar} from './desable';
 import {newVehicule, updateVehicule} from './newVehicule';
+import {} from './chart-custom';
 import {
     getTaxe2,
     getVehicules,
@@ -400,6 +401,7 @@ if (dom.btnDeleteTaxation) {
 }
 
 //6.Validation taxation
+console.log(dom.formValidation);
 if (dom.formValidation) {
     dom.formValidation.forEach((el, index) => {
         el.addEventListener('submit', async (event) => {
@@ -409,9 +411,7 @@ if (dom.formValidation) {
                 avis: dom.avis[index].value,
             };
 
-
             const id = el.dataset.id;
-            console.log(body);
             await validateTaxation(body, id, index);
 
         });
@@ -435,6 +435,7 @@ if (dom.formNewAttestation) {
                 montant_penalite: el.querySelector('.penalite').value,
                 numero_bordereau: el.querySelector('.numero_bordereau').value,
                 date_attestation: el.querySelector('.date_attestation').value,
+                devise: el.querySelector('.devise').value,
             };
 
             const container = document.querySelector(`.container-alert-${id}`);
@@ -452,12 +453,12 @@ if (dom.formNewAttestation) {
 }
 
 /*GENERATE CODE QR*/
-console.log(document.querySelectorAll('.qr-code'));
-if (document.querySelector('.qr-code')) {
-    const qr = document.querySelector('.qr-code');
-    const idDocument = qr.dataset.id;
-
-    QRCode.toCanvas(qr, `/home/all-ov/free/${idDocument}`, function (error) {
-        if (error) console.error(error);
-    });
-}
+// console.log(document.querySelectorAll('.qr-code'));
+// if (document.querySelector('.qr-code')) {
+//     const qr = document.querySelector('.qr-code');
+//     const idDocument = qr.dataset.id;
+//
+//     QRCode.toCanvas(qr, `/home/all-ov/free/${idDocument}`, function (error) {
+//         if (error) console.error(error);
+//     });
+// }

@@ -34,11 +34,11 @@ link(href='http://127.0.0.1:5100/css/note.css' rel='stylesheet')
                                         -const devise = doc[0].devise === 'CDF' ? 'Francs congolais' : 'Dollars americains'
                                         strong=` ${doc[0].montant_letter} ${devise}`
                             li Date de taxation :
-                                strong #{doc[0].date_taxation}
+                                strong=` ${doc[0].date_taxation}`
                             li Taxateur:
-                                strong #{doc[0].nom_taxateur}
+                                strong=` ${doc[0].nom_taxateur}`
                             li Qualit&eacute :
-                                strong #{doc[0].qualite_taxateur}
+                                strong=` ${doc[0].qualite_taxateur}`
                 .bloc-contribuable
                     h2.title-bloc-contribuable Identification de l&apos;assujettit
                     .info-contribuable

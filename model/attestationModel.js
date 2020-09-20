@@ -27,11 +27,12 @@ module.exports = class Attestation {
                     avis=?,
                     id_site=?,
                     id_agent=?,
+                    devise=?,
                     date_creation=current_timestamp()
             `, [this.data.date_attestation, this.data.numero_bordereau, this.data.id_taxation, this.data.montant,
                 this.data.montant_penalite,
                 this.data.montant_global,
-                this.data.avis, this.data.id_site, this.data.id_agent]);
+                this.data.avis, this.data.id_site, this.data.id_agent,this.data.devise]);
 
             if (rows.insertId) {
                 await DB.query(`UPDATE taxation SET state='att' WHERE id_taxation=${this.data.id_taxation}`);
@@ -182,6 +183,50 @@ module.exports = class Attestation {
             const [rows] = await DB.query(`SELECT *
                                            FROM v_note_calcul`);
             return rows;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    //Statistiques
+    async stat(user){
+        try {
+            let sumCdf;
+            let sumUsd;
+            if (user.id_fonction === 1) {
+                sumCdf = `
+                    SELECT *
+                    FROM v_sum_attestation_cdf
+                `;
+                sumUsd = `
+                    SELECT *
+                    FROM v_sum_attestation_usd
+                `;
+            }
+            else {
+                sumCdf = `
+                    SELECT *
+                    FROM v_sum_attestation_cdf WHERE id_site = ?
+                `;
+                sumUsd = `
+                    SELECT *
+                    FROM v_sum_attestation_usd WHERE id_site = ?
+                `;
+            }
+
+            const [row1] = await DB.query(sumCdf, user.id_site);
+            const [row2] = await DB.query(sumUsd, user.id_site);
+
+            if(user.id_fonction === 1){
+                const allrow1 = row1.forEach(el=>{
+                    console.log(el)
+                })
+            }
+
+            return{
+                row1,
+                row2
+            };
         } catch (err) {
             throw err;
         }

@@ -28,7 +28,7 @@ html{
 }
 
 .objet {
-    border-bottom: 1px solid #222222;
+    border-bottom: 4px solid #222222;
     margin: 15px 0;
     display: flex;
     justify-content: space-between;
@@ -45,12 +45,14 @@ html{
 .bloc-content{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .bloc-taxation{
-    border-right: 1px solid #222222;
+    /*border-right: 4px solid #222222;*/
     padding-right: 5px;
-    flex-basis: 65%;
+    margin-right: 5px;
+    flex-basis: 60%;
 }
 
 .nb {

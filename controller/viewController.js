@@ -19,6 +19,8 @@ const Compte = require('./../model/compteModel');
 const Attestation = require('./../model/attestationModel');
 const PartDosec = require('./../model/attestationModel');
 const User = require('./../model/userModel');
+const Site = require('./../model/siteModel');
+const Fonction = require('./../model/fonctionModel');
 
 // let file = fs.readFileSync(path.join(__dirname, './../views/doc.pug'), 'utf-8');
 
@@ -56,7 +58,7 @@ exports.home = catchAsync(async (req, res, next) => {
         notes,
         vehicules,
         statAtt,
-        statTax
+        statTax,
     });
 });
 
@@ -245,6 +247,17 @@ exports.doc = catchAsync(async (req, res, next) => {
                 right: '10px',
             },
         },
+    });
+});
+
+exports.newUser = catchAsync(async (req, res, next) => {
+    const sites = await new Site().getAll();
+    const fonctions = await new Fonction().getAll();
+    res.status(200)
+    .render('new-user', {
+        title: 'Création utilisateur',
+        sites,
+        fonctions,
     });
 });
 

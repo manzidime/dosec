@@ -1,0 +1,93 @@
+extends home
+block content
+    .row
+    // customar project  start
+    .col-xl-12
+        .card
+            .card-body
+                h5.mt-3.mb-3 Création d'un utilisateur
+                form.needs-validation(novalidate='')#form-new-user
+                    .row
+                        .col-sm-4
+                            .form-group
+                                label.floating-label(for='nom') Nom
+                                input#nom.form-control.form-control-sm.rounded-0(type='text' required='')
+                        .col-sm-4
+                            .form-group.fill
+                                label.floating-label(for='prenom') Pr&eacute;nom
+                                input.form-control.form-control-sm(type='text' id='prenom' required='')
+                        .col-sm-4
+                            .form-group
+                                label.floating-label(for='sexe') Sexe
+                                select#sexe.form-control.form-control-sm(required='')
+                                    option(value='' selected='' disabled='') Sexe
+                                    option(value='masculin') Masculin
+                                    option(value='feminin') Féminin
+                        .col-sm-4
+                            .form-group
+                                label.floating-label(for='site') Site
+                                select#site.form-control.form-control-sm(required='')
+                                    option(value='' selected='' disabled='')
+                                    if sites
+                                    each site in sites
+                                        option(value=`${site.id}`)=site.lieu
+                        .col-sm-4
+                            .form-group.fill
+                                label.floating-label(for='matricule') Matricule
+                                input#matricule.form-control.form-control-sm(type='text' required='')
+                        .col-sm-4
+                            .form-group
+                                label.floating-label(for='fonction') Fonctions
+                                select#fonction.form-control.form-control-sm(required='')
+                                    option(value='' selected='' disabled='') Fonctions
+                                    if fonctions
+                                    each fonction in fonctions
+                                        option(value=`${fonction.id_fonction}`)=fonction.libelle_fonction
+                        .col-sm-4
+                            .form-group
+                                label.floating-label(for='password') Mots de passe
+                                input.form-control.form-control-sm(type='text' id='password' required='')
+                        .col-sm-12
+                            h5.ml-0.p-0 Role*
+                        .col-sm-12
+                            .row
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#taxer.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='taxer') Taxation
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#ordonnancer.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='ordonnancer') Ordonnancement
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#apurer.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='apurer') Apurement
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#encoder.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='encoder') Encodage
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#imprimer.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='imprimer') Impression des documents
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#rapport.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='rapport') Gestion des rapports
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#admin.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='admin') Administration
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#gerer.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='gerer') Gestion des centres
+                                .col-sm-4
+                                    .custom-control.custom-checkbox.custom-control-inline
+                                        input#stocker.custom-control-input.input-success(type='checkbox' required='')
+                                        label.custom-control-label(for='stocker') Gestion de stock
+                        .col-sm-12
+                            .float-right
+                                button.btn.btn-success.btn-sm.rounded-0.mr-2(type='Submit') Enregistrer
+                                button.btn.btn-danger.btn-sm.rounded-0(type='Reset') Reprendre

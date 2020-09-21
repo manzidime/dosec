@@ -452,6 +452,33 @@ if (dom.formNewAttestation) {
 
 }
 
+//! USER
+//1. creation
+
+if (dom.formNewUser) {
+    dom.formNewUser.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const body = {
+            nom: dom.nom.value,
+            prenom: dom.prenom.value,
+            matricule: dom.matricule.value,
+            id_fonction: dom.fonction.value,
+            sexe: dom.sexe.value,
+            password: dom.password.value,
+            taxer: dom.taxer.checked,
+            apurer: dom.apurer.checked,
+            encoder: dom.encoder.checked,
+            ordonnancer: dom.ordonnancer.checked,
+            administrer: dom.admin.checked,
+            rapport: dom.rapport.checked,
+            imprimer: dom.rapport.checked,
+            gerer: dom.gerer.checked,
+            stocker: dom.stocker.checked,
+        };
+        console.log(body);
+    });
+}
+
 /*GENERATE CODE QR*/
 // console.log(document.querySelectorAll('.qr-code'));
 // if (document.querySelector('.qr-code')) {

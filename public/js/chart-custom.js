@@ -40,7 +40,7 @@ if (dom.chartOne) {
     };
 
     const myPieChart = new Chart(dom.chartOne.getContext('2d'), {
-        type: 'pie',
+        type: 'doughnut',
         data: data4,
         responsive: true,
         options: {

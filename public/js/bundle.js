@@ -6605,15 +6605,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  formLogin: document.getElementById('form-login'),
   login: document.getElementById('login'),
   password: document.getElementById('password'),
   logout: document.getElementById('logout'),
-  formChangePassword: document.getElementById('form-change-password'),
   oldPassword: document.getElementById('old-password'),
   newPassword: document.getElementById('new-password'),
   confirmPassword: document.getElementById('confirm-password'),
-  formNewPerson: document.getElementById('form-new-person'),
   nomPersonne: document.getElementById('nom_personne'),
   telephone: document.getElementById('telephone'),
   ville: document.getElementById('ville'),
@@ -6627,11 +6624,9 @@ var _default = {
   districtAr: document.querySelectorAll('.district'),
   communeAr: document.querySelectorAll('.commune'),
   quartierAr: document.querySelectorAll('.quartier'),
-  formUpdatePerson: document.querySelectorAll('.form-update-person'),
   contentTable: document.querySelector('.content-table'),
   rowData: document.querySelectorAll('.row-data'),
   btnDelete: document.querySelectorAll('.btn-delete'),
-  fomrNewVehicule: document.getElementById('form-new-vehicule'),
   contribuable: document.getElementById('contribuable'),
   contribuables: document.querySelectorAll('.contribuable'),
   chassis: document.getElementById('chassis'),
@@ -6650,11 +6645,19 @@ var _default = {
   taxes: document.querySelectorAll('.taxes'),
   btnDeleteCar: document.querySelectorAll('.btn-delete-car'),
   btnDeleteTaxation: document.querySelectorAll('.btn-delete-taxation'),
+  //LES FORMULAIRES
   formUpdateV: document.querySelectorAll('.form-update-vehicule'),
   formUpdateTaxation: document.querySelectorAll('.form-update-taxation'),
   formNewAttestation: document.querySelectorAll('.form-new-attestation'),
-  penalite: document.getElementById('penalite'),
+  fomrNewVehicule: document.getElementById('form-new-vehicule'),
   formNewTaxation: document.getElementById('form-new-taxation'),
+  formUpdatePerson: document.querySelectorAll('.form-update-person'),
+  formNewPerson: document.getElementById('form-new-person'),
+  formValidation: document.querySelectorAll('.form-validation-taxation'),
+  formLogin: document.getElementById('form-login'),
+  formChangePassword: document.getElementById('form-change-password'),
+  formNewUser: document.getElementById('form-new-user'),
+  penalite: document.getElementById('penalite'),
   exercice: document.getElementById('exercice'),
   vehicule: document.getElementById('vehicule'),
   vehicules: document.querySelectorAll('.vehicule'),
@@ -6666,7 +6669,6 @@ var _default = {
   telephoneDeclarantUpdate: document.querySelectorAll('.telephone_declarant'),
   echeance: document.getElementById('echeance'),
   echeanceUpdate: document.querySelectorAll('.echeance'),
-  formValidation: document.querySelectorAll('.form-validation-taxation'),
   compte: document.querySelectorAll('.compte'),
   avis: document.querySelectorAll('.avis'),
   dateAttestation: document.getElementById('d-attestation'),
@@ -6675,6 +6677,21 @@ var _default = {
   montantPenalite: document.getElementById('m-penalite'),
   montantGlobal: document.getElementById('m-global'),
   taxation: document.getElementById('taxation'),
+  nom: document.getElementById('nom'),
+  prenom: document.getElementById('prenom'),
+  sexe: document.getElementById('sexe'),
+  site: document.getElementById('site'),
+  matricule: document.getElementById('matricule'),
+  fonction: document.getElementById('fonction'),
+  taxer: document.getElementById('taxer'),
+  ordonnancer: document.getElementById('ordonnancer'),
+  apurer: document.getElementById('apurer'),
+  encoder: document.getElementById('encoder'),
+  imprimer: document.getElementById('imprimer'),
+  rapport: document.getElementById('rapport'),
+  admin: document.getElementById('admin'),
+  gerer: document.getElementById('gerer'),
+  stocker: document.getElementById('stocker'),
   containerError: document.getElementById('container-error'),
   chartOne: document.getElementById('chartOne')
 };
@@ -30903,7 +30920,7 @@ if (_dom.default.chartOne) {
     }]
   };
   var myPieChart = new _chart.default(_dom.default.chartOne.getContext('2d'), {
-    type: 'pie',
+    type: 'doughnut',
     data: data4,
     responsive: true,
     options: {
@@ -32780,6 +32797,50 @@ if (_dom.default.formNewAttestation) {
       };
     }());
   });
+} //! USER
+//1. creation
+
+
+if (_dom.default.formNewUser) {
+  _dom.default.formNewUser.addEventListener('submit', /*#__PURE__*/function () {
+    var _ref30 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee30(event) {
+      var body;
+      return regeneratorRuntime.wrap(function _callee30$(_context30) {
+        while (1) {
+          switch (_context30.prev = _context30.next) {
+            case 0:
+              event.preventDefault();
+              body = {
+                nom: _dom.default.nom.value,
+                prenom: _dom.default.prenom.value,
+                matricule: _dom.default.matricule.value,
+                id_fonction: _dom.default.fonction.value,
+                sexe: _dom.default.sexe.value,
+                password: _dom.default.password.value,
+                taxer: _dom.default.taxer.checked,
+                apurer: _dom.default.apurer.checked,
+                encoder: _dom.default.encoder.checked,
+                ordonnancer: _dom.default.ordonnancer.checked,
+                administrer: _dom.default.admin.checked,
+                rapport: _dom.default.rapport.checked,
+                imprimer: _dom.default.rapport.checked,
+                gerer: _dom.default.gerer.checked,
+                stocker: _dom.default.stocker.checked
+              };
+              console.log(body);
+
+            case 3:
+            case "end":
+              return _context30.stop();
+          }
+        }
+      }, _callee30);
+    }));
+
+    return function (_x24) {
+      return _ref30.apply(this, arguments);
+    };
+  }());
 }
 /*GENERATE CODE QR*/
 // console.log(document.querySelectorAll('.qr-code'));

@@ -1,16 +1,13 @@
 export default {
-    formLogin: document.getElementById('form-login'),
     login: document.getElementById('login'),
     password: document.getElementById('password'),
 
     logout: document.getElementById('logout'),
 
-    formChangePassword: document.getElementById('form-change-password'),
     oldPassword: document.getElementById('old-password'),
     newPassword: document.getElementById('new-password'),
     confirmPassword: document.getElementById('confirm-password'),
 
-    formNewPerson: document.getElementById('form-new-person'),
     nomPersonne: document.getElementById('nom_personne'),
     telephone: document.getElementById('telephone'),
     ville: document.getElementById('ville'),
@@ -27,14 +24,12 @@ export default {
     communeAr: document.querySelectorAll('.commune'),
     quartierAr: document.querySelectorAll('.quartier'),
 
-    formUpdatePerson: document.querySelectorAll('.form-update-person'),
 
     contentTable: document.querySelector('.content-table'),
     rowData: document.querySelectorAll('.row-data'),
 
     btnDelete: document.querySelectorAll('.btn-delete'),
 
-    fomrNewVehicule: document.getElementById('form-new-vehicule'),
     contribuable: document.getElementById('contribuable'),
     contribuables: document.querySelectorAll('.contribuable'),
     chassis: document.getElementById('chassis'),
@@ -57,11 +52,20 @@ export default {
     btnDeleteCar: document.querySelectorAll('.btn-delete-car'),
     btnDeleteTaxation: document.querySelectorAll('.btn-delete-taxation'),
 
+    //LES FORMULAIRES
     formUpdateV: document.querySelectorAll('.form-update-vehicule'),
     formUpdateTaxation: document.querySelectorAll('.form-update-taxation'),
     formNewAttestation: document.querySelectorAll('.form-new-attestation'),
-    penalite:document.getElementById('penalite'),
+    fomrNewVehicule: document.getElementById('form-new-vehicule'),
     formNewTaxation: document.getElementById('form-new-taxation'),
+    formUpdatePerson: document.querySelectorAll('.form-update-person'),
+    formNewPerson: document.getElementById('form-new-person'),
+    formValidation: document.querySelectorAll('.form-validation-taxation'),
+    formLogin: document.getElementById('form-login'),
+    formChangePassword: document.getElementById('form-change-password'),
+    formNewUser:document.getElementById('form-new-user'),
+
+    penalite:document.getElementById('penalite'),
     exercice: document.getElementById('exercice'),
     vehicule: document.getElementById('vehicule'),
     vehicules: document.querySelectorAll('.vehicule'),
@@ -74,7 +78,6 @@ export default {
     echeance: document.getElementById('echeance'),
     echeanceUpdate: document.querySelectorAll('.echeance'),
 
-    formValidation: document.querySelectorAll('.form-validation-taxation'),
     compte: document.querySelectorAll('.compte'),
     avis: document.querySelectorAll('.avis'),
 
@@ -84,6 +87,22 @@ export default {
     montantPenalite: document.getElementById('m-penalite'),
     montantGlobal: document.getElementById('m-global'),
     taxation: document.getElementById('taxation'),
+
+    nom:document.getElementById('nom'),
+    prenom:document.getElementById('prenom'),
+    sexe:document.getElementById('sexe'),
+    site:document.getElementById('site'),
+    matricule:document.getElementById('matricule'),
+    fonction:document.getElementById('fonction'),
+    taxer:document.getElementById('taxer'),
+    ordonnancer:document.getElementById('ordonnancer'),
+    apurer:document.getElementById('apurer'),
+    encoder:document.getElementById('encoder'),
+    imprimer:document.getElementById('imprimer'),
+    rapport:document.getElementById('rapport'),
+    admin:document.getElementById('admin'),
+    gerer:document.getElementById('gerer'),
+    stocker:document.getElementById('stocker'),
 
 
     containerError: document.getElementById('container-error'),

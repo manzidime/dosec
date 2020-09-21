@@ -25,6 +25,7 @@ router.get('/home/parts', viewController.partDosec);
 router.get('/home/api-dosec', viewController.apiDosec);
 router.get('/home/note', viewController.note);
 router.get('/home/note/doc/:id', viewController.doc);
+router.get('/home/new-user', viewController.newUser);
 
 //Export router
 module.exports = router;

@@ -307,6 +307,9 @@ exports.doc = catchAsync(async (req, res, next) => {
     }, {
         printBackground: true,
         filename: 'note_calcul.pdf',
+        puppeteerArgs: { 
+            args: ["--no-sandbox", "--disable-setuid-sandbox"] 
+        },
         pdfOptions: {
             format: 'A5',
             landscape: true,

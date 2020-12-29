@@ -9,10 +9,10 @@ html{
     -webkit-print-color-adjust: exact;
 }
 
-.sub-page {
+/* .sub-page {
     background: url('http://127.0.0.1:5100/images/ville.jpg') no-repeat center;
     background-size: contain;
-}
+} */
 
 .top-bar{
     border-left: 10px solid #012b8f;

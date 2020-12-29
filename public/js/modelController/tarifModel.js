@@ -53,7 +53,6 @@ export const updateTarif = async(body,id,container)=>{
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger',err.response.data.message,container)
     }
 }

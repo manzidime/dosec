@@ -63,12 +63,10 @@ export const updateSite = async (body,id,container) => {
         });
 
         if (res.data.status === 'success') {
-            console.log(res.data.data)
             alert('alert-success', '', dom.containerAlert)
             return res.data.data.row
         }
     } catch (err) {
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, container)
     }
 };
@@ -83,7 +81,6 @@ export const deleteSite = async(body,id)=>{
       })
 
       if(res.data.status === 'success'){
-          console.log(res.data)
           return res.data.data.row
       }
     }

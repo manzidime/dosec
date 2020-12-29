@@ -13,12 +13,10 @@ export const createArticle = async(body)=>{
 
         if(res.data.status === 'success'){
             alert('alert-success', '', dom.containerError)
-            console.log(res.data.data.newRow)
             return res.data.data.newRow
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, dom.containerError)
     }
 }
@@ -71,7 +69,6 @@ export const updateArticle = async(body,id)=>{
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, document.querySelector(`.container-alert-${id}`))
     }
 }
@@ -86,12 +83,10 @@ export const stateArticle = async(body,id)=>{
         })
 
         if(res.data.status === 'success'){
-            //alert('alert-success', '', dom.containerAlert)
             console.log(res.data.data.row)
         }
     }
     catch(err){
         console.log(err.response.data.message)
-        //alert('alert-danger', err.response.data.message, document.querySelector(`.container-alert-${id}`))
     }
 }

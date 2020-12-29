@@ -13,12 +13,10 @@ export const createTaxe = async(body)=>{
 
         if(res.data.status === 'success'){
             alert('alert-success', '', dom.containerAlert)
-            console.log(res.data.data.newRow)
             return res.data.data.newRow
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, dom.containerAlert)
     }
 }
@@ -69,7 +67,6 @@ export const updateTaxe = async(body,id)=>{
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, document.querySelector(`.container-alert-${id}`))
     }
 }
@@ -84,13 +81,11 @@ export const stateTaxe = async(body,id)=>{
         })
 
         if(res.data.status === 'success'){
-            //alert('alert-success', '', dom.containerAlert)
             console.log(res.data.data.row)
         }
     }
     catch(err){
         console.log(err.response.data.message)
-        //alert('alert-danger', err.response.data.message, document.querySelector(`.container-alert-${id}`))
     }
 }
 

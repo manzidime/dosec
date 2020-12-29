@@ -117,7 +117,6 @@ module.exports = class Taxation {
         //1. Définition du montant
         if (this.data.montant.length > 1) {
             try {
-                console.log('superieur à 1')
                 //Test si ces articles budgetaires font déjà parti d'une même taxation
                 await ifProprieteIstaxed()
 
@@ -146,7 +145,6 @@ module.exports = class Taxation {
 
         else if (this.data.montant.length === 1) {
             try{
-                console.log('egal 1')
                 //Test si ces articles budgetaires font déjà parti d'une même taxation
                 await ifProprieteIstaxed()
 

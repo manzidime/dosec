@@ -13,12 +13,10 @@ export const createTaux = async(body)=>{
 
         if(res.data.status === 'success'){
             alert('alert-success', '', dom.containerError)
-            console.log(res.data.data.newRow)
             return res.data.data.newRow
         }
     }
     catch(err){
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, dom.containerError)
     }
 }

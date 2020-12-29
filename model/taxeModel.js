@@ -69,7 +69,6 @@ module.exports = class Taxe {
 
     //Get all car
     async getAll(user) {
-        console.log(user.operation)
         try {
             let query
             if (user.administrer === 1) {

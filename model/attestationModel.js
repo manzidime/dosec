@@ -185,8 +185,6 @@ module.exports = class Attestation {
             `, [this.data.numero_bordereau, this.data.id_taxation, this.data.montant, this.data.montant_penalite,
                 this.data.montant_global, id]);
 
-            console.log(this.data);
-
             if (rows.affectedRows !== 1) {
                 throw new AppError(`Aucune attestation trouvée avec l'id:${id}`, 403);
             }

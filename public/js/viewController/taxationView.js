@@ -3,7 +3,6 @@ import {getOneTaxe} from '../modelController/taxeModel';
 
 const renderEcheance = async (idTaxe)=>{
     const taxe = await getOneTaxe(idTaxe)
-    console.log(taxe)
     if(taxe.duree===6 || idTaxe==15){
         return `
             <select class="form-control form-control-sm required rounded-0" name="wizard-echeance" id="echeance">

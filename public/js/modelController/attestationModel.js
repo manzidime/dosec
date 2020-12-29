@@ -32,7 +32,6 @@ export const newAttestation = async (body,container) => {
         }
     } catch (err) {
         alert('alert-danger', err.response.data.message, container);
-        console.log(err.response.data.message)
     }
 
 };

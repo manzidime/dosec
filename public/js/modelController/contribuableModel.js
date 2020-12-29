@@ -15,7 +15,6 @@ export const newPerson = async (body) => {
         if (res.data.status === 'success') {
             alert('alert-success', 'Nouveau contribuable inséré', dom.containerError);
             dom.formNewPerson.reset()
-            console.log(res.data.data.newRow)
             return res.data.data.newRow
         }
     } catch (err) {
@@ -36,12 +35,10 @@ export const updatePerson = async (body, id) => {
         });
 
         if (res.data.status === 'success') {
-            console.log(res.data)
             alert('alert-success', 'Contribuable mises à jour', dom.containerAlert)
             return res.data.data.row
         }
     } catch (err) {
-        console.log(err.response.data.message)
         const container = document.querySelector(`.container-alert-${id}`)
         alert('alert-danger', err.response.data.message, container)
     }

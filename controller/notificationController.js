@@ -5,7 +5,6 @@ const globalController = require('./globalController');
 
 //Read notification
 exports.read = catchAsync(async(req,res,next)=>{
-    console.log(req.body)
     const notification = await new Notification(req.body).readNotification(req.params.id)
     res.status(200).json({
         status:'success',

@@ -12,12 +12,10 @@ export const newVehicule = async (body) => {
         });
 
         if (res.data.status === 'success') {
-            console.log(res.data)
             alert('alert-success', '', dom.containerAlert);
             form.reset()
         }
     } catch (err) {
-        console.log(err.response.data.message)
         alert('alert-danger', err.response.data.message, dom.containerAlert);
     }
 

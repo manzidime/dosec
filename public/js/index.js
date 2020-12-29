@@ -596,7 +596,6 @@ window.addEventListener('load', async () => {
                         const designation = el.dataset.designation;
                         const newObject = {};
                         const montant = await montantTaxation(body.id_taxe, article, categorie, body.echeance);
-                        console.log(montant)
                         if (montant === undefined) {
                             alert('alert-danger',
                                 `Aucun tarif n'est encore défini pour l'article  <strong>${designation}</strong> pour ce type d'opération`,
@@ -1372,7 +1371,6 @@ if (dom.containerTable) {
 
             const periodiciteStart = row.querySelector('.periodicite-start');
             const periodiciteEnd = row.querySelector('.periodicite-end');
-            console.log(periodiciteStart)
             let dateDif;
             let duree;
             let year = []

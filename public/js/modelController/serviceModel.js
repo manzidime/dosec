@@ -32,7 +32,6 @@ export const allServices = async ()=>{
         })
 
         if(res.data.status === 'success'){
-            console.log(res.data)
             return res.data.data.rows
         }
     }
@@ -44,7 +43,6 @@ export const allServices = async ()=>{
 //3. Update
 export const updateService = async (body,id)=>{
     try{
-        console.log(body,id)
         const res = await axios({
             method:'PATCH',
             url:`/api/v1/services/${id}`,
@@ -63,7 +61,6 @@ export const updateService = async (body,id)=>{
 //Disable or active
 export const stateService = async (body,id)=>{
     try{
-        console.log(body,id)
         const res = await axios({
             method:'PATCH',
             url:`/api/v1/services/disable-active/${id}`,

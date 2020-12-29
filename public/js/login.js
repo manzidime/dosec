@@ -15,13 +15,11 @@ export const login = async (login, password) => {
         });
 
         if (res.data.status === 'success') {
-            console.log(res.data);
             window.location = '/home';
         }
     } catch (err) {
         clearHtml(dom.containerError);
         alert('alert-danger', err.response.data.message, dom.containerError);
-        console.log(err.response.data.message);
     }
 
 };
@@ -34,7 +32,6 @@ export const logout = async () => {
     });
 
     if (res.data.status === 'success') {
-        console.log('ok');
         window.location = '/';
     }
 };

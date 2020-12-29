@@ -285,6 +285,8 @@ const occurenceArticle = (body)=>{
 }
 
 exports.doc = catchAsync(async (req, res, next) => {
+    const host = req.get('host')
+    console.log(`${host}/css/note.css`)
     const newTaxation = new Taxation()
     const doc = await newTaxation.getOneDoc(req.params.id);
     const resArticles = await newTaxation.getAllArticleFromTaxation(req.params.id);
@@ -300,7 +302,8 @@ exports.doc = catchAsync(async (req, res, next) => {
     .renderPDF('doc', {
         title: 'document',
         doc,
-        articles
+        articles,
+        host
     }, {
         printBackground: true,
         filename: 'note_calcul.pdf',

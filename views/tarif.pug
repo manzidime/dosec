@@ -1,0 +1,77 @@
+extends home
+block content
+    .row
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Tarification
+                .card-body
+                    #container-alert
+                    .container-form.d-flex.flex-column
+                        a.btn.mb-1.btn-primary.btn-sm.rounded-0.mb-2.align-self-end(data-toggle='collapse' href='#multiCollapseExample1' role='button' aria-expanded='false' aria-controls='multiCollapseExample1')
+                            i.feather.icon-plus
+                            |  Nouveau tarif
+                        #multiCollapseExample1.collapse.multi-collapse.mt-2
+                            .card.shadow-none
+                                .card-body.p-0
+                                    form.needs-validation(novalidate='')#form-new-tarif
+                                        .row
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='taxe-tarif') Taxe
+                                                    span.text-danger *
+                                                    select#taxe-tarif.form-control.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Choisir une categorie
+                                                        if taxes
+                                                        each taxe in taxes
+                                                            option(value=`${taxe.id_taxe}`)=taxe.designation
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='categorie') Categories
+                                                    span.text-danger *
+                                                    select#categorie.form-control.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Choisir une categorie
+                                                        if categories
+                                                        each categorie in categories
+                                                            option(value=`${categorie.id_categorie}`)=categorie.designation
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='article') Articles
+                                                    span.text-danger *
+                                                    select#article.form-control.form-control-sm.js-example-basic-single(style='width:100%')
+                                                        option(value='' selected='' disabled='') Choisir un article
+                                                        if articles
+                                                            each article in articles
+                                                                option(value=`${article.id_article}`)=article.designation
+                                            .col-md-4
+                                                .form-group.fill
+                                                    label.floating-label(for='exercice') Exercice
+                                                    span.text-danger *
+                                                    select#exercice.form-control.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Choisir un exercice
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='echeance-tarif') Echeance
+                                                    span.text-danger *
+                                                    select#echeance-tarif.form-control.form-control-sm(required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='devise') Periodicité
+                                                    select#periodicite.form-control.form-control-sm(required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='montant') Montant
+                                                    span.text-danger *
+                                                    input.form-control.form-control-sm(type='number' id='montant' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='devise') Devise
+                                                    span.text-danger *
+                                                    select#devise.form-control.form-control-sm(required='')
+                                                        option(value='' disabled='' selected='') Devise
+                                                        option(value='USD') USD
+                                                        option(value='CDF') CDF
+                                            .col-md-12
+                                                .float-right
+                                                    button.btn.btn-primary.btn-sm.save-add.rounded-0.mr-2(type='submit') Enregistrer
+                    .dt-responsive.table-responsive.container-table

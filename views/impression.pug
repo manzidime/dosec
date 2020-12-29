@@ -1,0 +1,45 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Impression
+                .card-body
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Date attestation
+                                    th Numero bordereau
+                                    th Plaque
+                                    th Numero taxation
+                                    th Taxe
+                                    th Redevable
+                                    th Action
+                            tbody.content-table
+                                if docs
+                                    each doc,index in docs
+                                        tr
+                                            td=doc.date_attestation
+                                            td=doc.numero_bordereau
+                                            td=doc.numero_plaque
+                                            td=doc.num_taxation
+                                            td=doc.description_taxe
+                                            td=doc.nom
+                                            td(style='width:60px').text-center
+                                                a.btn.btn-success.mr-1.btn-sm.rounded-0(href=`/home/print/${doc.id_attestation}/${doc.numero_plaque}` target='_blank')
+                                                    i.feather.icon-printer
+
+                            tfoot
+                                tr
+                                    th Date attestation
+                                    th Numero bordereau
+                                    th Redevable
+                                    th Plaque
+                                    th Numero taxation
+                                    th Taxe
+                                    th Action
+block scripts
+    script(src='/js/pages/data-api-custom.js')

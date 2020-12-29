@@ -1,0 +1,53 @@
+mixin stat(title,count,actif,desactive,bg)
+    .col-xl-4.col-md-6
+        .card.analytic-card(class=`${bg}`)
+            .card-body.p-2
+                .row.align-items-center.m-b-25
+                    .col-auto
+                        i.fas.fa-users.text-primary.f-18.analytic-icon
+                    .col.text-right
+                        if count
+                            h4.m-b-5.text-white=count
+                            h6.m-b-0.text-white.f-12=title
+                p.m-b-0.text-white.d-inline-block.f-12 Actifs :
+                h5.text-white.d-inline-block.m-b-0.m-l-10.mr-1 #{actif} |
+                p.m-b-0.text-white.d-inline-block.f-12 Desactivés :
+                h5.text-white.d-inline-block.m-b-0.m-l-10=desactive
+mixin stat2(title,count,print,noprint,bg)
+    .col-xl-4.col-md-6
+        .card.analytic-card(class=`${bg}`)
+            .card-body.p-2
+                .row.align-items-center.m-b-25
+                    .col-auto
+                        i.fas.fa-edit.text-primary.f-18.analytic-icon
+                    .col.text-right
+                        h4.m-b-5.text-white=count
+                        h6.m-b-0.text-white.f-12=title
+                p.m-b-0.text-white.d-inline-block.f-12 Imprimées :
+                h5.text-white.d-inline-block.m-b-0.m-l-10.mr-1 #{print} |
+                p.m-b-0.text-white.d-inline-block.f-12 Non imprimées :
+                h5.text-white.d-inline-block.m-b-0.m-l-10=noprint
+mixin stat3(title,count,sum,bg)
+    .col-xl-4.col-md-6
+        .card.analytic-card(class=`${bg}`)
+            .card-body.p-2
+                .row.align-items-center.m-b-25
+                    .col-auto
+                        i.fas.fa-file.text-primary.f-18.analytic-icon
+                    .col.text-right
+                        h4.m-b-5.text-white=count
+                        h6.m-b-0.text-white.f-12=title
+                p.m-b-0.text-white.d-inline-block.f-12 Montant :
+                h5.text-white.d-inline-block.m-b-0.m-l-10.mr-1=sum
+
+.row(id='data')
+        +stat('Total agents',countAgent.count,agentActif.count,agentInactif.count,'bg-danger')
+        +stat('Total Contribuable',countCont.count,contActif.count,contInactif.count,'bg-primary')
+        if user.operation===15
+            +stat('Total Vehicules',vehCount.count,vehActif.count,vehInactif.count,'bg-success')
+        +stat2('Total Notes de calcul',noteCount.count,notePrint.count,noteNoPrint.count,'bg-danger')
+        +stat2('Total documents',docCount.count,docPrint.count,docNoPrint.count,'bg-primary')
+        +stat3('Total taxations',taxCount.count,`$${taxSum.sum?taxSum.sum:0}`,'bg-success')
+        +stat3('Total taxations validées',taxValidCount.count,`$${taxValidSum.sum?taxValidSum.sum:0}`,'bg-danger')
+        +stat3('Total taxations non validées',taxNoValidCount.count,`$${taxNoValidSum.sum?taxNoValidSum.sum:0}`,'bg-primary')
+        +stat3('Total taxations attestées',taxAttCount.count,`$${taxAttSum.sum?taxAttSum.sum:0}`,'bg-success')

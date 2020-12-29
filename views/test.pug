@@ -1,0 +1,99 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Attestation
+                .card-body
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Taxe
+                                    th Date taxation
+                                    th Date validation
+                                    th Numero taxation
+                                    th Montant
+                                    th Devise
+                                    th Action
+                            tbody.content-table
+                                if attestations
+                                    each attestation,index in attestations
+                                        tr
+                                            td=attestation.nom
+                                            td=attestation.taxe
+                                            td=attestation.date_taxation
+                                            td=attestation.date_validation
+                                            td=attestation.num_taxation
+                                            td=attestation.montant_global
+                                            td=attestation.devise
+                                            td
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Nouvel attestation
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    form.form-new-attestation(data-id=`${attestation.id_taxation}`)
+                                                                        div(class=`container-alert-${attestation.id_taxation}`)
+                                                                        .row
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='d-attestation') Date attestation
+                                                                                    input.form-control-sm.form-control.rounded-0.date_attestation(type='date' required)
+                                                                                    //small#date.form-text.text-muted Le format de la date recquis est: ANNEE/MOIS/JOUR
+                                                                            .col-sm-4
+                                                                                label.floating-label(for='taxation') Taxation
+                                                                                select.form-control.taxation(disabled)
+                                                                                    option(value=`${attestation.id_taxation}` selected)=`${attestation.num_taxation} | ${attestation.date_taxation}`
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='montant') Montant
+                                                                                    input.montant.form-control.form-control-sm.rounded-0(type='text' disabled value=`${attestation.montant}`)
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='m-penalite') Montant Penalite
+                                                                                    input.form-control.form-control-sm.rounded-0.penalite(type='text' disabled value=`${(attestation.montant*1) * (attestation.penalite*1)/100}`)
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='m-global') Montant global
+                                                                                    input.form-control.form-control-sm.rounded-0.montant_global(type='text' disabled value=`${attestation.montant_global}`)
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='') Devise
+                                                                                    input.form-control.form-control-sm.rounded-0.devise(type='text' disabled value=`${attestation.devise}`)
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='n-bordereau') Numero bordereau
+                                                                                    input.form-control.form-control-sm.rounded-0.numero_bordereau(type='text' required='')
+                                                                            .col-sm-4
+                                                                                .form-group
+                                                                                    label.floating-label(for='avis') Avis
+                                                                                    select.form-control.avis.form-control-sm.rounded-0
+                                                                                        option(value='favorable' selected) Favorable
+                                                                                        option(value='defavorable') Non favorable
+                                                                            .col-sm-12
+                                                                                .modal-footer
+                                                                                    button.btn.btn-secondary.rounded-0.btn-sm(type='button' data-dismiss='modal') Fermer
+                                                                                    button.btn.btn-success.rounded-0.btn-sm.mr-2(type='Submit') Enregistrer
+
+                            tfoot
+                                tr
+                                    th Redevable
+                                    th Numero plaque
+                                    th Type
+                                    //th Numero chassis
+                                    th Modele
+                                    th Marque
+                                    th Couleur
+                                    th Mise en circulation
+                                    th Action
+        // Individual Column Searching (Text Inputs) end

@@ -1,0 +1,161 @@
+extends home
+block content
+    .row
+        .col-xl-12
+            .card
+                .card-body
+                    #smartwizard-3.smartwizard-example
+                        ul.card.nav.nav-tabs.px-4.pt-3.mb-3
+                            li
+                                a.mb-3(href='#smartwizard-3-step-1')
+                                    span.sw-done-icon.feather.icon-check-circle
+                                    span.sw-number 1
+                                    .text-muted.small Première partie
+                                    | Création du contribuable
+                            li
+                                a.mb-3(href='#smartwizard-3-step-2')
+                                    span.sw-done-icon.feather.icon-check-circle
+                                    span.sw-number 2
+                                    .text-muted.small Deuxième partie
+                                    | Création du vehicule
+                        .mb-3
+                            #smartwizard-3-step-1.card.animated.fadeIn
+                                .card-body.p-1
+                                    form.needs-validation(novalidate='')#form-new-person
+                                        #container-error
+                                        .row
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='nom_personne') Nom
+                                                    input.form-control.rounded-0.form-control-sm(type='text' id='nom_personne' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='telephone') T&eacute;l&eacute;phone
+                                                    input.form-control.rounded-0.form-control-sm(type='text' id='telephone' required='')
+                                            .col-md-4
+                                                .form-group.fill
+                                                    label.floating-label(for='ville') Ville
+                                                    input#ville.form-control.rounded-0.form-control-sm(type='text' value='Kinshasa' required='' disabled)
+                                            .col-md-4
+                                                .form-group.fill
+                                                    label.floating-label(for='district') District
+                                                    select#district.form-control.rounded-0.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Veillez choisir le district
+                                                        if districts
+                                                        each district in districts
+                                                            option(value=`${district.id_district}`)=district.libelle_district
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='commune') Commune
+                                                    select#commune.form-control.rounded-0.form-control-sm(required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='quartier') Quartier
+                                                    select#quartier.form-control.rounded-0.form-control-sm(required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='avenue') Avenue
+                                                    input#avenue.form-control.rounded-0.form-control-sm(type='text' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='numero') Num&eacute;ro
+                                                    input.form-control.rounded-0.form-control-sm(type='text' id='numero' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='observation') Observation
+                                                    input.form-control.rounded-0.form-control-sm(type='text' id='observation' required='')
+                                            .col-md-12.text-right
+                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='Submit') Enregistrer
+                            #smartwizard-3-step-2.card.animated.fadeIn
+                                .card-body
+                                    form.needs-validation(novalidate='')#form-new-vehicule
+                                        #container-alert-vehicule
+                                        .row
+                                            .col-sm-4
+                                                label.floating-label(for='contribuable') Contribuable
+                                                select.js-example-basic-single.col-sm-12#contribuable(style='width: 100%')
+                                                    option(value='' selected='' disabled='') Veillez choisir le contribuable
+                                                    if contribuables
+                                                        each contribuable in contribuables
+                                                            option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                            .col-sm-4
+                                                .form-group.fill
+                                                    label.floating-label(for='category') Catégorie
+                                                    select#category.form-control.form-control-sm.rounded-0
+                                                        option(value='' selected='' disabled='') Veillez choisir une categorie
+                                                        if categories
+                                                            each categorie in categories
+                                                                option(value=`${categorie.id_categorie}`)=categorie.designation
+                                            .col-sm-4
+                                                .form-group.fill
+                                                    label.floating-label(for='type') Type
+                                                    select#type.form-control.form-control-sm.rounded-0
+                                                        option(value='1' selected disabled) VEHICULE
+                                            .col-sm-4
+                                                label.floating-label(for='articles') Article Budgétaire
+                                                select.js-example-basic-single.col-sm-12#articles(style='width: 100%')
+                                            .col-sm-4
+                                                .form-group
+                                                    label.floating-label(for='chassis') Num&eacute;ro chassis
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='chassis' required='')
+                                            .col-sm-4
+                                                .form-group
+                                                    label.floating-label(for='plaque') Num&eacute;ro plaque
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='plaque' required='')
+                                            .col-sm-2
+                                                .form-group
+                                                    .form-group.fill
+                                                        label.floating-label(for='model') Model
+                                                        input.form-control.form-control-sm.rounded-0(type='text' id='model')
+                                            .col-sm-2
+                                                .form-group
+                                                    label.floating-label(for='marque') marque
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='marque')
+                                            .col-sm-2
+                                                .form-group.fill
+                                                    label.floating-label(for='couleur') Couleur
+                                                    input#couleur.form-control.form-control-sm.rounded-0(type='text')
+                                            .col-md-2
+                                                .form-group.fill
+                                                    label.floating-label(for='charge') Charge utile
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='charge')
+                                            .col-md-4
+                                                .form-group.fill
+                                                    label.floating-label(for='pc-datepicker-1') Date mise en circulation
+                                                    input.circulation.form-control.form-control-sm.rounded-0(type='text' id="pc-datepicker-1")
+                                            .col-sm-12.text-right
+                                                button.btn.btn-success.rounded-0.btn-sm.mr-2(type='submit') Enregistrer
+block scripts
+    script(src='/js/plugins/jquery.smartWizard.min.js')
+    script(src='/js/plugins/bootstrap-datepicker.min.js')
+block script-natif
+    script.
+        arrows = {
+            leftArrow: '<i class="feather icon-chevron-left"></i>',
+            rightArrow: '<i class="feather icon-chevron-right"></i>'
+        }
+        // minimum setup
+        $('#pc-datepicker-1')
+        .datepicker({
+            todayHighlight: true,
+            orientation: "top left",
+            templates: arrows,
+            format: 'yyyy/mm/dd',
+            autoclose:true
+        });
+    script.
+        $(function () {
+            $('.smartwizard-example')
+            .smartWizard({
+                autoAdjustHeight: false,
+                backButtonSupport: false,
+                useURLhash: false,
+                showStepURLhash: false
+            });
+            // Change markup for vertical wizards
+            //
+            $('#smartwizard-4 .sw-toolbar')
+            .appendTo($('#smartwizard-4 .sw-container'));
+            $('#smartwizard-5 .sw-toolbar')
+            .appendTo($('#smartwizard-5 .sw-container'));
+        });

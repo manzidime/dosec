@@ -1,0 +1,11 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Taxations
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive.container-table(data-compte=`${JSON.stringify(comptes)}`)

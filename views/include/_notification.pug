@@ -1,0 +1,14 @@
+#notification-modal.modal.notification-modal.fade(tabindex='-1' role='dialog' aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-body
+                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                    span(aria-hidden='true') &times;
+                ul#pc-noti-tab.nav.nav-pill.tabs-light.mb-3(role='tablist')
+                    li.nav-item
+                        a#pc-noti-home-tab.nav-link.active.rounded-0(data-toggle='pill' href='#pc-noti-home' role='tab' aria-controls='pc-noti-home' aria-selected='true') Notification
+                #pc-noti-tabContent.tab-content.pt-4
+                    #pc-noti-home.tab-pane.fade.show.active.container-notification(role='tabpanel' aria-labelledby='pc-noti-home-tab')
+            .modal-footer
+                button.btn.btn-light-danger.btn-sm(type='button' data-dismiss='modal') Close
+                //button.btn.btn-light-primary.btn-sm(type='button') Save changes

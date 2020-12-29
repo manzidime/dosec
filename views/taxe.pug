@@ -1,0 +1,76 @@
+extends home
+block content
+    .row
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Taxes
+                .card-body
+                    #container-alert
+                    .container-form.d-flex.flex-column
+                        a.btn.mb-1.btn-primary.btn-sm.rounded-0.mb-2.align-self-end(data-toggle='collapse' href='#multiCollapseExample1' role='button' aria-expanded='false' aria-controls='multiCollapseExample1')
+                            i.feather.icon-plus
+                            |  Nouvelle taxe
+                        #multiCollapseExample1.collapse.multi-collapse.mt-2
+                            .card.shadow-none
+                                .card-body.p-0
+                                    form.needs-validation(novalidate='')#form-new-taxe
+                                        .row
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='service') Service
+                                                    select#service.form-control.form-control-sm.rounded-0(required='')
+                                                        option(value='' selected='' disabled='') Choisir un service
+                                                        if services
+                                                        each service in services
+                                                            option(value=`${service.id_serviceAssiette}`)=service.designation
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='type') Type d'article
+                                                    select#type.form-control.form-control-sm.rounded-0(required='')
+                                                        option(value='' selected='' disabled='') Choisir un type
+                                                        if types
+                                                        each type in types
+                                                            option(value=`${type.id_type_objet}`)=type.designation
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='designation') Designation
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='designation' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='description') Description
+                                                    input.form-control.form-control-sm.rounded-0(type='text' id='description' required='')
+                                            .col-md-4
+                                                .form-group
+                                                    label.floating-label(for='delai') Delai
+                                                    input.form-control.form-control-sm.rounded-0(type='number' id='delai' required='')
+                                            .col-md-4
+                                                //.form-group
+                                                //    label.floating-label(for='periodicite') Periodicite
+                                                //    input.form-control.form-control-sm(type='text' id='periodicite' required='')
+                                                .form-group
+                                                    label.floating-label Périodicité
+                                                    #pc-datepicker-5.input-daterange.input-group
+                                                        input.form-control.form-control-sm.rounded-0#periodicite-start(type='text')
+                                                        .input-group-append
+                                                            span.input-group-text
+                                                                i à
+                                                        input.form-control.form-control-sm.rounded-0#periodicite-end(type='text')
+                                            .col-md-12
+                                                .float-right
+                                                    button.btn.btn-primary.btn-sm.save-add.rounded-0.mr-2(type='submit') Enregistrer
+                    .dt-responsive.table-responsive.container-table(data-service=`${JSON.stringify(services)}` data-type=`${JSON.stringify(types)}`)
+block script-natif
+    script.
+        const arrows = {
+            leftArrow: '<i class="feather icon-chevron-left"></i>',
+            rightArrow: '<i class="feather icon-chevron-right"></i>'
+        };
+        // minimum setup
+        $('.pc-datepicker-6').each(function () {
+            $(this).datepicker({
+                todayHighlight: true,
+                templates: arrows,
+                format: 'yyyy/mm/dd'
+            });
+        })

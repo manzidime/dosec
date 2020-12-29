@@ -1,0 +1,105 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header
+                    h5 Taxations validées
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Acte generateur
+                                    th Numero taxation
+                                    th Article budgetaire
+                                    th Montant
+                                    th Action
+                            tbody.content-table
+                                if notes
+                                    each note,index in notes
+                                        tr
+                                            td=note.nom_redevable
+                                            td=note.acte_generateur
+                                            td=note.num_taxation
+                                            td=note.article_budgetaire
+                                            td=note.montant_taxe+' '+note.devise
+                                            td
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header
+                                                                h5#myLargeModalLabel.modal-title.h4 Details
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    .dt-responsive.table-responsive
+                                                                        table#footer-search.table.table-striped.table-bordered.nowrap
+                                                                            tbody.content-table
+                                                                                tr
+                                                                                    td Redevable
+                                                                                    td=note.nom_redevable
+                                                                                tr
+                                                                                    td Acte générateur
+                                                                                    td=note.acte_generateur
+                                                                                tr
+                                                                                    td Num taxe
+                                                                                    td=note.num_taxation
+                                                                                tr
+                                                                                    td Article bugetaire
+                                                                                    td=note.article_budgetaire
+                                                                                tr
+                                                                                    td Montant
+                                                                                    td=note.montant_taxe + ' ' +note.devise
+                                                                                tr
+                                                                                    td Date taxation
+                                                                                    td=note.date_taxation
+                                                                                tr
+                                                                                    td Nom taxateur
+                                                                                    td=note.nom_taxateur
+                                                                                tr
+                                                                                    td Qualité taxateur
+                                                                                    td=note.fonction_taxateur
+                                                                                tr
+                                                                                    td Avenue redevable
+                                                                                    td=note.avenue_redevable
+                                                                                tr
+                                                                                    td Quartier
+                                                                                    td=note.quartier_redevable
+                                                                                tr
+                                                                                    td Commune
+                                                                                    td=note.commune_redevable
+                                                                                tr
+                                                                                    td Num
+                                                                                    td=note.numero_avenue_redevable
+                                                                                tr
+                                                                                    td telephone
+                                                                                    td=note.telephone_redevable
+                                                                                tr
+                                                                                    td Num taxation
+                                                                                    td=note.num_taxation
+                                                                                tr
+                                                                                    td Article budgetaire
+                                                                                    td=note.article_budgetaire
+                                                                                tr
+                                                                                    td Arte generateur
+                                                                                    td=note.arte_generateur
+                                                                                tr
+                                                                                    td Service taxateur
+                                                                                    td=note.service_taxateur
+
+                            tfoot
+                                tr
+                                    th Redevable
+                                    th Acte generateur
+                                    th Numero taxation
+                                    th Article budgetaire
+                                    th Montant
+                                    th Action
+        // Individual Column Searching (Text Inputs) end

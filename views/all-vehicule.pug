@@ -1,0 +1,14 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header.py-2.bg-primary
+                    h5.text-light Vehicules
+                .card-body
+                    #container-alert
+                    .dt-responsive.table-responsive.container-table(data-categorie=`${JSON.stringify(categories)}` data-type=`${JSON.stringify(types)}` data-article=`${JSON.stringify(articles)}`)
+block scripts
+    script(src='/js/plugins/bootstrap-datepicker.min.js')
+

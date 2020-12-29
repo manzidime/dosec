@@ -1,0 +1,83 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Taxations validées
+                .card-body
+                    #container-error
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Redevable
+                                    th Taxe
+                                    th Date validation
+                                    th Montant USD
+                                    th Montant CDF
+                                    th Receptionniste
+                                    th.text-center Action
+                            tbody.content-table
+                                if taxations
+                                    each taxation,index in taxations
+                                        tr(class='row-data' data-row=`${taxation.id_taxation}`)
+                                            td=taxation.redevable
+                                            td=taxation.description
+                                            td=taxation.date_validation
+                                            td=`${taxation.devise && taxation.devise === 'CDF'?Math.round(taxation.montant_global * 1 / taxation.taux):taxation.montant_global} USD`
+                                            td=`${taxation.devise && taxation.devise === 'USD'?Math.round(taxation.montant_global * 1 * taxation.taux):taxation.montant_global} CDF`
+                                            td=taxation.nom_declarant
+                                            td
+                                                a.btn.btn-info.btn-sm.rounded-0.mr-1.btn-edit(href='#' data-toggle='modal' data-title='Operation' data-target=`.bd-example-modal-lg-${index}`)
+                                                    i.feather.icon-edit
+                                                .modal.fade(tabindex='-1' role='dialog' class=`bd-example-modal-lg-${index}` aria-labelledby='myLargeModalLabel' style='display: none;' aria-hidden='true')
+                                                    .modal-dialog.modal-xl
+                                                        .modal-content.rounded-0
+                                                            .modal-header.bg-primary.py-2
+                                                                h5.text-light#myLargeModalLabel.modal-title Details
+                                                                button.close(type='button' data-dismiss='modal' aria-label='Close')
+                                                                    span(aria-hidden='true') &times;
+                                                            .modal-body
+                                                                .card-body
+                                                                    table.table
+                                                                        tr
+                                                                            th.wid-45 Date validation
+                                                                            td=taxation.date_validation
+                                                                        tr
+                                                                            th Taux
+                                                                            td=taxation.taux
+                                                                        tr
+                                                                            th Taxateur
+                                                                            td=`${taxation.nom_taxateur+' '+taxation.prenom_taxateur}`
+                                                                        tr
+                                                                            th Validateur
+                                                                            td=`${taxation.nom_validateur +' '+taxation.prenom_validateur}`
+                                                                        tr
+                                                                            th Article
+                                                                            td=taxation.article
+                                                                        tr
+                                                                            th Nom receptionniste
+                                                                            td=taxation.nom_declarant
+                                                                        tr
+                                                                            th Taxe
+                                                                            td=taxation.taxe
+                                                                        tr
+                                                                            th Montant
+                                                                            td=taxation.montant_global
+                                                                        tr
+                                                                            th Devise
+                                                                            td=taxation.devise
+
+                            tfoot
+                                tr
+                                    th Redevable
+                                        th Taxe
+                                        th Date taxation
+                                        th Montant USD
+                                        th Montant CDF
+                                        th Receptionniste
+                                        th Action
+block scripts
+    script(src='/js/pages/data-api-custom.js')

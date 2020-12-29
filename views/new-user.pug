@@ -1,0 +1,167 @@
+extends home
+block content
+    .row
+        .col-xl-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Gestion d'utilisateur
+                .card-body
+                    #smartwizard-3.smartwizard-example
+                        ul.card.nav.nav-tabs.px-4.pt-3.mb-3
+                            li
+                                a.mb-3(href='#smartwizard-3-step-1')
+                                    span.sw-done-icon.feather.icon-check-circle
+                                    span.sw-number 1
+                                    .text-muted.small Première partie
+                                    | Création de l'utilisateur
+                            li
+                                a.mb-3(href='#smartwizard-3-step-2')
+                                    span.sw-done-icon.feather.icon-check-circle
+                                    span.sw-number 2
+                                    .text-muted.small Deuxième partie
+                                    | Création utilisateur pour l'api
+                        .mb-3
+                            #smartwizard-3-step-1.card.animated.fadeIn.shadow-none.p-0
+                                .card-body.shadow-none.p-0
+                                    form.needs-validation(novalidate='')#form-new-user
+                                        #container-error
+                                        .row
+                                            .col-sm-4
+                                                .form-group
+                                                    label.floating-label(for='nom') Nom
+                                                    span.text-danger *
+                                                    input#nom.form-control.form-control-sm.rounded-0(type='text' required='' autocomplete='off')
+                                            .col-sm-4
+                                                .form-group.fill
+                                                    label.floating-label(for='prenom') Pr&eacute;nom
+                                                    span.text-danger *
+                                                    input.form-control.form-control-sm(type='text' id='prenom' required='' autocomplete='off')
+                                            .col-sm-4
+                                                .form-group
+                                                    label.floating-label(for='sexe') Sexe
+                                                    span.text-danger *
+                                                    select#sexe.form-control.form-control-sm(required='' autocomplete='off')
+                                                        option(value='' selected='' disabled='') Sexe
+                                                        option(value='masculin') Masculin
+                                                        option(value='feminin') Féminin
+                                            .col-md-3
+                                                .form-group
+                                                    label.floating-label(for='site') Site
+                                                    span.text-danger *
+                                                    select#site.form-control.form-control-sm(required='' autocomplete='off')
+                                                        option(value='' selected='' disabled='')
+                                                        if sites
+                                                        each site in sites
+                                                            option(value=`${site.id}`)=site.lieu
+                                            .col-md-3
+                                                .form-group.fill
+                                                    label.floating-label(for='matricule') Matricule
+                                                    span.text-danger *
+                                                    input#matricule.form-control.form-control-sm(type='text' required='' autocomplete='off')
+                                            .col-md-3
+                                                .form-group.fill
+                                                    label.floating-label(for='password') Mot de passe
+                                                    span.text-danger *
+                                                    input#password.form-control.form-control-sm(type='text' required='' autocomplete='off')
+                                            .col-md-3
+                                                .form-group
+                                                    label.floating-label(for='fonction') Fonctions
+                                                    span.text-danger *
+                                                    select#fonction.form-control.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Fonctions
+                                                        if fonctions
+                                                        each fonction in fonctions
+                                                            option(value=`${fonction.id_fonction}`)=fonction.libelle_fonction
+                                            .col-sm-12
+                                                h5.ml-0.p-0 Role*
+                                            .col-sm-12
+                                                .row
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#taxer.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='taxer') Taxation
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#ordonnancer.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='ordonnancer') Ordonnancement
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#apurer.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='apurer') Attestation
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#encoder.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='encoder') Encodage
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#imprimer.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='imprimer') Impression des documents
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#rapport.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='rapport') Gestion des rapports
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#admin.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='admin') Administration
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#gerer.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='gerer') Gestion des centres
+                                                    .col-sm-4
+                                                        .custom-control.custom-checkbox.custom-control-inline
+                                                            input#stocker.custom-control-input.input-success(type='checkbox' required='')
+                                                            label.custom-control-label(for='stocker') Gestion de stock
+                                            .col-sm-12
+                                                .float-right
+                                                    button.btn.btn-success.btn-sm.rounded-0.mr-2(type='Submit') Enregistrer
+                            #smartwizard-3-step-2.card.animated.fadeIn
+                                .card-body
+                                    form.needs-validation(novalidate='')#form-new-user-api
+                                        #container-alert-api
+                                        .row
+                                            .col-md-6
+                                                .form-group
+                                                    label(for='nom-api') Nom
+                                                    span.text-danger *
+                                                    input#nom-api.form-control.form-control-sm.rounded-0(type='text' required='')
+                                            .col-md-6
+                                                .form-group.fill
+                                                    label.floating-label(for='service') Service
+                                                    input.form-control.form-control-sm(type='text' id='service' required='')
+                                            .col-md-6
+                                                .form-group.fill
+                                                    label.floating-label(for='email') Email
+                                                    input.form-control.form-control-sm(type='text' id='email' required='')
+                                            .col-md-6
+                                                .form-group
+                                                    label.floating-label(for='motif') Motif
+                                                    select#motif.form-control.form-control-sm(required='')
+                                                        option(value='' selected='' disabled='') Motif
+                                                        option(value='developement') Developpement
+                                                        option(value='production') Production
+                                            .col-sm-12
+                                                .float-right
+                                                    button.btn.btn-success.btn-sm.rounded-0.mr-2(type='submit') Enregistrer
+                                                    button.btn.btn-danger.btn-sm.rounded-0(type='Reset') Reprendre
+block scripts
+    script(src='/js/plugins/jquery.smartWizard.min.js')
+block script-natif
+
+    script.
+        $(function () {
+            $('.smartwizard-example')
+            .smartWizard({
+                autoAdjustHeight: false,
+                backButtonSupport: false,
+                useURLhash: false,
+                showStepURLhash: false
+            });
+            // Change markup for vertical wizards
+            //
+            $('#smartwizard-4 .sw-toolbar')
+            .appendTo($('#smartwizard-4 .sw-container'));
+            $('#smartwizard-5 .sw-toolbar')
+            .appendTo($('#smartwizard-5 .sw-container'));
+        });
+

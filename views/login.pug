@@ -1,0 +1,48 @@
+doctype html
+head
+    title #{title}
+    // Meta
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='description' content='')
+    meta(name='keywords' content='')
+    meta(name='author' content='Phoenixcoded')
+    // Favicon icon
+    link(rel='icon' href='/images/favicon.svg' type='image/x-icon')
+    // font css
+    link(rel='stylesheet' href='/fonts/font-awsome-pro/css/pro.min.css')
+    link(rel='stylesheet' href='/fonts/feather.css')
+    link(rel='stylesheet' href='/fonts/fontawesome.css')
+    // vendor css
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/css/customizer.css')
+// [ auth-signup ] start
+.auth-wrapper(style='background:#dedede !important')
+    .auth-content
+        .card
+            .row.align-items-center.text-center
+                .col-md-12
+                    .card-body
+                        form.needs-validation(novalidate='')#form-login
+                            img.img-fluid.mb-4(src='/images/Logo.png' alt='' width=120)
+                            h4.mb-3.f-w-600 Connexion
+                            #container-error
+                            .input-group.mb-3
+                                .input-group-prepend
+                                    span.input-group-text
+                                        i(data-feather='user')
+                                input.form-control(type='text' placeholder="Nom d'utilisateur" required='')#login
+                            .input-group.mb-4
+                                .input-group-prepend
+                                    span.input-group-text
+                                        i(data-feather='lock')
+                                input.form-control(type='password' placeholder='Mots de passe' required='')#password
+                            button.btn.btn-primary.btn-block.mb-4.rounded-0(type='submit') Se connecter
+// [ auth-signup ] end
+// Required Js
+script(src='/js/vendor-all.min.js')
+script(src='/js/plugins/bootstrap.min.js')
+script(src='/js/plugins/feather.min.js')
+script(src='/js/pcoded.min.js')
+script(src='/js/bundle.js')

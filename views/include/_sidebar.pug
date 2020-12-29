@@ -1,0 +1,123 @@
+nav.pc-sidebar
+    .navbar-wrapper
+        .m-header.bg-dark
+            a.b-brand(href='/home')
+                // ========   change your logo hear   ============
+                img.logo.logo-lg(src='/images/Logo.png' alt='' width=120)
+                //img.logo.logo-sm(src='/images/Logo.png' alt='')
+        if user
+            .navbar-content
+                ul.pc-navbar
+                    li.pc-item.pc-hasmenu
+                        a.pc-link(href='/home')
+                            span.pc-micon
+                                //i(data-feather='home')
+                            span.pc-mtext Tableau de bord
+                    if user.encoder || user.administrer || user.apurer || user.ordonnancer || user.taxer
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i(data-feather='users')
+                                span.pc-mtext Contribuable
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                if user.encoder || user.administrer
+                                    li.pc-item
+                                        a.pc-link(href='/home/new-contribuable') Contribuable
+                                    li.pc-item
+                                        a.pc-link(href='/home/new-propriete') Propriété
+                                li.pc-item
+                                    a.pc-link(href='/home/all-person') Liste Contribuable
+                                if user.operation===15
+                                    li.pc-item
+                                        a.pc-link(href='/home/all-vehicule') Liste Vehicule
+                    if user.taxer === 1 || user.ordonnancer === 1 || user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i.fas.fa-donate
+                                span.pc-mtext Taxation
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                if user.taxer === 1 || user.administrer === 1
+                                    li.pc-item
+                                        a.pc-link(href='/home/new-taxation') Nouvelle Taxation
+                                if user.taxer === 1 || user.ordonnancer === 1 || user.administrer === 1
+                                    li.pc-item
+                                        a.pc-link(href='/home/all-taxation') Liste Taxation
+                                    li.pc-item
+                                        a.pc-link(href='/home/all-taxation-validate') Taxation validée
+                    if user.taxer === 1 || user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='/home/note')
+                                span.pc-micon
+                                    //i.fas.fa-file-invoice-dollar
+                                span.pc-mtext Note de calcul
+                    if user.apurer === 1 || user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i.fas.fa-file-alt
+                                span.pc-mtext Attestation
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/new-attestation') Nouvel attestation
+                                li.pc-item
+                                    a.pc-link(href='/home/all-attestation') Liste Attestation
+                    if user.imprimer === 1 || user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i.fas.fa-file-alt
+                                span.pc-mtext Document
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/print') Impression
+                    if user.rapport === 1 || user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i.fas.fa-folder-open
+                                span.pc-mtext Rapports
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/parts') Part dosec
+                    if user.administrer === 1
+                        li.pc-item.pc-hasmenu
+                            a.pc-link(href='#!')
+                                span.pc-micon
+                                    //i.fas.fa-user-cog
+                                span.pc-mtext Administration
+                                span.pc-arrow
+                                    i(data-feather='chevron-right')
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/new-user') Utilisateur
+                                li.pc-item
+                                    a.pc-link(href='/home/all-user') Liste Utilisateur
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/site') Site
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/service') Service
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/tarif') Tarif
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/taxe') Taxe
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/article') Article
+                            ul.pc-submenu
+                                li.pc-item
+                                    a.pc-link(href='/home/taux') Taux

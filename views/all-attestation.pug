@@ -1,0 +1,42 @@
+extends home
+block content
+    .row
+        // Individual Column Searching (Text Inputs) start
+        .col-sm-12
+            .card
+                .card-header.bg-primary.py-2
+                    h5.text-light Liste globale des attestations
+                .card-body
+                    .dt-responsive.table-responsive
+                        table#footer-search.table.table-striped.table-bordered.nowrap
+                            thead
+                                tr
+                                    th Date attestation
+                                    th Numero bordereau
+                                    th Montant
+                                    th Penalite
+                                    th Montant global
+                                    th Devise
+                                    th Numero taxation
+                            tbody.content-table
+                                if attestations
+                                    each attestation,index in attestations
+                                        tr
+                                            td=attestation.date_attestation
+                                            td=attestation.numero_bordereau
+                                            td=attestation.montant
+                                            td=attestation.montant_penalite
+                                            td=attestation.montant_global
+                                            td=attestation.devise
+                                            td=attestation.num_taxation
+                            tfoot
+                                tr
+                                    th Date attestation
+                                    th Numero bordereau
+                                    th Montant
+                                    th Penalite
+                                    th Montant global
+                                    th Devise
+                                    th Numero taxation
+block scripts
+    script(src='/js/pages/data-api-custom.js')

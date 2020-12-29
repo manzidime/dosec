@@ -1,0 +1,20 @@
+.page-doc{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.container-doc{
+    text-align: center;
+    margin-top: 284px;
+    margin-left: 14px;
+}
+
+.container-doc h1{
+    padding: 0;
+    margin: 0;
+    font-family: "Cooper Black", sans-serif;
+    font-size: 18px;
+    line-height: 26px;
+
+}

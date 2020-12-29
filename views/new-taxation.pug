@@ -1,0 +1,147 @@
+extends home
+block content
+    .row
+        .col-xl-12
+            form#smartwizard-6.smartwizard-example.form-new-taxation.bg-transparent()
+                ul.card.nav.nav-tabs.px-4.pt-3.mb-3
+                    li
+                        a.mb-3(href='#smartwizard-6-step-1')
+                            span.sw-done-icon.feather.icon-check-circle
+                            span.sw-number 1
+                            .text-muted.small Première partie
+                            | Contribuable, taxe
+                    li
+                        a.mb-3(href='#smartwizard-6-step-2')
+                            span.sw-done-icon.feather.icon-check-circle
+                            span.sw-number 2
+                            .text-muted.small Deuxième partie
+                            | Detail de taxation
+                .mb-3.bg-transparent
+                    #smartwizard-6-step-1.card.animated.fadeIn
+                        .card-body
+                            .row
+                                .col-md-4
+                                    .form-group
+                                        label.form-label
+                                            | Contribuable
+                                            span.text-danger *
+                                        select.js-example-basic-single.col-sm-12.required#contribuable(style='width: 100%' name='wizard-contribuable')
+                                            option(value='' selected disabled) Veillez choisir le contribuable
+                                            if contribuables
+                                                each contribuable in contribuables
+                                                    option(value=`${contribuable.id_contribuable}`)=contribuable.nom
+                                .col-md-4
+                                    .form-group
+                                        label.form-label
+                                            | Service
+                                            span.text-danger *
+                                        select#service.form-control.form-control-sm.rounded-0.required(name='wizard-service')
+                                            option(value='' selected='' ) ...
+                                            if services
+                                                each service in services
+                                                    option(value=`${service.id_serviceAssiette}`)=service.designation
+                                .col-md-4
+                                    .form-group
+                                        label.form-label
+                                            | Taxe
+                                            span.text-danger *
+                                        select#taxe.form-control.rounded-0.form-control-sm.required(name='wizard-axe')
+                    #smartwizard-6-step-2.card.animated.fadeIn.bg-transparent.shadow-none.p-0
+                        .card-body.p-0
+                            #container-alert
+                            .row#container-formulaire-taxation(data-article=`${JSON.stringify(articles)}` data-taux=`${JSON.stringify(taux)}` data-type=`${JSON.stringify(types)}` data-categorie=`${JSON.stringify(categories)}`)
+
+block scripts
+    script(src='/js/plugins/jquery.smartWizard.min.js')
+    script(src='/js/plugins/bootstrap-datepicker.min.js')
+    script(src='/js/plugins/jquery.validate.min.js')
+block script-natif
+    script.
+        $(function () {
+            $('.smartwizard-example')
+                .smartWizard({
+                    autoAdjustHeight: false,
+                    backButtonSupport: false,
+                    useURLhash: false,
+                    showStepURLhash: false,
+                    enableAllSteps:true,
+                    anchorSettings: {
+                        anchorClickable: false // Enable/Disable anchor navigation
+                        //enableAllAnchors: false, // Activates all anchors clickable all times
+                        //markDoneStep: true, // Add done state on navigation
+                        //markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                        //removeDoneStepOnNavigateBack: false, // While navigate back done step after active step will be cleared
+                        //enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+                    },
+                });
+            // Change markup for vertical wizards
+            //
+            $('#smartwizard-4 .sw-toolbar')
+                .appendTo($('#smartwizard-4 .sw-container'));
+            $('#smartwizard-5 .sw-toolbar')
+                .appendTo($('#smartwizard-5 .sw-container'));
+        });
+
+        //With validation
+        $(function () {
+            var $form = $('#smartwizard-6');
+            var $btnFinish = $('<button class="btn-finish btn btn-primary hidden mr-2" type="button">Finish</button>');
+            // Set up validator
+            $form.validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    $(element).parents('.form-group').append(
+                        error.addClass('invalid-feedback small d-block')
+                    )
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                rules: {
+                    'wizard-confirm': {
+                        equalTo: 'input[name="wizard-password"]'
+                    }
+                }
+            });
+            // Initialize wizard
+            $form
+                .smartWizard({
+                    autoAdjustHeight: false,
+                    backButtonSupport: false,
+                    useURLhash: false,
+                    showStepURLhash: false,
+                    toolbarSettings: {
+                        toolbarExtraButtons: [$btnFinish]
+                    }
+                })
+                .on('leaveStep', function (e, anchorObject, stepNumber, stepDirection) {
+                    // stepDirection === 'forward' :- this condition allows to do the form validation
+                    // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
+                    if (stepDirection === 'forward') {
+                        return $form.valid();
+                    }
+                    return true;
+                })
+                .on('showStep', function (e, anchorObject, stepNumber, stepDirection) {
+                    var $btn = $form.find('.btn-finish');
+                    // Enable finish button only on last step
+                    if (stepNumber === 3) {
+                        $btn.removeClass('hidden');
+                    } else {
+                        $btn.addClass('hidden');
+                    }
+                });
+            // Click on finish button
+            $form.find('.btn-finish').on('click', function () {
+                if (!$form.valid()) {
+                    return;
+                }
+                // Submit form
+                alert("Great! We're ready to submit form.");
+                return false;
+            });
+        });
+
+

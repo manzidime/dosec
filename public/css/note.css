@@ -6,7 +6,14 @@ html{
     padding: 5px;
     background: #fff;
     font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
     -webkit-print-color-adjust: exact;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+    padding: 0;
+    margin: 0;
 }
 
 /* .sub-page {
@@ -15,77 +22,84 @@ html{
 } */
 
 .top-bar{
-    border-left: 10px solid #012b8f;
-    padding-left: 5px;
-}
-
-.top-bar h1 {
-    font-family: Yellowtail, serif;
-    line-height: 25px;
-    font-size: 20px;
-    margin: 0;
-    padding: 0;
-}
-
-.objet {
-    border-bottom: 4px solid #222222;
-    margin: 15px 0;
     display: flex;
     justify-content: space-between;
+}
+
+.top-bar .logo{
+    width: 50px;
+}
+
+.logo img{
+    width: 100%;
+}
+
+.top-bar span{
+    display:block;
+}
+
+.top-bar .ministere{
+    font-weight: 600;
+}
+
+.title-document{
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.objet h1 {
-    font-size: 22px;
-    margin: 0;
-    padding: 0;
+.title-document h1{
+    font-size: 21px;
+    line-height: normal;
     font-weight: 900;
 }
 
-.bloc-content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.site-ref{
+    margin: 10px 0;
 }
 
-.bloc-taxation{
-    /*border-right: 4px solid #222222;*/
-    padding-right: 5px;
-    margin-right: 5px;
-    flex-basis: 60%;
+table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
 }
 
-.nb {
-    font-size: 18px;
-    font-style: italic;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
+.row-site-ref td{
+    border: 1px solid #000;
+    padding: 5px;
 }
 
-.info_taxation ul li, .info-contribuable ul li{
-    font-style: italic;
-    font-size: 14px;
-    line-height: 25px;
+.site,.ref{
+    font-size: 17px !important;
 }
 
-.title-bloc-taxation {
-    background: #696969;
+.site span,.ref span{
+    font-weight: 600;
 }
 
-.title-bloc-contribuable{
-    font-size: 16px;
-    text-decoration: underline;
-    font-style: italic;
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
+.bloc-contribuable{
+    margin-top: 10px;
 }
 
-.table-taxation td {
-    font-size: 13px;
-}
-
-.qr{
+.bloc-taxateur h2,.bloc-contribuable h2{
+    border-bottom: 1px solid #000;
+    font-weight: 600;
     font-size: 12px;
+}
+
+.bloc-taxateur table th,td,.bloc-contribuable table th,td{
+    line-height: 20px;
+    text-align: left;
+}
+
+.bloc-taxateur table th,.bloc-contribuable table th{
+    font-weight: 600;
+}
+
+.bloc-contribuable table th{
+    width: 150px;
+}
+
+#sub-table table tr td, #sub-table table tr th{
+    border: 1px solid #000;
 }

@@ -1,59 +1,105 @@
 link(href=`https://${host}/css/note.css` rel='stylesheet')
+style.
+
+    @font-face {
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 300;
+        src: local('Lato Light'), url(`https://${host}/fonts/Lato-Light.woff`) format('woff');
+    }
+    @font-face {
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Lato Regular'), url(`https://${host}/fonts/Lato-Regular.woff`) format('woff');
+    }
+        
+    @font-face {
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 600;
+        src: local('Lato Bold'), url(`https://${host}/fonts/Lato-Semibold.woff`) format('woff');
+    }
+    
+    @font-face {
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 900;
+        src: local('Lato Black'), url(`https://${host}/fonts/Lato-Black.woff`) format('woff');
+    }
 .page-note
-    .sub-page(style=`background-image:https://${host}/images/ville.jpg;background-size: contain`)
+    .sub-page(style=`background-image:url(https://${host}/images/ville.jpg);background-size: contain;background-position: center;background-repeat:no-repeat`)
         .top-bar
-            h1 République Démocratique du Congo
-            h1 Ministère de transports et Vois de Communication
-            h1 Ville de Kinshasa
-        .objet
-            h1 NOTE DE CALCUL/#{doc[0].num_taxation}
-            h1=user.lieu
-        .main-note
-            h2.nb *A remplir par le service taxateur
-            .bloc-content
-                .bloc-taxation
-                    .info_taxation
-                        ul
-                            li Service taxateur :
-                                strong #{doc[0].service_taxateur}
-                            li Acte g&eacute;n&eacute;rateur :
-                                strong #{doc[0].acte_generateur}
-                            li Num&eacute;ro taxation :
-                                strong #{doc[0].num_taxation}
-                            li Nombre d&apos;actes :
-                                strong #{doc[0].nombre_acte}
-                            li Article budg&eacute;taire :
-                                ul(style='display:flex;list-style:none')
-                                    each article in articles
-                                        li
-                                            strong=` ${article.designation_article},`
-                            li Arr&ecirc;t&eacute; N&deg; :
-                                strong=` ${doc[0].numero_arrete}`
-                            li Montant tax&eacute
-                                ul
-                                    li en chiffres :
-                                        strong #{doc[0].montant_global+''+doc[0].devise}
-                                    li en lettres :
-                                        -const devise = doc[0].devise === 'CDF' ? 'Francs congolais' : 'Dollars americains'
-                                        strong=` ${doc[0].montant_letter} ${devise}`
-                            li Date de taxation :
-                                strong=` ${doc[0].date_taxation}`
-                            li Taxateur:
-                                strong=` ${doc[0].nom_taxateur}`
-                            li Qualit&eacute :
-                                strong=` ${doc[0].qualite_taxateur}`
-                .bloc-contribuable
-                    h2.title-bloc-contribuable Identification de l&apos;assujettit
-                    .info-contribuable
-                        ul
-                            li Nom ou Raison sociale :
-                                strong #{doc[0].contribuable}
-                            li Avenue/rue :
-                                strong #{doc[0].avenue} n°#{doc[0].numero}
-                            li Commune :
-                                strong #{doc[0].commune}
-                            li &eacute;l&eacute;phone :
-                                strong #{doc[0].telephone_contribuable}
-                    div.qr
+            div
+                span République Démocratique du Congo
+                span.ministere Ministère de transports et Voie de Communication
+                span Ville de Kinshasa
+            div.logo
+                img(src=`https://${host}/images/small-logo-ville.png`)
+        .title-document
+            h1 NOTE DE CALCUL             
+        .site-ref
+            table   
+                tr.row-site-ref
+                    td.site SITE: 
+                        span=user.lieu
+                    td.ref REF.: 
+                        span=doc[0].num_taxation
+        .bloc-taxateur
+            h2 *A remplir par le service taxateur
+            table
+                tr
+                    th Service taxateur
+                    td=`: ${doc[0].service_taxateur}`
+                tr
+                    th Acte g&eacute;n&eacute;rateur
+                    td=`: ${doc[0].acte_generateur}`
+                tr
+                    th Num&eacute;ro taxation
+                    td=`: ${doc[0].num_taxation}`
+                tr
+                    th Nombre d&apos;actes
+                    td=`: ${doc[0].nombre_acte}`
+                tr
+                    th Article budg&eacute;taire
+                    td
+                        each article in articles
+                            span=` ${article.designation_article},`
+                tr
+                    th Arr&ecirc;t&eacute; N&deg;
+                    td=`: ${doc[0].numero_arrete}`
+                tr
+                    th Montant tax&eacute
+                    td#sub-table
+                        table
+                            tr
+                                th En chiffre
+                                th En lettre
+                            tr
+                                td #{doc[0].montant_global+''+doc[0].devise}
+                                -const devise = doc[0].devise === 'CDF' ? 'Francs congolais' : 'Dollars americains'
+                                td=` ${doc[0].montant_letter} ${devise}`
+                tr
+                    th Date de taxation
+                    td=`: ${doc[0].date_taxation}`
+                tr
+                    th Taxateur
+                    td=`: ${doc[0].nom_taxateur}`
+                        //- strong=` ${doc[0].qualite_taxateur}`                                    
+        .bloc-contribuable
+            h2 Identification de l&apos;assujettit
+            table
+                tr
+                    th Nom ou Raison sociale
+                    td=`: ${doc[0].contribuable}`
+                tr
+                    th Avenue/rue
+                    td : #{doc[0].avenue} n°#{doc[0].numero}
+                tr
+                    th Commune
+                    td : #{doc[0].commune}
+                tr
+                    th &eacute;l&eacute;phone
+                    td : #{doc[0].telephone_contribuable}
 
 

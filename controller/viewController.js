@@ -134,13 +134,12 @@ exports.newPropriete = catchAsync(async (req, res, next) => {
 });
 
 //List Person
-exports.listPerson = catchAsync(async (req, res, next) => {
+exports.listPerson = (req, res, next) => {
     res.status(200)
     .render('all-person', {
         title: 'List person',
     });
-
-});
+};
 
 //All vehicule
 exports.allVehicule = catchAsync(async (req, res, next) => {
@@ -286,7 +285,6 @@ const occurenceArticle = (body)=>{
 
 exports.doc = catchAsync(async (req, res, next) => {
     const host = req.get('host')
-    console.log(`${host}/css/note.css`)
     const newTaxation = new Taxation()
     const doc = await newTaxation.getOneDoc(req.params.id);
     const resArticles = await newTaxation.getAllArticleFromTaxation(req.params.id);
@@ -418,7 +416,7 @@ exports.print = catchAsync(async (req, res, next) => {
 });
 
 exports.doc2 = catchAsync(async (req, res, next) => {
-
+    const host = req.get('host')
     const doc = await new Attestation().docByPlaque(req.params.id, req.params.plaque);
     let dateExp
     const options = {year: "numeric", month: "2-digit", day: "2-digit"};
@@ -441,10 +439,14 @@ exports.doc2 = catchAsync(async (req, res, next) => {
     .renderPDF('doc-2', {
         title: 'document',
         doc,
-        dateExp
+        dateExp,
+        host
     }, {
         printBackground: true,
         filename: `document-${doc[0].numero_plaque}.pdf`,
+        puppeteerArgs: { 
+            args: ["--no-sandbox", "--disable-setuid-sandbox"] 
+        },
         pdfOptions: {
             format: 'A6',
             landscape: false,

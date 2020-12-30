@@ -734,6 +734,7 @@ const renderTableAttestation = async () => {
     const taxationOrdonnance = await taxationOrd();
     listAttestation(taxationOrdonnance, dom.containerTable);
     table();
+    date()
 };
 
 window.addEventListener('load', async (e) => {
